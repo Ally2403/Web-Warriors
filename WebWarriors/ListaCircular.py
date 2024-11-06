@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 
-from NodoSimple import *
-
+# Nodo que representa cada canción
+class NodoSimple:
+    def __init__(self, songName):
+        self.songName = songName  # Nombre de la canción
+        self.sig = None  # Enlace al siguiente nodo
+        
 # Lista circular que contiene los nodos de canciones
 class ListaCircular:
     def __init__(self):
