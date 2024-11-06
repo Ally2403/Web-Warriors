@@ -1,4 +1,5 @@
 from GifPlayer import *
+from ListaCircular import *
 
 keys_pressed = set()
 background_image = None  # Variable para almacenar la imagen de fondo
@@ -9,6 +10,10 @@ def setup():
     size(1500, 720)  # Ajusta el tamaño de la ventana según sea necesario
     gif_player = GIFPlayer("F", num_frames=5, x=0, y=0)
     backgroundImage = loadImage("prueba.png")
+    # Llamar a las funciones de reproducción
+    songList.playNext()  # Reproduce la primera canción
+    songList.playNext()  # Reproduce la siguiente canción
+    songList.playNext()  # Reproduce la siguiente canción nuevamente (circular)
 
 def draw():
     image(backgroundImage, 0, 0)
