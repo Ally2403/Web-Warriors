@@ -1,3 +1,5 @@
+import processing.sound.*;
+WebWarriors game;
 PImage backgroundImage;
 PImage character;
 Character mainCharacter;
@@ -6,14 +8,15 @@ GifPlayer gifPlayer;
 void setup(){
   size(1500, 720);
   backgroundImage = loadImage("prueba.png");
+  game = new WebWarriors(this);
   mainCharacter = new Character(this, "F", 5, 0, 0, 5);
 }
 
 void draw(){
   image(backgroundImage, 0, 0);
+  //game.displayCurrentSong();
   mainCharacter.move();
   mainCharacter.display(this);
-
 }
 
 
@@ -31,6 +34,11 @@ void keyPressed() {
   }
   if (key == 'd' || key == 'D') {
     mainCharacter.setMoveRight(true);
+  }
+  if (key == 'n') {  // Siguiente canción
+    game.nextSong();
+  } else if (key == 'p') {  // Canción anterior
+    game.previousSong();
   }
 }
 
