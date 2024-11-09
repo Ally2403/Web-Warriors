@@ -9,6 +9,8 @@ void setup(){
   size(1500, 720);
   backgroundImage = loadImage("prueba.png");
   game = new WebWarriors(this);
+  game.addSong("music1.mp3");
+  game.addSong("music2.mp3");
   mainCharacter = new Character(this, "F", 5, 0, 0, 5);
 }
 

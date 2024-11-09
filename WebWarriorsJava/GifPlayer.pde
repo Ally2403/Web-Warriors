@@ -1,5 +1,7 @@
+import processing.sound.*;
+
 public class GifPlayer {
-  private ArrayList<PImage> frames; // Lista de cuadros
+  private SimpleList frames; // Lista de cuadros
   private PApplet app;  // Referencia al PApplet principal
   private int numFrames; // Número total de cuadros
   private int frameIndex; // Índice del cuadro actual
@@ -11,7 +13,7 @@ public class GifPlayer {
   
   public GifPlayer(PApplet app, String folder, int numFrames, float x, float y) {
     this.app = app;  // Guardar la referencia para usar métodos de Processing
-    this.frames = new ArrayList<>();
+    this.frames = new SimpleList();
     this.numFrames = numFrames;
     this.frameIndex = 0;
     this.x = x;
@@ -27,7 +29,7 @@ public class GifPlayer {
         String filename = folder + i + ".png";
         PImage frame = app.loadImage(filename);
         //frame.resize((int) width, (int) height);
-        this.frames.add(frame);
+        this.frames.addNode(frame); // Agregar el cuadro a SimpleList
     }
   }
   
@@ -35,10 +37,10 @@ public class GifPlayer {
   public void display(PApplet app) {
       app.noFill();
       app.stroke(255, 0, 0);  // Dibujar el marco de colisión
-      app.rect(x, y , width, height);
+      app.rect(x, y, width, height);
   
-      if (!frames.isEmpty()) {
-          PImage currentFrame = frames.get(frameIndex);
+      if (numFrames > 0) {
+          PImage currentFrame = (PImage) frames.getNode(frameIndex);
           app.image(currentFrame, x, y);
       }
   
@@ -90,5 +92,4 @@ public class GifPlayer {
   public void setFrameDelay(int frameDelay) {
       this.frameDelay = frameDelay;
   }
-  
 }

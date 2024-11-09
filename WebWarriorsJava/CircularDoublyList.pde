@@ -12,11 +12,11 @@ public class CircularDoublyList extends List {
       PTR = newNode;
       FINAL = newNode;
       FINAL.next = PTR;  // El siguiente del último nodo apunta al primero
-      ((DoublyNode)PTR).setPrev(FINAL);    // El anterior del primer nodo apunta al último
+      ((DoublyNode)PTR).setPrev(((DoublyNode)FINAL));    // El anterior del primer nodo apunta al último
     } else {
       FINAL.next = newNode;       // El último nodo apunta al nuevo nodo
-      newNode.prev = FINAL;       // El nuevo nodo apunta al nodo anterior
-      ((DoublyNode)PTR).setPrev(newNode);  // El primer nodo apunta hacia atrás al nuevo nodo
+      newNode.prev = ((DoublyNode)FINAL);       // El nuevo nodo apunta al nodo anterior
+      ((DoublyNode)PTR).setPrev(((DoublyNode)newNode));  // El primer nodo apunta hacia atrás al nuevo nodo
       FINAL = newNode;            // Actualiza el puntero al último nodo
       FINAL.next = PTR;           // El siguiente del último nodo apunta al primero
     }

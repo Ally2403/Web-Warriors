@@ -1,5 +1,5 @@
 public class DoublyNode extends Node {
-  private Node prev;  // Puntero al nodo anterior
+  private DoublyNode prev;  // Puntero al nodo anterior
 
   public DoublyNode(Object info) {
     super(info);
@@ -9,7 +9,7 @@ public class DoublyNode extends Node {
   public Node getPrev() {
      return prev;
   }
-  public void setPrev(Node prev) {
+  public void setPrev(DoublyNode prev) {
      this.prev = prev;
   }
 }

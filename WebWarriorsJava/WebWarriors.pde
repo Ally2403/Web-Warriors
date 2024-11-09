@@ -9,12 +9,21 @@ public class WebWarriors {
   public WebWarriors(PApplet app) {
     this.app = app;
     this.playlist = new CircularDoublyList();
-    setupPlaylist();
+
+  }
+  
+  public CircularDoublyList getPlaylist(){
+    return this.playlist;
+  }
+  
+  public void addSong(Object song){
+    this.playlist.addNode(song);
+    if (currentSong == null) {
+      setupPlaylist();
+    }
   }
 
   private void setupPlaylist() {
-    playlist.addNode("music1.mp3");
-    playlist.addNode("music2.mp3");
     // Selecciona una canción aleatoria para comenzar
     currentSong = (DoublyNode) playlist.PTR;
     int randomStart = (int) app.random(playlist.size());
