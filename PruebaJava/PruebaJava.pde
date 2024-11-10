@@ -1,12 +1,13 @@
-PImage fondo, play, howToPlay, credits, setting, personaje1, personaje2, personaje3, personaje4, personaje5 = null;
+PImage fondo, selectYourCharacter, howToPlay, credits, setting, personaje1, personaje2, personaje3, personaje4, personaje5, ok, start, okn = null;
 int pantalla = 0, personaje = 1;
 PFont mouse = null;
+boolean oke = false;
 
 void setup(){
   size(1500, 800);
   mouse = createFont("Arial Bold", 30);
   fondo = loadImage("Start.png");
-  play = loadImage("Play.png");
+  selectYourCharacter = loadImage("SelectYourCharacter.png");
   howToPlay = loadImage("How To Play.png");
   credits = loadImage("Credits.png");
   setting = loadImage("Settings.png");
@@ -16,6 +17,9 @@ void setup(){
   personaje3 = loadImage("SelPersonaje3.png");
   personaje4 = loadImage("SelPersonaje4.png");
   personaje5 = loadImage("SelPersonaje5.png");
+  ok = loadImage("Ok.png");
+  start = loadImage("Start.png");
+  okn = loadImage("Okselect.png");
 }
 
 void draw(){
@@ -24,7 +28,12 @@ void draw(){
     image(fondo, 0, 0, width, height);
     
   }else if(pantalla == 1){
-    image(play, 0, 0, width, height);
+    image(selectYourCharacter, 0, 0, width, height);
+    if (!oke){
+    image(ok, (750-55), 644);
+    }else{
+    image(okn, (750-55), 644);
+    }
     
     if(personaje == 1){
       image(personaje1, (750-280), 150);
@@ -40,6 +49,7 @@ void draw(){
       
     }else if (personaje == 5){
       image(personaje5, (750-280), 150);
+      
     }
     
   }else if(pantalla == 2){
@@ -66,13 +76,17 @@ void mousePressed(){
   if(pantalla == 0){
     if(mouseX>77 && mouseX<583 && mouseY>334 && mouseY<391){
       pantalla = 1;
+      
     }else if(mouseX>154 && mouseX<507 && mouseY>464 && mouseY<521){
       pantalla = 2;
+    
     }else if(mouseX>869 && mouseX<1426 && mouseY>394 && mouseY<451){
       pantalla = 3;
+      
     }else if(mouseX>945 && mouseX<1350 && mouseY>534 && mouseY<597){
       pantalla = 4;
     }
+    
   }else if (pantalla == 1) {
         if (isPointInTriangle(mouseX, mouseY, dx1, dy1, dx2, dy2, dx3, dy3)) {
           switch (personaje){
@@ -110,12 +124,20 @@ void mousePressed(){
           }
         } else if (mouseX > 20 && mouseX < 141 && mouseY > 31 && mouseY < 55){
           pantalla = 0;
+        } else if (mouseX > 694 && mouseX <792 && mouseY >644 && mouseY <694){
+          pantalla = 5;
         }
     } else if (pantalla == 2 || pantalla == 3 || pantalla == 4) {
         if (mouseX > 20 && mouseX < 141 && mouseY > 31 && mouseY < 55) {
             pantalla = 0;
         }
     }
+}
+
+void mouseMoved(){
+  if(mouseX > 694 && mouseX <792 && mouseY >644 && mouseY <694){
+    oke=true;
+  }
 }
 
 boolean isPointInTriangle(float px, float py, float x1, float y1, float x2, float y2, float x3, float y3) {
