@@ -1,10 +1,10 @@
-PImage fondo, selectYourCharacter, howToPlay, credits, setting, personaje1, personaje2, personaje3, personaje4, personaje5, ok, start, okn = null;
+PImage fondo, selectYourCharacter, howToPlay, credits, setting, personaje1, personaje2, personaje3, personaje4, personaje5, ok, start, okn, mapa = null;
 int pantalla = 0, personaje = 1;
 PFont mouse = null;
 boolean oke = false;
 
 void setup(){
-  size(1500, 800);
+  size(1500, 720);
   mouse = createFont("Arial Bold", 30);
   fondo = loadImage("Start.png");
   selectYourCharacter = loadImage("SelectYourCharacter.png");
@@ -20,6 +20,8 @@ void setup(){
   ok = loadImage("Ok.png");
   start = loadImage("Start.png");
   okn = loadImage("Okselect.png");
+  
+  mapa = loadImage("Mapa.png");
 }
 
 void draw(){
@@ -30,25 +32,25 @@ void draw(){
   }else if(pantalla == 1){
     image(selectYourCharacter, 0, 0, width, height);
     if (!oke){
-    image(ok, (750-55), 644);
+    image(ok, (750-55), 600);
     }else{
-    image(okn, (750-55), 644);
+    image(okn, (750-55), 600);
     }
     
     if(personaje == 1){
-      image(personaje1, (750-280), 150);
+      image(personaje1, (750-280), 125);
       
     }else if(personaje == 2){
-      image(personaje2, (750-280), 150);
+      image(personaje2, (750-280), 125);
       
     }else if(personaje == 3){
-      image(personaje3, (750-280), 150);
+      image(personaje3, (750-280), 125);
       
     }else if(personaje == 4){
-      image(personaje4, (750-280), 150);
+      image(personaje4, (750-280), 125);
       
     }else if (personaje == 5){
-      image(personaje5, (750-280), 150);
+      image(personaje5, (750-280), 125);
       
     }
     
@@ -60,6 +62,9 @@ void draw(){
     
   }else if(pantalla == 4){
     image(setting, 0, 0, width, height);
+  
+  }else if(pantalla == 5) {
+    image(mapa, 0, 0, width, height);
   }
   
   textFont(mouse);
@@ -68,22 +73,21 @@ void draw(){
 }
 
 void mousePressed(){
-    // Coordenadas del triángulo de la flecha derecha (ajusta según tu diseño)
-    float dx1 = 922, dy1 = 322, ix1 = 560, iy1 = 322;
-    float dx2 = 974, dy2 = 383, ix2 = 509, iy2 = 383;
-    float dx3 = 922, dy3 = 435, ix3 = 560, iy3 = 435;
+    float dx1 = 922, dy1 = 297, ix1 = 560, iy1 = 297;
+    float dx2 = 974, dy2 = 358, ix2 = 509, iy2 = 358;
+    float dx3 = 922, dy3 = 410, ix3 = 560, iy3 = 410;
     
   if(pantalla == 0){
-    if(mouseX>77 && mouseX<583 && mouseY>334 && mouseY<391){
+    if(mouseX>78 && mouseX<583 && mouseY>300 && mouseY<352){
       pantalla = 1;
       
-    }else if(mouseX>154 && mouseX<507 && mouseY>464 && mouseY<521){
+    }else if(mouseX>154 && mouseX<507 && mouseY>418 && mouseY<468){
       pantalla = 2;
     
-    }else if(mouseX>869 && mouseX<1426 && mouseY>394 && mouseY<451){
+    }else if(mouseX>869 && mouseX<1426 && mouseY>356 && mouseY<412){
       pantalla = 3;
       
-    }else if(mouseX>945 && mouseX<1350 && mouseY>534 && mouseY<597){
+    }else if(mouseX>945 && mouseX<1350 && mouseY>480 && mouseY<538){
       pantalla = 4;
     }
     
@@ -122,21 +126,23 @@ void mousePressed(){
             case 5:
             personaje = 4;
           }
-        } else if (mouseX > 20 && mouseX < 141 && mouseY > 31 && mouseY < 55){
+        } else if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49){
           pantalla = 0;
-        } else if (mouseX > 694 && mouseX <792 && mouseY >644 && mouseY <694){
+        } else if (mouseX > 694 && mouseX <792 && mouseY >600 && mouseY <650){
           pantalla = 5;
         }
     } else if (pantalla == 2 || pantalla == 3 || pantalla == 4) {
-        if (mouseX > 20 && mouseX < 141 && mouseY > 31 && mouseY < 55) {
+        if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49) {
             pantalla = 0;
         }
     }
 }
 
 void mouseMoved(){
-  if(mouseX > 694 && mouseX <792 && mouseY >644 && mouseY <694){
+  if(mouseX > 694 && mouseX <792 && mouseY >600 && mouseY <650){
     oke=true;
+  }else{
+    oke = false;
   }
 }
 
