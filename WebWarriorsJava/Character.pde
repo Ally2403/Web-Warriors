@@ -101,6 +101,14 @@ public class Character {
     return this.velocityX;
   } 
   
+  public boolean getMoveLeft(){
+    return this.moveLeft;
+  }
+  
+  public boolean getMoveRight(){
+    return this.moveRight;
+  }
+  
   // Setters
   public void setMoveUp(boolean moveUp) {
     this.moveUp = moveUp;

@@ -1,17 +1,32 @@
 import processing.sound.*;
 WebWarriors game;
 PImage backgroundImage;
-PImage character;
-Character mainCharacter;
+PImage character, combate, youWon, youLose, next, textBox;
+Character mainCharacter, enemy1, battleCharacter;
 GifPlayer gifPlayer;
+boolean showYouWon = false, showYouLose = false;
+int startTime, finishTime;
 float backgroundOffset = 0; // Ancho total de la imagen de fondo
 float backgroundWidth = 8000; // Ancho total de la imagen de fondo
 PFont mouse = null;
 
+boolean booleanBattle1 = false, booleanBattle2 = false, booleanBattle3 = false;
+SimpleList battle1Texts, battle1xPositions, battle1yPositions, comments;
+Battle battle1, battle2;
+
 void setup(){
-  mouse = createFont("Arial Bold", 30);
+  mouse = createFont("PressStart2P.ttf", 20);
   size(1500, 720);
   backgroundImage = loadImage("FONDO MAPA VIDEOJUEGO.png");
+  combate = loadImage("Combate.png");
+  combate.resize(1500, 720);
+  youWon = loadImage("you won.png");
+  youWon.resize(width, height);
+  youLose = loadImage("you won.png");
+  youLose.resize(width, height);
+  next = loadImage("next.png");
+  textBox = loadImage("textBox.png");
+  
   game = new WebWarriors(this);
   game.addSong("music1.mp3");
   game.addSong("music2.mp3");
@@ -40,35 +55,117 @@ void setup(){
   
   mainCharacter = new Character(this, "F", 5, 0, 0, 5);
   
+  battleCharacter = new Character(this, "B", 10, 200, 300, 5);
+  enemy1 = new Character(this, "A", 10, 1000, 0, 5);
+  
+  battle1xPositions = new SimpleList();
+  battle1xPositions.addNode(545);
+  battle1xPositions.addNode(1000);
+  battle1xPositions.addNode(545);
+  battle1xPositions.addNode(1000);
+  battle1xPositions.addNode(50);
+  
+  battle1yPositions = new SimpleList();
+  battle1yPositions.addNode(537);
+  battle1yPositions.addNode(537);
+  battle1yPositions.addNode(630);
+  battle1yPositions.addNode(630);
+  battle1yPositions.addNode(537);
+  
+  // Crear listas de texto y posiciones para las batallas
+  battle1Texts = new SimpleList();
+  battle1Texts.addNode("1");
+  battle1Texts.addNode("2");
+  battle1Texts.addNode("3");
+  battle1Texts.addNode("4");
+  battle1Texts.addNode("");
+  
+  comments = new SimpleList();
+  comments.addNode("buenos dias\ncomo estas\ncomo te llamas");
+  comments.addNode("me gusta la papaaaaa");
+  comments.addNode("3");
+  comments.addNode("4");
+  comments.addNode("5");
+  
+  // Crear batallas
+  battle1 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments);
+  battle2 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments); // Puedes personalizar otra batalla
+  
+  // Agregar batallas a WebWarriors
+  game.addBattle(battle1);
+  game.addBattle(battle2);
+  
 }
 
 void draw(){
   image(backgroundImage, -backgroundOffset, 0);
-  //game.displayCurrentSong();
-  mainCharacter.move(this);
-  mainCharacter.display(this);
-  moveBackground();
-  
-  // Mostrar plataformas
-  Node platformNode = game.getPlatforms().PTR;
-  while (platformNode != null) {
-    Platform platform = (Platform) platformNode.info;
-    platform.display(this);
-    platformNode = platformNode.next;
-  }
-  
-  // Verificar colisión con plataformas
-  if (CollisionDetector.isColliding(mainCharacter, game.getPlatforms(), backgroundOffset)) {
-    mainCharacter.setOnGround(true);
-  } else {
-    mainCharacter.setOnGround(false);
+  //BATALLAS EN JUEGO
+  if (game.isBattleActive()) {
+    game.updateBattle();
+    battleCharacter.display(this);
+    enemy1.display(this);
+  } else if(showYouWon){
+    finishTime = millis() - startTime;
+    if (finishTime < 5000) {
+      image(youWon, 0, 0); // Muestra la imagen en (100, 100)
+    } else {
+      showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
+    }
+  }else if(showYouLose){
+    finishTime = millis() - startTime;
+    if (finishTime < 5000) {
+      image(youLose, 0, 0); // Muestra la imagen en (100, 100)
+    } else {
+      showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
+    }
+  }else{
+    //JUEGO PLATAFORMAS
+    mainCharacter.move(this);
+    mainCharacter.display(this);
+    moveBackground();
     
+    // Mostrar plataformas
+    Node platformNode = game.getPlatforms().PTR;
+    while (platformNode != null) {
+      Platform platform = (Platform) platformNode.info;
+      platform.display(this);
+      platformNode = platformNode.next;
+    }
+    
+    // Verificar colisión con plataformas
+    if (CollisionDetector.isColliding(mainCharacter, game.getPlatforms(), backgroundOffset)) {
+      mainCharacter.setOnGround(true);
+    } else {
+      mainCharacter.setOnGround(false);
+    }
+    
+    //CONTROL DE BATALLAS
+    if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 4036 && !booleanBattle1){
+      print("llegue");
+      game.setActiveBattle(0); // Comienza con la primera batalla
+      game.startBattle();
+      booleanBattle1 = true;
+    }else if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 5000 && !booleanBattle2){
+      print("llegue");
+      game.nextBattle();
+      booleanBattle2 = true;
+    }else if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 7000 && !booleanBattle3){
+      print("llegue");
+      game.nextBattle();
+      booleanBattle3 = true;
+    }
+    text("Press T for next battle", 50, 100);
   }
   
   textFont(mouse);
   text("mouseX "+ mouseX + " mouseY " + mouseY + " offsetX" + backgroundOffset + " Total" + (int(mouseX) + backgroundOffset), 20, 20);
 }
 
+void mousePressed() {
+  if (game.isBattleActive()) {
+    game.mousePressed();
+  }
+}
 
 // Control de movimiento
 void keyPressed() {
@@ -110,12 +207,12 @@ void keyReleased() {
 
 void moveBackground(){
   if (mainCharacter.gifPlayer.getX() > width - 150 && backgroundOffset < backgroundWidth - width) {
-    if (keyPressed && (key == 'd')) {
+    if (mainCharacter.getMoveRight()) {
       backgroundOffset += mainCharacter.getSpeed(); // Desplazar el fondo a la derecha
     }  
   }
   if (mainCharacter.gifPlayer.getX() < 150 && backgroundOffset > 0) {
-    if (keyPressed && (key == 'a'  )) {
+    if (mainCharacter.getMoveLeft()) {
       backgroundOffset -= mainCharacter.getSpeed(); // Desplazar el fondo a la izquierda
     }  
   }

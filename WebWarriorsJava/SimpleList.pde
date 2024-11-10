@@ -38,4 +38,18 @@ public class SimpleList extends List{
     }
     return null;  // Si el índice es inválido
   }
+  
+  // Implementación del método size
+  public int size() {
+    int count = 0;
+    Node current = PTR; // Comenzamos desde el primer nodo
+
+    // Recorremos la lista hasta llegar al FINAL
+    while (current != null) {
+      count++;  // Incrementamos el contador por cada nodo
+      current = current.next;  // Avanzamos al siguiente nodo
+    }
+
+    return count;  // Retornamos el tamaño de la lista
+  }
 }

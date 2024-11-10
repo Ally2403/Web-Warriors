@@ -6,13 +6,70 @@ public class WebWarriors {
   private DoublyNode currentSong;
   private PApplet app;
   private SimpleList platforms;
+  private SimpleList battleList; // Lista de batallas
+  private int activeBattleIndex = 0; // Índice de la batalla activa
+  private boolean battleState = false; // Controla si una batalla está en curso
 
   public WebWarriors(PApplet app) {
     this.app = app;
     this.playlist = new CircularDoublyList();
     this.platforms = new SimpleList();
+    this.battleList = new SimpleList();
 
   }
+  
+  //BATTLE METHODS
+  public void setActiveBattle(int index){
+    this.activeBattleIndex = index;
+  }
+  
+  public boolean isBattleActive() {
+    return battleState;
+  }
+
+  public void setBattleState(boolean state) {
+    this.battleState = state;
+  }
+
+  public void addBattle(Battle battle) {
+    battleList.addNode(battle);
+  }
+
+  public void startBattle() {
+    if (battleList.size() > 0) {
+      Battle battle = (Battle) battleList.getNode(activeBattleIndex);
+      battleState = true;
+      battle.start(); 
+    }
+  }
+
+  public void nextBattle() {
+    if (activeBattleIndex < battleList.size() - 1) {
+      activeBattleIndex++;
+      startBattle();
+    }
+  }
+
+  public void updateBattle() {
+    if (battleState && battleList.size() > 0) {
+      Battle battle = (Battle) battleList.getNode(activeBattleIndex);
+      app.image(combate, 0, 0);
+      battle.displayStatus();
+      battle.displaySquares();
+      battle.displayTurn();
+      if(battle.getEnemyHealth() == 0 || battle.getPlayerHealth() == 0){
+        battleState = false;
+      }
+    }
+  }
+
+  public void mousePressed() {
+    if (battleState && battleList.size() > 0) {
+      Battle battle = (Battle) battleList.getNode(activeBattleIndex);
+      battle.mousePressed();
+    }
+  }
+
   
   public CircularDoublyList getPlaylist(){
     return this.playlist;
