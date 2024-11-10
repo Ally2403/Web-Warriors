@@ -11,7 +11,7 @@ class Platform{
     
   public void display(PApplet app){
     app.fill(255, 0, 0);  // Color rojo para las plataformas
-    app.rect(x, y, width, height);
+    app.rect(x - backgroundOffset, y, width, height);
   }
   
   //getters

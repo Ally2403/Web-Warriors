@@ -15,6 +15,29 @@ void setup(){
   game = new WebWarriors(this);
   game.addSong("music1.mp3");
   game.addSong("music2.mp3");
+  
+  //Plataformas
+  game.addPlatform(new Platform(0, 625, 465, 15));
+  game.addPlatform(new Platform(465, 560, 168, 15));
+  game.addPlatform(new Platform(633, 484, 353, 15));
+  game.addPlatform(new Platform(986, 562, 166, 15));
+  game.addPlatform(new Platform(1154, 625, 1713, 15));
+  game.addPlatform(new Platform(1740, 500, 350, 15));
+  game.addPlatform(new Platform(2195, 370, 350, 15));
+  game.addPlatform(new Platform(2867, 565, 125, 15));
+  game.addPlatform(new Platform(2993, 492, 688, 55));
+  game.addPlatform(new Platform(3680, 630, 220, 15));
+  game.addPlatform(new Platform(3900, 545, 352, 15));
+  game.addPlatform(new Platform(4252, 630, 910, 15));
+  game.addPlatform(new Platform(5162, 580, 168, 15));
+  game.addPlatform(new Platform(5332, 500, 355, 15));
+  game.addPlatform(new Platform(5685, 575, 166, 15));
+  game.addPlatform(new Platform(5852, 627, 1240, 15));
+  game.addPlatform(new Platform(6074, 472, 352, 15));
+  game.addPlatform(new Platform(6527, 355, 352, 15));
+  game.addPlatform(new Platform(7096, 560, 126, 15));
+  game.addPlatform(new Platform(7223, 488, 688, 55));
+  
   mainCharacter = new Character(this, "F", 5, 0, 0, 5);
   
 }
@@ -25,8 +48,25 @@ void draw(){
   mainCharacter.move(this);
   mainCharacter.display(this);
   moveBackground();
+  
+  // Mostrar plataformas
+  Node platformNode = game.getPlatforms().PTR;
+  while (platformNode != null) {
+    Platform platform = (Platform) platformNode.info;
+    platform.display(this);
+    platformNode = platformNode.next;
+  }
+  
+  // Verificar colisión con plataformas
+  if (CollisionDetector.isColliding(mainCharacter, game.getPlatforms(), backgroundOffset)) {
+    mainCharacter.setOnGround(true);
+  } else {
+    mainCharacter.setOnGround(false);
+    
+  }
+  
   textFont(mouse);
-  text("mouseX "+ mouseX + " mouseY " + mouseY, 20, 20);
+  text("mouseX "+ mouseX + " mouseY " + mouseY + " offsetX" + backgroundOffset + " Total" + (int(mouseX) + backgroundOffset), 20, 20);
 }
 
 

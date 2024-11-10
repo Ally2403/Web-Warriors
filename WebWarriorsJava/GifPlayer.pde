@@ -92,4 +92,8 @@ public class GifPlayer {
   public void setFrameDelay(int frameDelay) {
       this.frameDelay = frameDelay;
   }
+  
+  public float getSpeed(){
+    return this.speed;
+  }
 }

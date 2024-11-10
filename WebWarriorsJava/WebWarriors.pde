@@ -5,10 +5,12 @@ public class WebWarriors {
   private SoundFile currentPlayer;
   private DoublyNode currentSong;
   private PApplet app;
+  private SimpleList platforms;
 
   public WebWarriors(PApplet app) {
     this.app = app;
     this.playlist = new CircularDoublyList();
+    this.platforms = new SimpleList();
 
   }
   
@@ -21,6 +23,14 @@ public class WebWarriors {
     if (currentSong == null) {
       setupPlaylist();
     }
+  }
+  
+  public void addPlatform(Object platform){
+    this.platforms.addNode(platform);
+  }
+  
+  public SimpleList getPlatforms(){
+    return this.platforms;
   }
 
   private void setupPlaylist() {
