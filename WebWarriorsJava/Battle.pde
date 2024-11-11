@@ -1,6 +1,6 @@
 public class Battle {
-    private boolean isPlayerTurn = true;
-    private boolean inBattle = true;
+    private boolean isPlayerTurn;
+    private boolean inBattle;
     private int playerHealth;
     private int enemyHealth;
     private PApplet app;
@@ -9,14 +9,14 @@ public class Battle {
     private SimpleList squareX;      // Lista de posiciones X
     private SimpleList squareY;      // Lista de posiciones Y
     private SimpleList comments;      // Lista de posiciones Y
-    private int squareSize = 80;     // Tamaño de los cuadrados
+    private int squareSize;     // Tamaño de los cuadrados
 
-    private int enemyTurnStartTime = 0; // Variable para marcar el inicio del turno enemigo
-    private boolean printNext = false;
-    private int selectedAction = 0; // Variable para almacenar la acción seleccionada
-    private int round = 0; // Contador de rondas
-    private String damageMessage = ""; // Mensaje de daño que se muestra al jugador
-    private String enemyDamageMessage = ""; // Mensaje de daño del enemigo
+    private int enemyTurnStartTime; // Variable para marcar el inicio del turno enemigo
+    private boolean printNext;
+    private int selectedAction; // Variable para almacenar la acción seleccionada
+    private int round; // Contador de rondas
+    private String damageMessage; // Mensaje de daño que se muestra al jugador
+    private String enemyDamageMessage; // Mensaje de daño del enemigo
 
     // Daño que los botones causan en cada ronda
     private int[][] damageMatrix = {
@@ -27,10 +27,10 @@ public class Battle {
         {2, 3, 1, 0}  // Daños para ronda 5
     };
     
-    private int currentCommentIndex = 0; // Índice del comentario actual
-    private int letterCount = 0;         // Contador de letras mostradas
-    private int lastUpdate = 0;          // Tiempo del último incremento de letra
-    private int displaySpeed = 100;      // Tiempo entre letras (milisegundos)
+    private int currentCommentIndex; // Índice del comentario actual
+    private int letterCount;         // Contador de letras mostradas
+    private int lastUpdate;          // Tiempo del último incremento de letra
+    private int displaySpeed;      // Tiempo entre letras (milisegundos)
     
     private WebWarriors game; // Referencia a WebWarriors
 
@@ -41,6 +41,14 @@ public class Battle {
         this.squareY = yPositions;
         this.game = game; // Guardar la referencia
         this.comments = comments;
+        this.displaySpeed = 100;
+        this.lastUpdate = 0;
+        this.letterCount = 0;
+        this.currentCommentIndex = 0;
+        this.enemyDamageMessage = "";
+        this.damageMessage = "";
+        this.enemyTurnStartTime = 0;
+        this.squareSize = 80;
     }
 
     public void start() {
@@ -52,6 +60,7 @@ public class Battle {
         round = 0; // Resetear las rondas
         damageMessage = ""; // Resetear mensaje de daño
         enemyDamageMessage = ""; // Resetear mensaje de daño del enemigo
+        printNext = false;
     }
 
     public void displayStatus() {

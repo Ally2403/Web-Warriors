@@ -6,6 +6,7 @@ public class CircularDoublyList extends List {
   }
 
   // Método para agregar un nodo a la lista doblemente circular
+  @Override
   public void addNode(Object info) {
     DoublyNode newNode = new DoublyNode(info);
     if (PTR == null) {  // Si la lista está vacía
@@ -20,16 +21,6 @@ public class CircularDoublyList extends List {
       FINAL = newNode;            // Actualiza el puntero al último nodo
       FINAL.next = PTR;           // El siguiente del último nodo apunta al primero
     }
-  }
-
-  // Método para mostrar los nodos de la lista doblemente circular
-  public void show() {
-    if (PTR == null) return;  // Si la lista está vacía, no muestra nada
-    Node x = PTR;
-    do {
-      System.out.println(x.info);  // Imprime la información del nodo
-      x = x.next;  // Avanza al siguiente nodo
-    } while (x != PTR);  // Se detiene cuando vuelve al inicio
   }
   
   public int size() {

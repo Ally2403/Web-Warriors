@@ -37,7 +37,7 @@ public static class CollisionDetector {
     return false;
   }
   
-  // Método para manejar las colisiones laterales y evitar que el personaje atraviese las plataformas
+  // Método para manejar las colisiones laterales y evitar que el character atraviese las plataformas
   public static void handleSideCollision(Character character, Platform platform, float backgroundOffset) {
     float characterX = character.gifPlayer.getX();
     float characterY = character.gifPlayer.getY();
@@ -49,10 +49,10 @@ public static class CollisionDetector {
     float platformWidth = platform.getWidth();
     float platformHeight = platform.getHeight();
 
-    // Verificar si el personaje está dentro del rango vertical de la plataforma
+    // Verificar si el character está dentro del rango vertical de la plataforma
     boolean isAtPlatformHeight = characterY + characterHeight > platformY && characterY < platformY + platformHeight;
 
-    // Si hay colisión lateral y el personaje está en el rango de la altura de la plataforma, detenerlo
+    // Si hay colisión lateral y el character está en el rango de la altura de la plataforma, detenerlo
     if (isAtPlatformHeight) {
       // Si esta a la derecha y se mueve a la izquierda lo detiene
       if (characterX < platformX + platformWidth && characterX > platformX) {

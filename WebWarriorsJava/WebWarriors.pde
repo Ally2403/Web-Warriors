@@ -1,12 +1,12 @@
 import processing.sound.*;
 
 public class WebWarriors {
-  private CircularDoublyList playlist;
+  private List playlist;
   private SoundFile currentPlayer;
   private DoublyNode currentSong;
   private PApplet app;
-  private SimpleList platforms;
-  private SimpleList battleList; // Lista de batallas
+  private List platforms;
+  private List battleList; // Lista de batallas
   private int activeBattleIndex = 0; // Índice de la batalla activa
   private boolean battleState = false; // Controla si una batalla está en curso
 
@@ -32,27 +32,27 @@ public class WebWarriors {
   }
 
   public void addBattle(Battle battle) {
-    battleList.addNode(battle);
+    this.battleList.addNode(battle);
   }
 
   public void startBattle() {
-    if (battleList.size() > 0) {
-      Battle battle = (Battle) battleList.getNode(activeBattleIndex);
+    if (((SimpleList)battleList).size() > 0) {
+      Battle battle = (Battle) ((SimpleList)battleList).getNode(activeBattleIndex);
       battleState = true;
       battle.start(); 
     }
   }
 
   public void nextBattle() {
-    if (activeBattleIndex < battleList.size() - 1) {
+    if (activeBattleIndex < ((SimpleList)battleList).size() - 1) {
       activeBattleIndex++;
       startBattle();
     }
   }
 
   public void updateBattle() {
-    if (battleState && battleList.size() > 0) {
-      Battle battle = (Battle) battleList.getNode(activeBattleIndex);
+    if (battleState && ((SimpleList)battleList).size() > 0) {
+      Battle battle = (Battle) ((SimpleList)battleList).getNode(activeBattleIndex);
       app.image(combate, 0, 0);
       battle.displayStatus();
       battle.displaySquares();
@@ -64,14 +64,14 @@ public class WebWarriors {
   }
 
   public void mousePressed() {
-    if (battleState && battleList.size() > 0) {
-      Battle battle = (Battle) battleList.getNode(activeBattleIndex);
+    if (battleState && ((SimpleList)battleList).size() > 0) {
+      Battle battle = (Battle) ((SimpleList)battleList).getNode(activeBattleIndex);
       battle.mousePressed();
     }
   }
 
   
-  public CircularDoublyList getPlaylist(){
+  public List getPlaylist(){
     return this.playlist;
   }
   
@@ -86,14 +86,14 @@ public class WebWarriors {
     this.platforms.addNode(platform);
   }
   
-  public SimpleList getPlatforms(){
+  public List getPlatforms(){
     return this.platforms;
   }
 
   private void setupPlaylist() {
     // Selecciona una canción aleatoria para comenzar
     currentSong = (DoublyNode) playlist.PTR;
-    int randomStart = (int) app.random(playlist.size());
+    int randomStart = (int) app.random(((CircularDoublyList)playlist).size());
     for (int i = 0; i < randomStart; i++) {
       currentSong = (DoublyNode) currentSong.next;
     }

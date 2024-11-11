@@ -6,6 +6,7 @@ public class SimpleList extends List{
   }
 
   // Método para agregar un nodo a la lista
+  @Override
   public void addNode(Object info) {
     Node newNode = new SimpleNode(info);  // Crea un nuevo nodo
     if (PTR == null) {  // Si la lista está vacía
@@ -14,14 +15,6 @@ public class SimpleList extends List{
     } else {
       FINAL.next = newNode;  // Enlaza el último nodo con el nuevo nodo
       FINAL = newNode;       // Actualiza el puntero al último nodo
-    }
-  }
-  
-  public void show() {
-    Node x = PTR;  // Iniciar en el primer nodo
-    while (x != null) {  // Recorrer mientras el nodo actual no sea null
-        System.out.println(x.info);  // Imprimir la información del nodo
-        x = x.next;  // Avanzar al siguiente nodo
     }
   }
 

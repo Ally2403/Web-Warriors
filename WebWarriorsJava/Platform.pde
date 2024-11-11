@@ -7,7 +7,7 @@ class Platform{
     this.y = y;
     this.width = width;
     this.height = height;
-    }
+  }
     
   public void display(PApplet app){
     app.fill(255, 0, 0);  // Color rojo para las plataformas

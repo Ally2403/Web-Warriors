@@ -40,19 +40,19 @@ public class Character {
       // Gravedad
       if (!onGround) {
         velocityY += gravity;  // La gravedad va aumentando la velocidad hacia abajo
-        gifPlayer.setY(gifPlayer.getY() + velocityY);  // Mueve al personaje hacia abajo
+        gifPlayer.setY(gifPlayer.getY() + velocityY);  // Mueve al character hacia abajo
       } else {
         velocityY = 0;  // Resetea la velocidad Y cuando está en el suelo
       }
       
-      if (CollisionDetector.isColliding(mainCharacter, game.getPlatforms(), backgroundOffset)) {
-        //gifPlayer.setY(600);  // No deja que el personaje pase por debajo del suelo
+      if (CollisionDetector.isColliding(mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
+        //gifPlayer.setY(600);  // No deja que el character pase por debajo del suelo
         onGround = true;
       } else {
         onGround = false;
       }
       
-      // Detener el personaje por colisión lateral
+      // Detener el character por colisión lateral
       for (Node node = game.getPlatforms().PTR; node != null; node = node.next) {
         Platform platform = (Platform) node.info;
         CollisionDetector.handleSideCollision(this, platform, backgroundOffset);
@@ -67,13 +67,13 @@ public class Character {
       constrainBorders(app);
   }
   
-  // Método para mostrar el GIF en la pantalla
+  // Método para mostrar el GIF en la screen
   public void display(PApplet app) {
       gifPlayer.display(app);
   }
   
   public void constrainBorders(PApplet app){
-    // Limitar la posición del personaje a los límites de la pantalla
+    // Limitar la posición del character a los límites de la screen
         if (gifPlayer.getX() < 0) {
             gifPlayer.setX(0);
         }

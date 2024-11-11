@@ -33,7 +33,7 @@ public class GifPlayer {
     }
   }
   
-  // Método para mostrar el GIF en la pantalla
+  // Método para mostrar el GIF en la screen
   public void display(PApplet app) {
       app.noFill();
       app.stroke(255, 0, 0);  // Dibujar el marco de colisión

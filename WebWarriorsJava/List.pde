@@ -6,4 +6,6 @@ public abstract class List {
     this.PTR = null;
     this.FINAL = null;
   }
+  
+  protected abstract void addNode(Object info);
 }
