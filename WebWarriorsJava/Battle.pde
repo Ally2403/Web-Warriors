@@ -32,9 +32,12 @@ public class Battle {
     private int lastUpdate;          // Tiempo del último incremento de letra
     private int displaySpeed;      // Tiempo entre letras (milisegundos)
     
+    private Character battleCharacter;
+    private Character enemy;
+    
     private WebWarriors game; // Referencia a WebWarriors
 
-    public Battle(PApplet app, SimpleList texts, SimpleList xPositions, SimpleList yPositions, WebWarriors game, SimpleList comments) {
+    public Battle(PApplet app, SimpleList texts, SimpleList xPositions, SimpleList yPositions, WebWarriors game, SimpleList comments, Character battleCharacter, Character enemy) {
         this.app = app;
         this.squareTexts = texts;
         this.squareX = xPositions;
@@ -49,6 +52,8 @@ public class Battle {
         this.damageMessage = "";
         this.enemyTurnStartTime = 0;
         this.squareSize = 80;
+        this.battleCharacter = battleCharacter;
+        this.enemy = enemy;
     }
 
     public void start() {
@@ -138,6 +143,8 @@ public class Battle {
           letterCount = 0;  // Reinicia el conteo de letras para el nuevo mensaje
           
           if (playerHealth <= 0) {
+            //se devuelve la vida a 0 porque si es negativa no se puede dibujar en la barra de vida.
+              this.playerHealth = 0;
               System.out.print("you lose");
               showYouLose = true;
               startTime = millis();
@@ -149,6 +156,8 @@ public class Battle {
 
     public void displayTurn() {
         if (inBattle) {
+            battleCharacter.display(app);
+            enemy.display(app);
             if (isPlayerTurn) {
                 app.fill(0);
                 app.text("Your turn. Choose \nan action.", 72, 570);
@@ -193,6 +202,93 @@ public class Battle {
             }
         }
     }
+    
+    public void updateEnemyLifeBar(PApplet app){
+      switch (this.enemyHealth) {
+          case 10:
+              app.image(lifeBar10, 70, 140);
+              break;
+          case 9:
+              app.image(lifeBar9, 70, 140);
+              break;
+          case 8:
+              app.image(lifeBar8, 70, 140);
+              break;
+          case 7:
+              app.image(lifeBar7, 70, 140);
+              break;
+          case 6:
+              app.image(lifeBar6, 70, 140);
+              break;
+          case 5:
+              app.image(lifeBar5, 70, 140);
+              break;
+          case 4:
+              app.image(lifeBar4, 70, 140);
+              break;
+          case 3:
+              app.image(lifeBar3, 70, 140);
+              break;
+          case 2:
+              app.image(lifeBar2, 70, 140);
+              break;
+          case 1:
+              app.image(lifeBar1, 70, 140);
+              break;
+          case 0:
+              app.image(lifeBar0, 70, 140);
+              break;
+        }
+    }
+    
+    public void updatePlayerLifeBar(PApplet app) {
+      // Dibujar la barra de vida correspondiente
+      switch (this.playerHealth) {
+          case 10:
+              app.image(lifeBar10, 1100, 420);
+              break;
+          case 9:
+              app.image(lifeBar9, 1100, 420);
+              break;
+          case 8:
+              app.image(lifeBar8, 1100, 420);
+              break;
+          case 7:
+              app.image(lifeBar7, 1100, 420);
+              break;
+          case 6:
+              app.image(lifeBar6, 1100, 420);
+              break;
+          case 5:
+              app.image(lifeBar5, 1100, 420);
+              break;
+          case 4:
+              app.image(lifeBar4, 1100, 420);
+              break;
+          case 3:
+              app.image(lifeBar3, 1100, 420);
+              break;
+          case 2:
+              app.image(lifeBar2, 1100, 420);
+              break;
+          case 1:
+              app.image(lifeBar1, 1100, 420);
+              break;
+          case 0:
+              app.image(lifeBar0, 1100, 420);
+              break;
+        }
+    }
+  
+  
+    // Método para iniciar el parpadeo al cambiar la vida
+    public void setPlayerHealth(int newLife) {
+        if (this.playerHealth != newLife) {
+            this.playerHealth = newLife; // Actualizar la vida
+        }
+    }
+  
+    
     public boolean isInBattle() {
         return inBattle;
     }

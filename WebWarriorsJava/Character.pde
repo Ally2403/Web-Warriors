@@ -13,6 +13,16 @@ public class Character {
   private boolean moveLeft;
   private boolean moveRight;
   
+  private int life;
+  private int blinkCount = 0;  // Contador para controlar el parpadeo
+  private boolean showFirstImage = true; // Estado actual: ¿mostrar img1 o img2?
+  private int blinkDuration = 60; // Duración total del parpadeo en fotogramas
+  private int blinkRate = 10; // Tasa de parpadeo (en fotogramas)
+  private boolean isBlinking = false; // Estado del parpadeo
+  private PImage currentLifeBar; // Barra de vida actual
+  private PImage previousLifeBar; // Barra de vida anterior
+  
+  
   public Character(PApplet app, String folder, int numFrames, float x, float y, float speed) {
       this.gifPlayer = new GifPlayer(app, folder, numFrames, x, y);
       this.speed = speed;
@@ -23,6 +33,115 @@ public class Character {
       this.velocityY = 0;
       this.velocityX = 0;
       this.onGround = false;
+      this.life = 10;
+  }
+  
+  public void updateLifeBar(PApplet app) {
+    if (isBlinking) {
+        handleBlink(app); // Control del parpadeo
+    } else {
+        // Dibujar la barra de vida correspondiente
+        switch (this.life) {
+            case 10:
+                app.image(lifeBar10, 0, 0);
+                break;
+            case 9:
+                app.image(lifeBar9, 0, 0);
+                break;
+            case 8:
+                app.image(lifeBar8, 0, 0);
+                break;
+            case 7:
+                app.image(lifeBar7, 0, 0);
+                break;
+            case 6:
+                app.image(lifeBar6, 0, 0);
+                break;
+            case 5:
+                app.image(lifeBar5, 0, 0);
+                break;
+            case 4:
+                app.image(lifeBar4, 0, 0);
+                break;
+            case 3:
+                app.image(lifeBar3, 0, 0);
+                break;
+            case 2:
+                app.image(lifeBar2, 0, 0);
+                break;
+            case 1:
+                app.image(lifeBar1, 0, 0);
+                break;
+            case 0:
+                app.image(lifeBar0, 0, 0);
+                break;
+          }
+      }
+  }
+  
+  // Método para manejar el parpadeo
+  private void handleBlink(PApplet app) {
+      if (blinkCount < blinkDuration) {
+          if (app.frameCount % blinkRate == 0) {
+              showFirstImage = !showFirstImage; // Alternar entre la barra actual y la anterior
+          }
+          blinkCount++;
+      } else {
+          isBlinking = false; // Detener el parpadeo
+      }
+  
+      // Dibujar la imagen correspondiente
+      if (showFirstImage) {
+          app.image(currentLifeBar, 0, 0);
+      } else {
+          app.image(previousLifeBar, 0, 0);
+      }
+  }
+  
+  // Método para iniciar el parpadeo al cambiar la vida
+  public void setLife(int newLife) {
+      if (this.life != newLife) {
+          // Establecer la barra de vida actual y la anterior
+          previousLifeBar = getLifeBar(this.life); // Barra de vida antes del cambio
+          currentLifeBar = getLifeBar(newLife);   // Barra de vida después del cambio
+  
+          this.life = newLife; // Actualizar la vida
+  
+          // Iniciar el parpadeo
+          blinkCount = 0;
+          isBlinking = true;
+          showFirstImage = true;
+      }
+  }
+
+  // Método auxiliar para obtener la barra de vida según el estado de vida
+  private PImage getLifeBar(int life) {
+      switch (life) {
+          case 10:
+              return lifeBar10;
+          case 9:
+              return lifeBar9;
+          case 8:
+              return lifeBar8;
+          case 7:
+              return lifeBar7;
+          case 6:
+              return lifeBar6;
+          case 5:
+              return lifeBar5;
+          case 4:
+              return lifeBar4;
+          case 3:
+              return lifeBar3;
+          case 2:
+              return lifeBar2;
+          case 1:
+              return lifeBar1;
+          case 0:
+              return lifeBar0;
+          default:
+              return null;
+      }
   }
   
   // Método para controlar el movimiento
@@ -107,6 +226,10 @@ public class Character {
   
   public boolean getMoveRight(){
     return this.moveRight;
+  }
+  
+  public int getLife(){
+    return this.life;
   }
   
   // Setters

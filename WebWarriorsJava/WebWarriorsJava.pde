@@ -2,26 +2,28 @@ import processing.sound.*;
 WebWarriors game;
 PImage backgroundImage;
 PImage character, combate, youWon, youLose, next, textBox;
-Character mainCharacter, enemy1, battleCharacter;
+PImage lifeBar0, lifeBar1, lifeBar2, lifeBar3, lifeBar4, lifeBar5, lifeBar6, lifeBar7, lifeBar8, lifeBar9, lifeBar10;
+Character mainCharacter, enemy1, enemy2, enemy3, battleCharacter;
 GifPlayer gifPlayer;
 boolean showYouWon = false, showYouLose = false;
 int startTime, finishTime;
-float backgroundOffset = 0; // Ancho total de la imagen de principalPage
+float backgroundOffset = 3000; // Ancho total de la imagen de principalPage
 float backgroundWidth = 8000; // Ancho total de la imagen de principalPage
 PFont mouse = null;
 int indexBackground = 1;
 
 boolean booleanBattle1 = false, booleanBattle2 = false, booleanBattle3 = false;
 SimpleList battle1Texts, battle1xPositions, battle1yPositions, comments;
-Battle battle1, battle2;
+Battle battle1, battle2, battle3;
 
 //JUANCHO STUFF
 PImage principalPage, selectYourCharacter, howToPlay, credits, setting, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn, mapa = null;
 int screen = 0, characterVariable = 1;
 boolean oke = false;
-boolean map1 = false, map2 = false, map3 = true;
+boolean map1 = true, map2 = false, map3 = false;
 DoublyList characterSelector;
 
+boolean test = false;
 void setup(){
   mouse = createFont("PressStart2P.ttf", 20);
   size(1500, 720);
@@ -43,6 +45,29 @@ void setup(){
   start = loadImage("Start.png");
   okn = loadImage("Okselect.png");
   mapa = loadImage("Mapa.png");
+  
+  lifeBar0 = loadImage("Z0.png");
+  lifeBar0.resize(350, 40);
+  lifeBar1 = loadImage("Z1.png");
+  lifeBar1.resize(350, 40);
+  lifeBar2 = loadImage("Z2.png");
+  lifeBar2.resize(350, 40);
+  lifeBar3 = loadImage("Z3.png");
+  lifeBar3.resize(350, 40);
+  lifeBar4 = loadImage("Z4.png");
+  lifeBar4.resize(350, 40);
+  lifeBar5 = loadImage("Z5.png");
+  lifeBar5.resize(350, 40);
+  lifeBar6 = loadImage("Z6.png");
+  lifeBar6.resize(350, 40);
+  lifeBar7 = loadImage("Z7.png");
+  lifeBar7.resize(350, 40);
+  lifeBar8 = loadImage("Z8.png");
+  lifeBar8.resize(350, 40);
+  lifeBar9 = loadImage("Z9.png");
+  lifeBar9.resize(350, 40);
+  lifeBar10 = loadImage("Z10.png");
+  lifeBar10.resize(350, 40);
   
   game = new WebWarriors(this);
   game.addSong("music1.mp3");
@@ -146,8 +171,10 @@ void setup(){
   
   mainCharacter = new Character(this, "F", 5, 0, 0, 5);
   
-  battleCharacter = new Character(this, "B", 10, 200, 300, 5);
+  battleCharacter = new Character(this, "B", 10, 200, 250, 5);
   enemy1 = new Character(this, "A", 10, 1000, 0, 5);
+  enemy2 = new Character(this, "N", 10, 1000, 0, 5);
+  enemy3 = new Character(this, "G", 13, 1000, 0, 5);
   
   battle1xPositions = new SimpleList();
   battle1xPositions.addNode(545);
@@ -179,8 +206,9 @@ void setup(){
   comments.addNode("5");
   
   // Crear batallas
-  battle1 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments);
-  battle2 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments); // Puedes personalizar otra batalla
+  battle1 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy1);
+  battle2 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy2); // Puedes personalizar otra batalla
+  battle3 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy3);
   
   // Agregar batallas a WebWarriors
   game.addBattle(battle1);
@@ -220,26 +248,35 @@ void draw(){
     image(mapa, 0, 0, width, height);
     if(map1){
         image(backgroundImage, -backgroundOffset, 0);
+        
         //BATALLAS EN JUEGO
         if (game.isBattleActive()) {
-          game.updateBattle();
-          battleCharacter.display(this);
-          enemy1.display(this);
+          game.updateBattle(mainCharacter.getLife());
+          //battleCharacter.display(this);
+          //enemy1.display(this);
         } else if(showYouWon){
+          //se actualiza la vida después de la batalla
+          mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
             image(youWon, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
+            
           }
         }else if(showYouLose){
+          //se actualiza la vida después de la batalla
+          mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
             image(youLose, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
+            
           }
         }else{
+          mainCharacter.updateLifeBar(this);
+          
           //JUEGO PLATAFORMAS
           mainCharacter.move(this);
           mainCharacter.display(this);
@@ -267,30 +304,48 @@ void draw(){
             game.startBattle();
             booleanBattle1 = true;
           }
+          
+          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 1500 && test == false){
+            print("vida - 1");
+            mainCharacter.setLife(mainCharacter.getLife() - 1);
+            test = true;
+          }
+          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 2000 && test == true){
+            print("vida - 1");
+            mainCharacter.setLife(mainCharacter.getLife() - 1);
+            test = false;
+          }
           text("Press T for next battle", 50, 100);
         }
     }else if(map2){ // mapaaaaaaa
       image(backgroundImage, -backgroundOffset, 0);
       //BATALLAS EN JUEGO
       if (game.isBattleActive()) {
-        game.updateBattle();
+        game.updateBattle(mainCharacter.getLife());
         battleCharacter.display(this);
-        enemy1.display(this);
+        enemy2.display(this);
       } else if(showYouWon){
+        //se actualiza la vida después de la batalla
+        mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
         finishTime = millis() - startTime;
         if (finishTime < 5000) {
           image(youWon, 0, 0); // Muestra la imagen en (100, 100)
         } else {
           showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
+          
         }
       }else if(showYouLose){
+        //se actualiza la vida después de la batalla
+        mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
         finishTime = millis() - startTime;
         if (finishTime < 5000) {
           image(youLose, 0, 0); // Muestra la imagen en (100, 100)
         } else {
           showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
+          
         }
       }else{
+        mainCharacter.updateLifeBar(this);
         //JUEGO PLATAFORMAS
         mainCharacter.move(this);
         mainCharacter.display(this);
@@ -323,24 +378,31 @@ void draw(){
       image(backgroundImage, -backgroundOffset, 0);
         //BATALLAS EN JUEGO
         if (game.isBattleActive()) {
-          game.updateBattle();
+          game.updateBattle(mainCharacter.getLife());
           battleCharacter.display(this);
-          enemy1.display(this);
+          enemy3.display(this);
         } else if(showYouWon){
+          //se actualiza la vida después de la batalla
+          mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
             image(youWon, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
+            
           }
         }else if(showYouLose){
+          //se actualiza la vida después de la batalla
+          mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
             image(youLose, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
+            
           }
         }else{
+          mainCharacter.updateLifeBar(this);
           //JUEGO PLATAFORMAS
           mainCharacter.move(this);
           mainCharacter.display(this);
