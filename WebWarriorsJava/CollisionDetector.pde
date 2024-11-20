@@ -1,11 +1,13 @@
 public static class CollisionDetector {
   
-  public static boolean isColliding(Character character, SimpleList platforms, float backgroundOffset) {
+  public static boolean isColliding(int index, Character character, SimpleList platforms, float backgroundOffset) {
     Node current = platforms.PTR;
     while (current != null) {
       Platform platform = (Platform) current.info;
-      if (isCollidingWithPlatform(character, platform, backgroundOffset)) {
-        return true;
+      if(platform.getIndex() == index){
+          if (isCollidingWithPlatform(character, platform, backgroundOffset)) {
+            return true;
+          }
       }
       current = current.next;
     }

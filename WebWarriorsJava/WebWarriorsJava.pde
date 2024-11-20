@@ -1,13 +1,13 @@
 import processing.sound.*;
 WebWarriors game;
-PImage backgroundImage;
+PImage backgroundImage1, backgroundImage2, backgroundImage3;
 PImage character, combate, youWon, youLose, next, textBox;
 PImage lifeBar0, lifeBar1, lifeBar2, lifeBar3, lifeBar4, lifeBar5, lifeBar6, lifeBar7, lifeBar8, lifeBar9, lifeBar10;
 Character mainCharacter, enemy1, enemy2, enemy3, battleCharacter;
 GifPlayer gifPlayer;
 boolean showYouWon = false, showYouLose = false;
 int startTime, finishTime;
-float backgroundOffset = 3000; // Ancho total de la imagen de principalPage
+float backgroundOffset = 0; // Ancho total de la imagen de principalPage
 float backgroundWidth = 8000; // Ancho total de la imagen de principalPage
 PFont mouse = null;
 int indexBackground = 1;
@@ -20,9 +20,11 @@ Battle battle1, battle2, battle3;
 PImage principalPage, selectYourCharacter, howToPlay, credits, setting, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn, mapa = null;
 int screen = 0, characterVariable = 1;
 boolean oke = false;
-boolean map1 = true, map2 = false, map3 = false;
+boolean map1 = false, map2 = false, map3 = false;
+boolean levelLocked2 = true, levelLocked3 = true;
 DoublyList characterSelector;
 
+Timer timer;
 boolean test = false;
 void setup(){
   mouse = createFont("PressStart2P.ttf", 20);
@@ -74,100 +76,91 @@ void setup(){
   game.addSong("music2.mp3");
   
   //Plataformas
-  if(map1){
-    indexBackground = 1;
-    
-    // MAPA 1
-    game.addPlatform(new Platform(0, 625, 465, 15));
-    game.addPlatform(new Platform(465, 560, 168, 15));
-    game.addPlatform(new Platform(633, 484, 353, 15));
-    game.addPlatform(new Platform(986, 562, 166, 15));
-    game.addPlatform(new Platform(1154, 625, 1713, 15));
-    game.addPlatform(new Platform(1740, 500, 350, 15));
-    game.addPlatform(new Platform(2195, 370, 350, 15));
-    game.addPlatform(new Platform(2867, 565, 125, 15));
-    game.addPlatform(new Platform(2993, 492, 688, 55));
-    game.addPlatform(new Platform(3680, 630, 220, 15));
-    game.addPlatform(new Platform(3900, 545, 352, 15));
-    game.addPlatform(new Platform(4252, 630, 910, 15));
-    game.addPlatform(new Platform(5162, 580, 168, 15));
-    game.addPlatform(new Platform(5332, 500, 355, 15));
-    game.addPlatform(new Platform(5685, 575, 166, 15));
-    game.addPlatform(new Platform(5852, 627, 1240, 15));
-    game.addPlatform(new Platform(6074, 472, 352, 15));
-    game.addPlatform(new Platform(6527, 355, 352, 15));
-    game.addPlatform(new Platform(7096, 560, 126, 15));
-    game.addPlatform(new Platform(7223, 488, 688, 55));
-  }else{
-    if(map2){
-      indexBackground = 2;
-      
-      // MAPA 2
-      game.addPlatform(new Platform(0, 625, 3123, 15));
-      game.addPlatform(new Platform(3123, 590, 167, 15));
-      game.addPlatform(new Platform(3292, 515, 353, 15));
-      game.addPlatform(new Platform(3644, 590, 165, 15));
-      game.addPlatform(new Platform(3811, 625, 2441, 15));
-      game.addPlatform(new Platform(6252, 550, 127, 15));
-      game.addPlatform(new Platform(6378, 475, 688, 15));
-      game.addPlatform(new Platform(7065, 625, 935, 15));
-      game.addPlatform(new Platform(179, 512, 350, 15));
-      game.addPlatform(new Platform(573, 390, 182, 15));
-      game.addPlatform(new Platform(837, 290, 182, 15));
-      game.addPlatform(new Platform(1049, 465, 182, 15));
-      game.addPlatform(new Platform(1306, 365, 182, 15));
-      game.addPlatform(new Platform(1560, 230, 182, 15));
-      game.addPlatform(new Platform(1744, 445, 182, 15));
-      game.addPlatform(new Platform(1825, 170, 182, 15));
-      game.addPlatform(new Platform(2060, 445, 182, 15));
-      game.addPlatform(new Platform(4095, 465, 182, 15));
-      game.addPlatform(new Platform(4385, 350, 182, 15));
-      game.addPlatform(new Platform(4632, 435, 182, 15));
-      game.addPlatform(new Platform(4875, 285, 182, 15));
-      game.addPlatform(new Platform(5130, 165, 182, 15));
-      game.addPlatform(new Platform(5340, 490, 182, 15));
-      game.addPlatform(new Platform(5554, 330, 182, 15));
-      game.addPlatform(new Platform(5808, 210, 182, 15));
-    }else{
-      if(map3){
-        indexBackground = 3;
+  
+  // MAPA 1
+  game.addPlatform(new Platform(1, 0, 625, 465, 15));
+  game.addPlatform(new Platform(1, 465, 560, 168, 15));
+  game.addPlatform(new Platform(1, 633, 484, 353, 15));
+  game.addPlatform(new Platform(1, 986, 562, 166, 15));
+  game.addPlatform(new Platform(1, 1154, 625, 1713, 15));
+  game.addPlatform(new Platform(1, 1740, 500, 350, 15));
+  game.addPlatform(new Platform(1, 2195, 370, 350, 15));
+  game.addPlatform(new Platform(1, 2867, 565, 125, 15));
+  game.addPlatform(new Platform(1, 2993, 492, 688, 55));
+  game.addPlatform(new Platform(1, 3680, 630, 220, 15));
+  game.addPlatform(new Platform(1, 3900, 545, 352, 15));
+  game.addPlatform(new Platform(1, 4252, 630, 910, 15));
+  game.addPlatform(new Platform(1, 5162, 580, 168, 15));
+  game.addPlatform(new Platform(1, 5332, 500, 355, 15));
+  game.addPlatform(new Platform(1, 5685, 575, 166, 15));
+  game.addPlatform(new Platform(1, 5852, 627, 1240, 15));
+  game.addPlatform(new Platform(1, 6074, 472, 352, 15));
+  game.addPlatform(new Platform(1, 6527, 355, 352, 15));
+  game.addPlatform(new Platform(1, 7096, 560, 126, 15));
+  game.addPlatform(new Platform(1, 7223, 488, 688, 55));
+ 
+  // MAPA 2
+  game.addPlatform(new Platform(2, 0, 625, 3123, 15));
+  game.addPlatform(new Platform(2, 3123, 590, 167, 15));
+  game.addPlatform(new Platform(2, 3292, 515, 353, 15));
+  game.addPlatform(new Platform(2, 3644, 590, 165, 15));
+  game.addPlatform(new Platform(2, 3811, 625, 2441, 15));
+  game.addPlatform(new Platform(2, 6252, 550, 127, 15));
+  game.addPlatform(new Platform(2, 6378, 475, 688, 15));
+  game.addPlatform(new Platform(2, 7065, 625, 935, 15));
+  game.addPlatform(new Platform(2, 179, 512, 350, 15));
+  game.addPlatform(new Platform(2, 573, 390, 182, 15));
+  game.addPlatform(new Platform(2, 837, 290, 182, 15));
+  game.addPlatform(new Platform(2, 1049, 465, 182, 15));
+  game.addPlatform(new Platform(2, 1306, 365, 182, 15));
+  game.addPlatform(new Platform(2, 1560, 230, 182, 15));
+  game.addPlatform(new Platform(2, 1744, 445, 182, 15));
+  game.addPlatform(new Platform(2, 1825, 170, 182, 15));
+  game.addPlatform(new Platform(2, 2060, 445, 182, 15));
+  game.addPlatform(new Platform(2, 4095, 465, 182, 15));
+  game.addPlatform(new Platform(2, 4385, 350, 182, 15));
+  game.addPlatform(new Platform(2, 4632, 435, 182, 15));
+  game.addPlatform(new Platform(2, 4875, 285, 182, 15));
+  game.addPlatform(new Platform(2, 5130, 165, 182, 15));
+  game.addPlatform(new Platform(2, 5340, 490, 182, 15));
+  game.addPlatform(new Platform(2, 5554, 330, 182, 15));
+  game.addPlatform(new Platform(2, 5808, 210, 182, 15));
         
-        // MAPA 3
-        game.addPlatform(new Platform(0, 625, 380, 15));
-        game.addPlatform(new Platform(380, 565, 170, 15));
-        game.addPlatform(new Platform(550, 490, 353, 15));
-        game.addPlatform(new Platform(905, 570, 165, 15));
-        game.addPlatform(new Platform(1070, 625, 334, 15));
-        game.addPlatform(new Platform(1427, 500, 47, 15));
-        game.addPlatform(new Platform(1560, 405, 47, 15));
-        game.addPlatform(new Platform(1692, 380, 47, 15));
-        game.addPlatform(new Platform(1803, 470, 47, 15));
-        game.addPlatform(new Platform(1923, 385, 47, 15));
-        game.addPlatform(new Platform(2030, 510, 47, 15));
-        game.addPlatform(new Platform(2162, 510, 47, 15));
-        game.addPlatform(new Platform(2278, 430, 47, 15));
-        game.addPlatform(new Platform(2409, 380, 47, 15));
-        game.addPlatform(new Platform(2540, 450, 47, 15));
-        game.addPlatform(new Platform(2666, 525, 47, 15));
-        game.addPlatform(new Platform(2781, 615, 47, 15));
-        game.addPlatform(new Platform(2914, 615, 47, 15));
-        game.addPlatform(new Platform(3045, 615, 47, 15));
-        game.addPlatform(new Platform(3140, 530, 47, 15));
-        game.addPlatform(new Platform(3262, 450, 47, 15));
-        game.addPlatform(new Platform(3393, 375, 47, 15));
-        game.addPlatform(new Platform(3527, 445, 382, 15));
-        game.addPlatform(new Platform(4022, 445, 47, 15));
-        game.addPlatform(new Platform(4166, 530, 47, 15));
-        game.addPlatform(new Platform(4271, 435, 47, 15));
-        game.addPlatform(new Platform(4402, 365, 47, 15));
-        game.addPlatform(new Platform(4566, 450, 47, 15));
-        game.addPlatform(new Platform(4772, 625, 1552, 15));
-        game.addPlatform(new Platform(5272, 460, 352, 15));
-      }
-    }
-  }
+  // MAPA 3
+  game.addPlatform(new Platform(3, 0, 625, 380, 15));
+  game.addPlatform(new Platform(3, 380, 565, 170, 15));
+  game.addPlatform(new Platform(3, 550, 490, 353, 15));
+  game.addPlatform(new Platform(3, 905, 570, 165, 15));
+  game.addPlatform(new Platform(3, 1070, 625, 334, 15));
+  game.addPlatform(new Platform(3, 1427, 500, 47, 15));
+  game.addPlatform(new Platform(3, 1560, 405, 47, 15));
+  game.addPlatform(new Platform(3, 1692, 380, 47, 15));
+  game.addPlatform(new Platform(3, 1803, 470, 47, 15));
+  game.addPlatform(new Platform(3, 1923, 385, 47, 15));
+  game.addPlatform(new Platform(3, 2030, 510, 47, 15));
+  game.addPlatform(new Platform(3, 2162, 510, 47, 15));
+  game.addPlatform(new Platform(3, 2278, 430, 47, 15));
+  game.addPlatform(new Platform(3, 2409, 380, 47, 15));
+  game.addPlatform(new Platform(3, 2540, 450, 47, 15));
+  game.addPlatform(new Platform(3, 2666, 525, 47, 15));
+  game.addPlatform(new Platform(3, 2781, 615, 47, 15));
+  game.addPlatform(new Platform(3, 2914, 615, 47, 15));
+  game.addPlatform(new Platform(3, 3045, 615, 47, 15));
+  game.addPlatform(new Platform(3, 3140, 530, 47, 15));
+  game.addPlatform(new Platform(3, 3262, 450, 47, 15));
+  game.addPlatform(new Platform(3, 3393, 375, 47, 15));
+  game.addPlatform(new Platform(3, 3527, 445, 382, 15));
+  game.addPlatform(new Platform(3, 4022, 445, 47, 15));
+  game.addPlatform(new Platform(3, 4166, 530, 47, 15));
+  game.addPlatform(new Platform(3, 4271, 435, 47, 15));
+  game.addPlatform(new Platform(3, 4402, 365, 47, 15));
+  game.addPlatform(new Platform(3, 4566, 450, 47, 15));
+  game.addPlatform(new Platform(3, 4772, 625, 1552, 15));
+  game.addPlatform(new Platform(3, 5272, 460, 352, 15));
       
-  backgroundImage = loadImage("FONDO MAPA VIDEOJUEGO "+ indexBackground +".png");
+  backgroundImage1 = loadImage("FONDO MAPA VIDEOJUEGO "+ 1 +".png");
+  backgroundImage2 = loadImage("FONDO MAPA VIDEOJUEGO "+ 2 +".png");
+  backgroundImage3 = loadImage("FONDO MAPA VIDEOJUEGO "+ 3 +".png");
   
   mainCharacter = new Character(this, "F", 5, 0, 0, 5);
   
@@ -221,6 +214,7 @@ void setup(){
   characterSelector.addNode(loadImage("SelPersonaje4.png"));
   characterSelector.addNode(loadImage("SelPersonaje5.png"));
   
+  timer = new Timer();
 }
 
 void draw(){
@@ -247,13 +241,12 @@ void draw(){
   } else if (screen == 5) {
     image(mapa, 0, 0, width, height);
     if(map1){
-        image(backgroundImage, -backgroundOffset, 0);
+        image(backgroundImage1, -backgroundOffset, 0);
         
         //BATALLAS EN JUEGO
         if (game.isBattleActive()) {
+          timer.pause();
           game.updateBattle(mainCharacter.getLife());
-          //battleCharacter.display(this);
-          //enemy1.display(this);
         } else if(showYouWon){
           //se actualiza la vida después de la batalla
           mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
@@ -262,7 +255,7 @@ void draw(){
             image(youWon, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
-            
+            timer.resume();
           }
         }else if(showYouLose){
           //se actualiza la vida después de la batalla
@@ -278,20 +271,22 @@ void draw(){
           mainCharacter.updateLifeBar(this);
           
           //JUEGO PLATAFORMAS
-          mainCharacter.move(this);
+          mainCharacter.move(this, 1);
           mainCharacter.display(this);
           moveBackground();
-          
+          timer.time();
           // Mostrar plataformas
           Node platformNode = game.getPlatforms().PTR;
           while (platformNode != null) {
             Platform platform = (Platform) platformNode.info;
-            platform.display(this);
+            if(platform.getIndex() == 1){
+                platform.display(this);
+            }
             platformNode = platformNode.next;
           }
           
           // Verificar colisión con plataformas
-          if (CollisionDetector.isColliding(mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
+          if (CollisionDetector.isColliding(1, mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
             mainCharacter.setOnGround(true);
           } else {
             mainCharacter.setOnGround(false);
@@ -310,57 +305,57 @@ void draw(){
             mainCharacter.setLife(mainCharacter.getLife() - 1);
             test = true;
           }
-          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 2000 && test == true){
-            print("vida - 1");
-            mainCharacter.setLife(mainCharacter.getLife() - 1);
-            test = false;
+          //verificar que se haya terminado el nivel para pasar al selector de niveles nuevamente
+          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 2000){
+            map1 = false;
+            levelLocked2 = false;
           }
-          text("Press T for next battle", 50, 100);
         }
-    }else if(map2){ // mapaaaaaaa
-      image(backgroundImage, -backgroundOffset, 0);
+    }else if(map2 && !levelLocked2){ // mapaaaaaaa
+      image(backgroundImage2, -backgroundOffset, 0);
       //BATALLAS EN JUEGO
-      if (game.isBattleActive()) {
-        game.updateBattle(mainCharacter.getLife());
-        battleCharacter.display(this);
-        enemy2.display(this);
-      } else if(showYouWon){
-        //se actualiza la vida después de la batalla
-        mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
-        finishTime = millis() - startTime;
-        if (finishTime < 5000) {
-          image(youWon, 0, 0); // Muestra la imagen en (100, 100)
-        } else {
-          showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
-          
-        }
-      }else if(showYouLose){
-        //se actualiza la vida después de la batalla
-        mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
-        finishTime = millis() - startTime;
-        if (finishTime < 5000) {
-          image(youLose, 0, 0); // Muestra la imagen en (100, 100)
-        } else {
-          showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
-          
-        }
+        if (game.isBattleActive()) {
+          timer.pause();
+          game.updateBattle(mainCharacter.getLife());
+        } else if(showYouWon){
+          //se actualiza la vida después de la batalla
+          mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
+          finishTime = millis() - startTime;
+          if (finishTime < 5000) {
+            image(youWon, 0, 0); // Muestra la imagen en (100, 100)
+          } else {
+            showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
+            timer.resume();
+          }
+        }else if(showYouLose){
+          //se actualiza la vida después de la batalla
+          mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
+          finishTime = millis() - startTime;
+          if (finishTime < 5000) {
+            image(youLose, 0, 0); // Muestra la imagen en (100, 100)
+          } else {
+            showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
+            
+          }
       }else{
         mainCharacter.updateLifeBar(this);
         //JUEGO PLATAFORMAS
-        mainCharacter.move(this);
+        mainCharacter.move(this, 2);
         mainCharacter.display(this);
         moveBackground();
-        
+        timer.time();
         // Mostrar plataformas
         Node platformNode = game.getPlatforms().PTR;
         while (platformNode != null) {
           Platform platform = (Platform) platformNode.info;
-          platform.display(this);
+          if(platform.getIndex() == 2){
+              platform.display(this);
+          }
           platformNode = platformNode.next;
         }
         
         // Verificar colisión con plataformas
-        if (CollisionDetector.isColliding(mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
+        if (CollisionDetector.isColliding(2, mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
           mainCharacter.setOnGround(true);
         } else {
           mainCharacter.setOnGround(false);
@@ -372,15 +367,13 @@ void draw(){
           game.nextBattle();
           booleanBattle2 = true;
         }
-        text("Press T for next battle", 50, 100);
       }
     }else if(map3){
-      image(backgroundImage, -backgroundOffset, 0);
+      image(backgroundImage3, -backgroundOffset, 0);
         //BATALLAS EN JUEGO
         if (game.isBattleActive()) {
+          timer.pause();
           game.updateBattle(mainCharacter.getLife());
-          battleCharacter.display(this);
-          enemy3.display(this);
         } else if(showYouWon){
           //se actualiza la vida después de la batalla
           mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
@@ -389,7 +382,7 @@ void draw(){
             image(youWon, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
-            
+            timer.resume();
           }
         }else if(showYouLose){
           //se actualiza la vida después de la batalla
@@ -404,20 +397,22 @@ void draw(){
         }else{
           mainCharacter.updateLifeBar(this);
           //JUEGO PLATAFORMAS
-          mainCharacter.move(this);
+          mainCharacter.move(this, 3);
           mainCharacter.display(this);
           moveBackground();
-          
+          timer.time();
           // Mostrar plataformas
           Node platformNode = game.getPlatforms().PTR;
           while (platformNode != null) {
             Platform platform = (Platform) platformNode.info;
-            platform.display(this);
+            if(platform.getIndex() == 3){
+                platform.display(this);
+            }
             platformNode = platformNode.next;
           }
           
           // Verificar colisión con plataformas
-          if (CollisionDetector.isColliding(mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
+          if (CollisionDetector.isColliding(3, mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
             mainCharacter.setOnGround(true);
           } else {
             mainCharacter.setOnGround(false);
@@ -429,7 +424,6 @@ void draw(){
             game.nextBattle();
             booleanBattle3 = true;
           }
-          text("Press T for next battle", 50, 100);
         }
     }
   }
@@ -463,6 +457,7 @@ void mousePressed() {
       screen = 0;
     } else if (mouseX > 694 && mouseX <792 && mouseY >600 && mouseY <650) {
       screen = 5;
+      timer.start();
     }
   } else if(screen == 5 && !game.isBattleActive()){
       if(mouseX>290 && mouseX<378 && mouseY>509 && mouseY<556){
@@ -470,13 +465,21 @@ void mousePressed() {
         map2 = false;
         map3 = false;
       }else if(mouseX>1141 && mouseX<1245 && mouseY>637 && mouseY<692){
-        map1 = false;
-        map2 = true;
-        map3 = false;
+        if(levelLocked2){
+          
+        }else{
+          map1 = false;
+          map2 = true;
+          map3 = false;
+        }
       }else if(mouseX>718 && mouseX<839 && mouseY>623 && mouseY<688){
-        map1 = false;
-        map2 = false;
-        map3 = true;
+        if(levelLocked3){
+          
+        }else{
+          map1 = false;
+          map2 = false;
+          map3 = true;
+        }
       }
   } else if (screen == 2 || screen == 3 || screen == 4) {
     if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49) {

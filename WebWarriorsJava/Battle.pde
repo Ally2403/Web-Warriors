@@ -17,6 +17,7 @@ public class Battle {
     private int round; // Contador de rondas
     private String damageMessage; // Mensaje de daño que se muestra al jugador
     private String enemyDamageMessage; // Mensaje de daño del enemigo
+    private int endBattleStartTime = 0;
 
     // Daño que los botones causan en cada ronda
     private int[][] damageMatrix = {
@@ -24,7 +25,8 @@ public class Battle {
         {1, 4, 3, 2}, // Daños para ronda 2
         {3, 2, 1, 4}, // Daños para ronda 3
         {4, 0, 2, 3}, // Daños para ronda 4
-        {2, 3, 1, 0}  // Daños para ronda 5
+        {2, 3, 1, 0}, // Daños para ronda 5
+        {3, 4, 2, 0}  // Daños para ronda 6
     };
     
     private int currentCommentIndex; // Índice del comentario actual
@@ -109,7 +111,7 @@ public class Battle {
 
             // Reducir la salud del enemigo
             enemyHealth -= damage;
-
+            battleCharacter.vibrate();
             // Mensaje de daño
             damageMessage = "You chose action " + selectedAction + " and dealt " + damage + " damage to the enemy!";
             enemyDamageMessage = "";
@@ -137,7 +139,7 @@ public class Battle {
           selectedAction = 0; // Resetear la acción seleccionada
           round++; // Incrementar la ronda
           damageMessage = "";
-          
+          enemy.vibrate();
           // Cambiar al siguiente comentario cuando cambia de ronda
           currentCommentIndex = (currentCommentIndex + 1) % comments.size();
           letterCount = 0;  // Reinicia el conteo de letras para el nuevo mensaje

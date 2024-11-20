@@ -1,5 +1,6 @@
 public class Character {
   private GifPlayer gifPlayer;  // Instancia de GifPlayer para la animación
+  private PApplet app;
   private float speed;  // Velocidad de movimiento
   private float velocityY;
   private float velocityX; // Nueva variable para la velocidad en X
@@ -22,8 +23,15 @@ public class Character {
   private PImage currentLifeBar; // Barra de vida actual
   private PImage previousLifeBar; // Barra de vida anterior
   
+  private boolean isVibrating = false; // Estado de la vibración
+  private float vibrationAmplitude = 15; // Amplitud del movimiento
+  private float vibrationDuration = 0.5f; // Duración total de la vibración en segundos
+  private float vibrationElapsedTime = 0; // Tiempo acumulado de vibración
+  private float vibrationFrequency = 4; // Frecuencia de vibración (ciclos por segundo)
+  private float originalX; // Posición X inicial para restaurar después de la vibración
   
   public Character(PApplet app, String folder, int numFrames, float x, float y, float speed) {
+      this.app = app;
       this.gifPlayer = new GifPlayer(app, folder, numFrames, x, y);
       this.speed = speed;
       this.moveUp = false;
@@ -34,6 +42,101 @@ public class Character {
       this.velocityX = 0;
       this.onGround = false;
       this.life = 10;
+  }
+
+  // Método para iniciar la vibración
+  public void vibrate() {
+      if (!isVibrating) {
+          isVibrating = true;
+          vibrationElapsedTime = 0; // Reiniciar el tiempo acumulado
+          originalX = gifPlayer.getX(); // Guardar la posición original
+      }
+  }
+  
+  // Método para actualizar la vibración (llamar dentro de `move` o `display`)
+  private void updateVibration(PApplet app) {
+      if (isVibrating) {
+          // Incrementa el tiempo acumulado
+          vibrationElapsedTime += 1.0 / app.frameRate;
+  
+          // Calcula el desplazamiento sinusoidal
+          float offsetX = (float) Math.sin(vibrationElapsedTime * vibrationFrequency * PConstants.TWO_PI) * vibrationAmplitude;
+  
+          // Ajusta la posición temporal del personaje
+          gifPlayer.setX(originalX + offsetX);
+  
+          // Detén la vibración al finalizar la duración
+          if (vibrationElapsedTime >= vibrationDuration) {
+              gifPlayer.setX(originalX); // Restaurar la posición original
+              isVibrating = false;
+          }
+      }
+  }
+  
+  // Método para controlar el movimiento
+  public void move(PApplet app, int index) {
+      if (moveLeft) {
+        velocityX = -speed; // Movimiento hacia la izquierda
+      } else if (moveRight) {
+          velocityX = speed; // Movimiento hacia la derecha
+      } else {
+          velocityX = 0; // Detener el movimiento horizontal
+      }
+      
+      gifPlayer.setX(gifPlayer.getX() + velocityX); // Aplica el movimiento en el eje X
+      
+      // Gravedad
+      if (!onGround) {
+        velocityY += gravity;  // La gravedad va aumentando la velocidad hacia abajo
+        gifPlayer.setY(gifPlayer.getY() + velocityY);  // Mueve al character hacia abajo
+      } else {
+        velocityY = 0;  // Resetea la velocidad Y cuando está en el suelo
+      }
+      
+      if (CollisionDetector.isColliding(index, mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
+        //gifPlayer.setY(600);  // No deja que el character pase por debajo del suelo
+        onGround = true;
+      } else {
+        onGround = false;
+      }
+      
+      // Detener el character por colisión lateral
+      for (Node node = game.getPlatforms().PTR; node != null; node = node.next) {
+        Platform platform = (Platform) node.info;
+        if(platform.getIndex() == index){
+            CollisionDetector.handleSideCollision(this, platform, backgroundOffset);
+        }
+      }
+      
+      // Salto
+      if (moveUp && onGround) {
+        velocityY = jumpStrength;
+        onGround = false;  
+      }
+      
+      constrainBorders(app);
+  }
+  
+  // Método para mostrar el GIF en la screen
+  public void display(PApplet app) {
+    updateVibration(app); // Actualizar la vibración si está activa
+    gifPlayer.display(app); // Mostrar el GIF del personaje
+  }
+  
+  public void constrainBorders(PApplet app){
+    // Limitar la posición del character a los límites de la screen
+        if (gifPlayer.getX() < 0) {
+            gifPlayer.setX(0);
+        }
+        if (gifPlayer.getX() + gifPlayer.getWidth() > app.width) {
+            gifPlayer.setX(app.width - gifPlayer.getWidth());
+        }
+        if (gifPlayer.getY() < 0) {
+            gifPlayer.setY(0);
+        }
+        if (gifPlayer.getY() + gifPlayer.getHeight() > app.height) {
+            gifPlayer.setY(app.height - gifPlayer.getHeight());
+        }
   }
   
   public void updateLifeBar(PApplet app) {
@@ -142,69 +245,6 @@ public class Character {
           default:
               return null;
       }
-  }
-  
-  // Método para controlar el movimiento
-  public void move(PApplet app) {
-      if (moveLeft) {
-        velocityX = -speed; // Movimiento hacia la izquierda
-      } else if (moveRight) {
-          velocityX = speed; // Movimiento hacia la derecha
-      } else {
-          velocityX = 0; // Detener el movimiento horizontal
-      }
-      
-      gifPlayer.setX(gifPlayer.getX() + velocityX); // Aplica el movimiento en el eje X
-      
-      // Gravedad
-      if (!onGround) {
-        velocityY += gravity;  // La gravedad va aumentando la velocidad hacia abajo
-        gifPlayer.setY(gifPlayer.getY() + velocityY);  // Mueve al character hacia abajo
-      } else {
-        velocityY = 0;  // Resetea la velocidad Y cuando está en el suelo
-      }
-      
-      if (CollisionDetector.isColliding(mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
-        //gifPlayer.setY(600);  // No deja que el character pase por debajo del suelo
-        onGround = true;
-      } else {
-        onGround = false;
-      }
-      
-      // Detener el character por colisión lateral
-      for (Node node = game.getPlatforms().PTR; node != null; node = node.next) {
-        Platform platform = (Platform) node.info;
-        CollisionDetector.handleSideCollision(this, platform, backgroundOffset);
-      }
-      
-      // Salto
-      if (moveUp && onGround) {
-        velocityY = jumpStrength;
-        onGround = false;  
-      }
-      
-      constrainBorders(app);
-  }
-  
-  // Método para mostrar el GIF en la screen
-  public void display(PApplet app) {
-      gifPlayer.display(app);
-  }
-  
-  public void constrainBorders(PApplet app){
-    // Limitar la posición del character a los límites de la screen
-        if (gifPlayer.getX() < 0) {
-            gifPlayer.setX(0);
-        }
-        if (gifPlayer.getX() + gifPlayer.getWidth() > app.width) {
-            gifPlayer.setX(app.width - gifPlayer.getWidth());
-        }
-        if (gifPlayer.getY() < 0) {
-            gifPlayer.setY(0);
-        }
-        if (gifPlayer.getY() + gifPlayer.getHeight() > app.height) {
-            gifPlayer.setY(app.height - gifPlayer.getHeight());
-        }
   }
   
   // Getters
