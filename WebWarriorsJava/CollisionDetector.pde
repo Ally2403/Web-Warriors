@@ -68,4 +68,35 @@ public static class CollisionDetector {
       }
     }
   }
+  
+  public static boolean isCollidingWithSpikes(int index, Character character, SimpleList spikes, float backgroundOffset) {
+    Node current = spikes.PTR;
+    while (current != null) {
+      Spike spike = (Spike) current.info;
+      // Coordenadas del personaje
+      float characterX = character.gifPlayer.getX();
+      float characterY = character.gifPlayer.getY();
+      float characterWidth = character.gifPlayer.getWidth();
+      float characterHeight = character.gifPlayer.getHeight();
+
+      // Coordenadas del spike, ajustadas al offset del fondo
+      float spikeX = spike.getX() - backgroundOffset;
+      float spikeY = spike.getY();
+      float spikeWidth = spike.getWidth();
+      float spikeHeight = spike.getHeight();
+
+      // Verificar colisión por coordenadas
+      boolean collisionX = characterX < spikeX + spikeWidth && characterX + characterWidth > spikeX;
+      boolean collisionY = characterY < spikeY + spikeHeight && characterY + characterHeight > spikeY;
+
+      if (collisionX && collisionY && spike.getIndex() == index) {
+          return true; // Colision
+      }
+
+      current = current.next; 
+    }
+    return false; // No hay colisión
+
+  }  
+
 }

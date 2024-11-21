@@ -8,6 +8,15 @@ public class Character {
   private final float gravity = 0.5; // Fuerza de la gravedad
   private final float jumpStrength = -12; // Fuerza del salto
 
+  private boolean isInvulnerable; 
+  private int invulnerabilityTimer; 
+  private final int invulnerabilityDuration = 100; 
+  private int blinkTimer; 
+  
+  private boolean isJumping; 
+  private int jumpTime; 
+  private final int maxJumpTime = 9; 
+  
   // Variables de movimiento
   private boolean moveUp;
   private boolean moveDown;
@@ -30,9 +39,9 @@ public class Character {
   private float vibrationFrequency = 3; // Frecuencia de vibración (ciclos por segundo)
   private float originalX; // Posición X inicial para restaurar después de la vibración
   
-  public Character(PApplet app, String folder, int numFrames, float x, float y, float speed) {
+  public Character(PApplet app, String folder, int numFrames, float x, float y, float speed, float width, float height) {
       this.app = app;
-      this.gifPlayer = new GifPlayer(app, folder, numFrames, x, y);
+      this.gifPlayer = new GifPlayer(app, folder, numFrames, x, y, width,height);
       this.speed = speed;
       this.moveUp = false;
       this.moveDown = false;
@@ -41,6 +50,9 @@ public class Character {
       this.velocityY = 0;
       this.velocityX = 0;
       this.onGround = false;
+      this.isInvulnerable = false;
+      this.invulnerabilityTimer = 0;
+      this.blinkTimer = 0;
       this.life = 10;
   }
 
@@ -73,6 +85,20 @@ public class Character {
       }
   }
   
+  //INVULNERABILIDAD
+  public void updateInvulnerability() {
+    if (isInvulnerable) {
+      invulnerabilityTimer++;
+      blinkTimer++;
+
+      // Finalizar el periodo de inmunidad
+      if (invulnerabilityTimer > invulnerabilityDuration) {
+          isInvulnerable = false;
+          invulnerabilityTimer = 0;
+      }
+    }
+  }
+  
   // Método para controlar el movimiento
   public void move(PApplet app, int index) {
       if (moveLeft) {
@@ -93,12 +119,39 @@ public class Character {
         velocityY = 0;  // Resetea la velocidad Y cuando está en el suelo
       }
       
+      // Salto variable
+      if (moveUp && onGround && !isJumping) {
+        velocityY = jumpStrength; 
+        isJumping = true; 
+        jumpTime = 0; 
+        onGround = false;  
+      } else if (moveUp && isJumping && jumpTime < maxJumpTime) {
+        velocityY -= gravity; // Reduce la velocidad hacia abajo mientras mantienes el salto
+        jumpTime++; 
+      }
+      
+      if (!moveUp && isJumping) {
+        isJumping = false; // Finaliza el salto si se suelta la tecla
+      }
+      
+      // PLATAFORMAS
       if (CollisionDetector.isColliding(index, mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
-        //gifPlayer.setY(600);  // No deja que el character pase por debajo del suelo
         onGround = true;
+        isJumping = false;
       } else {
         onGround = false;
       }
+      
+      // PINCHOS
+      if(!isInvulnerable){
+        if (CollisionDetector.isCollidingWithSpikes(index, mainCharacter, (SimpleList)game.getSpikes(), backgroundOffset)) {
+          mainCharacter.setLife(mainCharacter.getLife() - 1);
+          velocityY = -20;
+          isInvulnerable = true;
+          blinkTimer = 0;
+        }
+      }
+      updateInvulnerability(); // Actualizar estado de inmunidad
       
       // Detener el character por colisión lateral
       for (Node node = game.getPlatforms().PTR; node != null; node = node.next) {
@@ -120,16 +173,20 @@ public class Character {
   // Método para mostrar el GIF en la screen
   public void display(PApplet app) {
     updateVibration(app); // Actualizar la vibración si está activa
+    if (isInvulnerable && (blinkTimer / 5) % 2 == 0) {
+        // Parpadeo: no mostrar el personaje
+        return;
+    }
     gifPlayer.display(app); // Mostrar el GIF del personaje
   }
   
   public void constrainBorders(PApplet app){
     // Limitar la posición del character a los límites de la screen
-        if (gifPlayer.getX() < 0) {
-            gifPlayer.setX(0);
+        if (gifPlayer.getX() < 340) {
+            gifPlayer.setX(340);
         }
-        if (gifPlayer.getX() + gifPlayer.getWidth() > app.width) {
-            gifPlayer.setX(app.width - gifPlayer.getWidth());
+        if (gifPlayer.getX() + gifPlayer.getWidth() > app.width - 450) {
+            gifPlayer.setX(app.width - gifPlayer.getWidth() - 450);
         }
         if (gifPlayer.getY() < 0) {
             gifPlayer.setY(0);

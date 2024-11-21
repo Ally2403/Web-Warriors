@@ -7,6 +7,7 @@ public class WebWarriors {
   private PApplet app;
   private List platforms;
   private List battleList; // Lista de batallas
+  private List spikes;
   private int activeBattleIndex = 0; // Índice de la batalla activa
   private boolean battleState = false; // Controla si una batalla está en curso
   private boolean count = true;
@@ -16,6 +17,7 @@ public class WebWarriors {
     this.playlist = new CircularDoublyList();
     this.platforms = new SimpleList();
     this.battleList = new SimpleList();
+    this.spikes = new SimpleList();
 
   }
   
@@ -100,6 +102,14 @@ public class WebWarriors {
   
   public List getPlatforms(){
     return this.platforms;
+  }
+  
+  public void addSpike(Object spike){
+    this.spikes.addNode(spike);
+  }
+  
+  public List getSpikes(){
+    return this.spikes;
   }
 
   private void setupPlaylist() {

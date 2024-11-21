@@ -8,7 +8,7 @@ Character mainCharacter, enemy1, enemy2, enemy3, battleCharacter;
 GifPlayer gifPlayer;
 boolean showYouWon = false, showYouLose = false;
 int startTime, finishTime;
-float backgroundOffset = 3000; // Ancho total de la imagen de principalPage
+float backgroundOffset = 0; // Ancho total de la imagen de principalPage
 float backgroundWidth = 8000; // Ancho total de la imagen de principalPage
 PFont mouse = null;
 int indexBackground = 1;
@@ -103,6 +103,16 @@ void setup(){
   game.addPlatform(new Platform(1, 7096, 560, 126, 15));
   game.addPlatform(new Platform(1, 7223, 488, 688, 55));
  
+  //Spikes
+  game.addSpike(new Spike(1, 764, 426, 78, 55));
+  game.addSpike(new Spike(1, 2095, 568, 78, 55));
+  game.addSpike(new Spike(1, 2333, 260, 78, 55));
+  game.addSpike(new Spike(1, 2579, 568, 159, 55));
+  game.addSpike(new Spike(1, 5007, 568, 78, 55));
+  game.addSpike(new Spike(1, 5460, 436, 78, 55));
+  game.addSpike(new Spike(1, 6428, 568, 78, 55));
+  game.addSpike(new Spike(1, 6666, 260, 78, 55));
+ 
   // MAPA 2
   game.addPlatform(new Platform(2, 0, 625, 3123, 15));
   game.addPlatform(new Platform(2, 3123, 590, 167, 15));
@@ -166,12 +176,12 @@ void setup(){
   backgroundImage2 = loadImage("FONDO MAPA VIDEOJUEGO "+ 2 +".png");
   backgroundImage3 = loadImage("FONDO MAPA VIDEOJUEGO "+ 3 +".png");
   
-  mainCharacter = new Character(this, "F", 5, 0, 0, 5);
+  mainCharacter = new Character(this, "D", 5, 0, 0, 5, 65, 75);
   
-  battleCharacter = new Character(this, "B", 10, 200, 250, 5);
-  enemy1 = new Character(this, "A", 10, 1000, 0, 5);
-  enemy2 = new Character(this, "N", 10, 1000, 0, 5);
-  enemy3 = new Character(this, "G", 13, 1000, 0, 5);
+  battleCharacter = new Character(this, "B", 10, 200, 250, 5, 200, 270);
+  enemy1 = new Character(this, "A", 10, 1000, 0, 5, 300, 330);
+  enemy2 = new Character(this, "G", 10, 1000, 0, 5, 110, 60);
+  enemy3 = new Character(this, "N", 10, 1000, 0, 5, 420, 360);
   
   //POSICIONES DE LOS BOTONES
   battle1xPositions = new SimpleList();
@@ -337,10 +347,11 @@ void draw(){
           }
           
           // Verificar colisión con plataformas
-          if (CollisionDetector.isColliding(1, mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
-            mainCharacter.setOnGround(true);
-          } else {
-            mainCharacter.setOnGround(false);
+          
+          // JUEGO PINCHOS // quitar
+          for (Node node = game.getSpikes().PTR; node != null; node = node.next) {
+            Spike spike = (Spike) node.info;
+            spike.display(this);
           }
           
           //CONTROL DE BATALLAS
@@ -351,16 +362,20 @@ void draw(){
             booleanBattle1 = true;
           }
           
-          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 1500 && test == false){
-            print("vida - 1");
-            mainCharacter.setLife(mainCharacter.getLife() - 1);
-            test = true;
-          }
+          //if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 1500 && test == false){
+          //  print("vida - 1");
+          //  mainCharacter.setLife(mainCharacter.getLife() - 1);
+          //  test = true;
+          //}
           //verificar que se haya terminado el nivel para pasar al selector de niveles nuevamente
-          /*if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 2000){
+          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 7400){
             map1 = false;
             levelLocked2 = false;
-          }*/
+            backgroundOffset = 0;
+            mainCharacter.gifPlayer.setX(0);
+            mainCharacter.setLife(10);
+            timer.restart();
+          }
         }
     }else if(map2 && !levelLocked2){ // mapaaaaaaa
       image(backgroundImage2, -backgroundOffset, 0);
@@ -582,12 +597,12 @@ void keyReleased() {
 }
 
 void moveBackground(){
-  if (mainCharacter.gifPlayer.getX() > width - 150 && backgroundOffset < backgroundWidth - width) {
+  if (mainCharacter.gifPlayer.getX() > width - 550 && backgroundOffset < backgroundWidth - width) {
     if (mainCharacter.getMoveRight()) {
       backgroundOffset += mainCharacter.getSpeed(); // Desplazar el principalPage a la derecha
     }  
   }
-  if (mainCharacter.gifPlayer.getX() < 150 && backgroundOffset > 0) {
+  if (mainCharacter.gifPlayer.getX() < 350 && backgroundOffset > 0) {
     if (mainCharacter.getMoveLeft()) {
       backgroundOffset -= mainCharacter.getSpeed(); // Desplazar el principalPage a la izquierda
     }  
