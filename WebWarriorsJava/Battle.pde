@@ -30,11 +30,11 @@ public class Battle {
     // Daño que los botones causan en cada ronda
     private int[][] damageMatrix = {
         {2, 3, 4, 0}, // Daños para ronda 1
-        {1, 4, 3, 2}, // Daños para ronda 2
-        {3, 2, 1, 4}, // Daños para ronda 3
-        {4, 0, 2, 3}, // Daños para ronda 4
-        {2, 3, 1, 0}, // Daños para ronda 5
-        {3, 4, 2, 0}  // Daños para ronda 6
+        {1, 4, 3, 0}, // Daños para ronda 2
+        {3, 0, 1, 4}, // Daños para ronda 3
+        {4, 1, 2, 3}, // Daños para ronda 4
+        {2, 3, 4, 0}, // Daños para ronda 5
+        {3, 4, 1, 0}  // Daños para ronda 6
     };
     
     private int currentCommentIndex; // Índice del comentario actual
@@ -59,7 +59,7 @@ public class Battle {
         this.squareY = yPositions;
         this.game = game; // Guardar la referencia
         this.comments = comments;
-        this.displaySpeed = 100;
+        this.displaySpeed = 50;
         this.lastUpdate = 0;
         this.letterCount = 0;
         this.currentCommentIndex = 0;
@@ -115,22 +115,22 @@ public class Battle {
                 app.fill(0); // Color de texto blanco
                 
                 if (round == 0) {
-                    app.text((String) textNodeRound0.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2);
+                    app.text((String) textNodeRound0.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2 - 10);
                 }
                 if (round == 1) {
-                    app.text((String) textNodeRound1.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2);
+                    app.text((String) textNodeRound1.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2 - 10);
                 }
                 if (round == 2) {
-                    app.text((String) textNodeRound2.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2);
+                    app.text((String) textNodeRound2.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2 - 10);
                 }
                 if (round == 3) {
-                    app.text((String) textNodeRound3.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2);
+                    app.text((String) textNodeRound3.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2 - 10);
                 }
                 if (round == 4) {
-                    app.text((String) textNodeRound4.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2);
+                    app.text((String) textNodeRound4.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2 - 10);
                 }
                 if (round == 5) {
-                    app.text((String) textNodeRound5.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2);
+                    app.text((String) textNodeRound5.info, (Integer) xNode.info + squareSize / 2, (Integer) yNode.info + squareSize / 2 - 10);
                 }
                 
                 textNodeRound0 = textNodeRound0.next;
@@ -152,9 +152,31 @@ public class Battle {
 
             // Reducir la salud del enemigo
             enemyHealth -= damage;
-            battleCharacter.vibrate();
+            if(damage != 0){
+              battleCharacter.vibrate();
+            }
             // Mensaje de daño
-            damageMessage = "You dealt " + damage + " damage to the enemy!";
+            switch (damage){
+                case 0:
+                  damageMessage = "That wasn't a good choice. You caused no harm to the enemy.\nTry harder next time!";
+                  break;
+                case 1:
+                  damageMessage = "A small hit, but it barely scratched the enemy.\nThink carefully to deal more damage!";
+                  break;
+                case 2:
+                  damageMessage = "Not bad! You managed to weaken the enemy a little.\nStay sharp for better results!";
+                  break;
+                case 3:
+                  damageMessage = "Great choice! You struck the enemy hard.\nKeep it up and aim for the perfect answer!";
+                  break;
+                case 4:
+                  damageMessage = "Excellent decision! A critical blow to the enemy!\nYou're getting closer to victory!";
+                  break;
+                default:
+                  damageMessage = "You dealt " + damage + " damage to the enemy!";
+                  break;
+            }
+            
             enemyDamageMessage = "";
             if (enemyHealth <= 0) {
                 System.out.print("you won");
@@ -176,7 +198,27 @@ public class Battle {
           // El enemigo hace un ataque
           int enemyDamage = (int) random(1, 5); // Daño aleatorio del enemigo
           playerHealth -= enemyDamage;
-          enemyDamageMessage = "Ouch Enemy dealt " + enemyDamage + " damage to you!";
+          // Mensaje de daño
+          switch (enemyDamage){
+              case 1:
+                enemyDamageMessage = "Is that all you've got?\nYou're barely holding up!";
+                break;
+              case 2:
+                enemyDamageMessage = "I can see you're struggling.\nMy attacks are starting to wear you down!";
+                break;
+              case 3:
+                enemyDamageMessage = "You're feeling it now, aren't you?\nI'm just getting started!";
+                break;
+              case 4:
+                enemyDamageMessage = "Your defenses are crumbling!\nYou can't keep this up much longer!";
+                break;
+              case 5:
+                enemyDamageMessage = "A crushing blow!\nYou'll never recover from this!";
+                break;
+              default:
+                enemyDamageMessage = "The enemy dealt " + enemyDamage + " damage to the you!";
+                break;
+          }
           // Verificar si la batalla ha terminado
           selectedAction = 0; // Resetear la acción seleccionada
           round++; // Incrementar la ronda
@@ -238,16 +280,16 @@ public class Battle {
                     app.rect(37, 530, 1440, 183);
                     app.fill(255);
                     // Mostrar el mensaje de daño después del turno del jugador
-                    app.text(damageMessage, 72, 650);
+                    app.text(damageMessage, 72, 610);
                     if (app.millis() - enemyTurnStartTime >= 5000 && printNext == false) {
                         enemyAction();
                         enemyTurnStartTime = app.millis();
                         printNext = true;
                     } else if (app.millis() - enemyTurnStartTime <= Integer.MAX_VALUE) {
-                        app.text(enemyDamageMessage, 72, 650);
+                        app.text(enemyDamageMessage, 72, 610);
                         app.fill(255);
                         if (printNext) {
-                            app.image(next, 1200, 550, 100, 100);
+                            app.image(next, 1200, 570, 100, 100);
                         }
                     } else if (playerHealth <= 0 || enemyHealth <= 0) {
                         inBattle = false;

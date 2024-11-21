@@ -15,6 +15,9 @@ int indexBackground = 1;
 
 boolean booleanBattle1 = false, booleanBattle2 = false, booleanBattle3 = false;
 SimpleList battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, commentsBattle1;
+SimpleList battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, commentsBattle2;
+SimpleList battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3TextsRound3, battle3TextsRound4, battle3TextsRound5, commentsBattle3;
+
 SimpleList battle1xPositions, battle1yPositions;
 Battle battle1, battle2, battle3;
 Movie youWon1, youLose1, areYouReady;
@@ -217,58 +220,166 @@ void setup(){
   battle1TextsRound4 = new SimpleList();
   battle1TextsRound5 = new SimpleList();
   //round 0
-  battle1TextsRound0.addNode("1");
-  battle1TextsRound0.addNode("2");
-  battle1TextsRound0.addNode("3");
-  battle1TextsRound0.addNode("4");
+  battle1TextsRound0.addNode("Log off and avoid\nconfrontation");
+  battle1TextsRound0.addNode("Talk to a trusted\nadult");
+  battle1TextsRound0.addNode("Ignore and block\nthe bully");
+  battle1TextsRound0.addNode("Insult them back\nto defend yourself");
   battle1TextsRound0.addNode("");
   //round 1
-  battle1TextsRound1.addNode("5");
-  battle1TextsRound1.addNode("6");
-  battle1TextsRound1.addNode("7");
-  battle1TextsRound1.addNode("8");
+  battle1TextsRound1.addNode("Threaten to expose\ntheir identity");
+  battle1TextsRound1.addNode("Report the account\nimmediately");
+  battle1TextsRound1.addNode("Tell a friend\nwhat's happening");
+  battle1TextsRound1.addNode("Post something\ndefending yourself");
   battle1TextsRound1.addNode("");
   //round 2
-  battle1TextsRound2.addNode("9");
-  battle1TextsRound2.addNode("10");
-  battle1TextsRound2.addNode("11");
-  battle1TextsRound2.addNode("12");
+  battle1TextsRound2.addNode("Their words don't\ndefine you");
+  battle1TextsRound2.addNode("Delete your posts\nto avoid attention");
+  battle1TextsRound2.addNode("Ask them why\nthey're doing this");
+  battle1TextsRound2.addNode("Save evidence\nand report it");
   battle1TextsRound2.addNode("");
   //round 3
-  battle1TextsRound3.addNode("13");
-  battle1TextsRound3.addNode("14");
-  battle1TextsRound3.addNode("15");
-  battle1TextsRound3.addNode("16");
+  battle1TextsRound3.addNode("It's likely untrue.\nBlock them");
+  battle1TextsRound3.addNode("Ask them to explain\ntheir claim");
+  battle1TextsRound3.addNode("Stop replying\nentirely");
+  battle1TextsRound3.addNode("Reach out to your\nfriends for support");
   battle1TextsRound3.addNode("");
   //round 4
-  battle1TextsRound4.addNode("17");
-  battle1TextsRound4.addNode("18");
-  battle1TextsRound4.addNode("19");
-  battle1TextsRound4.addNode("20");
+  battle1TextsRound4.addNode("Log out.No blocking\nor reporting");
+  battle1TextsRound4.addNode("Take a break from\nthe media. Block");
+  battle1TextsRound4.addNode("Save their messages\nand report them");
+  battle1TextsRound4.addNode("Argue with them\nto defend yourself");
   battle1TextsRound4.addNode("");
   //round 5
-  battle1TextsRound5.addNode("21");
-  battle1TextsRound5.addNode("22");
-  battle1TextsRound5.addNode("23");
-  battle1TextsRound5.addNode("24");
+  battle1TextsRound5.addNode("Tell someone in authority about the situation");
+  battle1TextsRound5.addNode("Contact the platform and report abuse");
+  battle1TextsRound5.addNode("Challenge them to stop harassing you");
+  battle1TextsRound5.addNode("Avoid confrontation but do nothing");
   battle1TextsRound5.addNode("");
   
-  //comentarios de los enemigos
+  //Comentarios enemigos Battle 1
   commentsBattle1 = new SimpleList();
-  commentsBattle1.addNode("1");
-  commentsBattle1.addNode("2");
-  commentsBattle1.addNode("3");
-  commentsBattle1.addNode("4");
-  commentsBattle1.addNode("5");
+  commentsBattle1.addNode("Nobody likes\nyou here.\nWhy don't you\njust leave and\nstop wasting\neveryone's time?");
+  commentsBattle1.addNode("You'll regret\nstaying here.\nI'll make sure\neveryone knows\nembarrassing things\nabout you!");
+  commentsBattle1.addNode("I'm sharing\nscreenshots of your\nposts.\nEveryone will\nknow how pathetic\nyou are!");
+  commentsBattle1.addNode("Your friends\nalready hate you.\nThey're just\npretending to\nlike you online!");
+  commentsBattle1.addNode("You don't\ndeserve to\nbe happy.\nJust give up\nalready!");
+  commentsBattle1.addNode("I'll make sure\nyour life is\nmiserable unless\nyou leave this\nplatform for good.");
   
+  // BATALLA NIVEL 2
+  battle2TextsRound0 = new SimpleList();
+  battle2TextsRound1 = new SimpleList();
+  battle2TextsRound2 = new SimpleList();
+  battle2TextsRound3 = new SimpleList();
+  battle2TextsRound4 = new SimpleList();
+  battle2TextsRound5 = new SimpleList();
+  //round 0
+  battle2TextsRound0.addNode("1");
+  battle2TextsRound0.addNode("1");
+  battle2TextsRound0.addNode("1");
+  battle2TextsRound0.addNode("1");
+  battle2TextsRound0.addNode("");
+  //round 1
+  battle2TextsRound1.addNode("1");
+  battle2TextsRound1.addNode("1");
+  battle2TextsRound1.addNode("1");
+  battle2TextsRound1.addNode("1");
+  battle2TextsRound1.addNode("");
+  //round 2
+  battle2TextsRound2.addNode("1");
+  battle2TextsRound2.addNode("1");
+  battle2TextsRound2.addNode("1");
+  battle2TextsRound2.addNode("1");
+  battle2TextsRound2.addNode("");
+  //round 3
+  battle2TextsRound3.addNode("1");
+  battle2TextsRound3.addNode("1");
+  battle2TextsRound3.addNode("1");
+  battle2TextsRound3.addNode("1");
+  battle2TextsRound3.addNode("");
+  //round 4
+  battle2TextsRound4.addNode("1");
+  battle2TextsRound4.addNode("1");
+  battle2TextsRound4.addNode("1");
+  battle2TextsRound4.addNode("1");
+  battle2TextsRound4.addNode("");
+  //round 5
+  battle2TextsRound5.addNode("1");
+  battle2TextsRound5.addNode("1");
+  battle2TextsRound5.addNode("1");
+  battle2TextsRound5.addNode("1");
+  battle2TextsRound5.addNode("");
+  
+  //Comentarios enemigos Battle 2
+  commentsBattle2 = new SimpleList();
+  commentsBattle2.addNode("1");
+  commentsBattle2.addNode("1");
+  commentsBattle2.addNode("1");
+  commentsBattle2.addNode("1");
+  commentsBattle2.addNode("1");
+  commentsBattle2.addNode("1");
+  
+  // BATALLA NIVEL 3
+  battle3TextsRound0 = new SimpleList();
+  battle3TextsRound1 = new SimpleList();
+  battle3TextsRound2 = new SimpleList();
+  battle3TextsRound3 = new SimpleList();
+  battle3TextsRound4 = new SimpleList();
+  battle3TextsRound5 = new SimpleList();
+  //round 0
+  battle3TextsRound0.addNode("1");
+  battle3TextsRound0.addNode("1");
+  battle3TextsRound0.addNode("1");
+  battle3TextsRound0.addNode("1");
+  battle3TextsRound0.addNode("");
+  //round 1
+  battle3TextsRound1.addNode("1");
+  battle3TextsRound1.addNode("1");
+  battle3TextsRound1.addNode("1");
+  battle3TextsRound1.addNode("1");
+  battle3TextsRound1.addNode("");
+  //round 2
+  battle3TextsRound2.addNode("1");
+  battle3TextsRound2.addNode("1");
+  battle3TextsRound2.addNode("1");
+  battle3TextsRound2.addNode("1");
+  battle3TextsRound2.addNode("");
+  //round 3
+  battle3TextsRound3.addNode("1");
+  battle3TextsRound3.addNode("1");
+  battle3TextsRound3.addNode("1");
+  battle3TextsRound3.addNode("1");
+  battle3TextsRound3.addNode("");
+  //round 4
+  battle3TextsRound4.addNode("1");
+  battle3TextsRound4.addNode("1");
+  battle3TextsRound4.addNode("1");
+  battle3TextsRound4.addNode("1");
+  battle3TextsRound4.addNode("");
+  //round 5
+  battle3TextsRound5.addNode("1");
+  battle3TextsRound5.addNode("1");
+  battle3TextsRound5.addNode("1");
+  battle3TextsRound5.addNode("1");
+  battle3TextsRound5.addNode("");
+  
+  //Comentarios enemigos Battle 3
+  commentsBattle3 = new SimpleList();
+  commentsBattle3.addNode("1");
+  commentsBattle3.addNode("1");
+  commentsBattle3.addNode("1");
+  commentsBattle3.addNode("1");
+  commentsBattle3.addNode("1");
+  commentsBattle3.addNode("1");
+
   // Crear batallas
-  battle1 = new Battle(this, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy1);
-  /*battle2 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy2); // Puedes personalizar otra batalla
-  battle3 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy3);*/
+  battle1 = new Battle(this, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy2);
+  battle2 = new Battle(this, battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle2, battleCharacter, enemy3); // Puedes personalizar otra batalla
+  battle3 = new Battle(this, battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3TextsRound3, battle3TextsRound4, battle3TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle3, battleCharacter, enemy1); 
   
   // Agregar batallas a WebWarriors
   game.addBattle(battle1);
   game.addBattle(battle2);
+  game.addBattle(battle3);
   
   characterSelector = new DoublyList();
   characterSelector.addNode(loadImage("SelPersonaje1.png"));
@@ -359,12 +470,6 @@ void draw(){
           
           // Verificar colisión con plataformas
           
-          // JUEGO PINCHOS // quitar
-          for (Node node = game.getSpikes().PTR; node != null; node = node.next) {
-            Spike spike = (Spike) node.info;
-            spike.display(this);
-          }
-          
           //CONTROL DE BATALLAS
           if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 4036 && !booleanBattle1){
             print("llegue");
@@ -390,7 +495,7 @@ void draw(){
         }
     }else if(map2 && !levelLocked2){ // mapaaaaaaa
       image(backgroundImage2, -backgroundOffset, 0);
-      //BATALLAS EN JUEGO
+      ///BATALLAS EN JUEGO
         if (game.isBattleActive()) {
           timer.pause();
           game.updateBattle(mainCharacter.getLife());
@@ -399,7 +504,7 @@ void draw(){
           mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
-            image(youWon, 0, 0); // Muestra la imagen en (100, 100)
+            image(youWon1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
             timer.resume();
@@ -409,7 +514,7 @@ void draw(){
           mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
-            image(youLose, 0, 0); // Muestra la imagen en (100, 100)
+            image(youLose1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
             
@@ -438,7 +543,7 @@ void draw(){
           booleanBattle2 = true;
         }
         
-        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 2000){
+        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 7500){
             map2 = false;
             levelLocked3 = false;
             backgroundOffset = 0;
@@ -458,7 +563,7 @@ void draw(){
           mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
-            image(youWon, 0, 0); // Muestra la imagen en (100, 100)
+            image(youWon1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
             timer.resume();
@@ -468,7 +573,7 @@ void draw(){
           mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
-            image(youLose, 0, 0); // Muestra la imagen en (100, 100)
+            image(youLose1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
             
