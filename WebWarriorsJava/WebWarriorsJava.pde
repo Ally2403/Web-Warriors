@@ -103,7 +103,7 @@ void setup(){
   game.addPlatform(new Platform(1, 7096, 560, 126, 15));
   game.addPlatform(new Platform(1, 7223, 488, 688, 55));
  
-  //Spikes
+  //Spikes 1
   game.addSpike(new Spike(1, 764, 426, 78, 55));
   game.addSpike(new Spike(1, 2095, 568, 78, 55));
   game.addSpike(new Spike(1, 2333, 260, 78, 55));
@@ -139,6 +139,10 @@ void setup(){
   game.addPlatform(new Platform(2, 5340, 490, 182, 15));
   game.addPlatform(new Platform(2, 5554, 330, 182, 15));
   game.addPlatform(new Platform(2, 5808, 210, 182, 15));
+  
+  //Spikes 2
+  game.addSpike(new Spike(2, 532, 565, 1776, 55));
+  game.addSpike(new Spike(2, 914, 225, 30, 55));
         
   // MAPA 3
   game.addPlatform(new Platform(3, 0, 625, 380, 15));
@@ -171,6 +175,13 @@ void setup(){
   game.addPlatform(new Platform(3, 4566, 450, 47, 15));
   game.addPlatform(new Platform(3, 4772, 625, 1552, 15));
   game.addPlatform(new Platform(3, 5272, 460, 352, 15));
+  
+  //Spikes 3
+  game.addSpike(new Spike(3, 676, 425, 78, 55));
+  game.addSpike(new Spike(3, 1408, 0, 3370, 190));
+  game.addSpike(new Spike(3, 1414, 630, 3357, 25));
+  game.addSpike(new Spike(3, 3678, 385, 78, 55));
+  game.addSpike(new Spike(3, 5625, 570, 78, 55));
       
   backgroundImage1 = loadImage("FONDO MAPA VIDEOJUEGO "+ 1 +".png");
   backgroundImage2 = loadImage("FONDO MAPA VIDEOJUEGO "+ 2 +".png");
@@ -420,20 +431,22 @@ void draw(){
           platformNode = platformNode.next;
         }
         
-        // Verificar colisión con plataformas
-        if (CollisionDetector.isColliding(2, mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
-          mainCharacter.setOnGround(true);
-        } else {
-          mainCharacter.setOnGround(false);
-        }
-        
         //CONTROL DE BATALLAS
-        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 5000 && !booleanBattle2){
+        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 1880 && !booleanBattle2){
           print("llegue");
           game.nextBattle();
           booleanBattle2 = true;
         }
-      }
+        
+        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 2000){
+            map2 = false;
+            levelLocked3 = false;
+            backgroundOffset = 0;
+            mainCharacter.gifPlayer.setX(0);
+            mainCharacter.setLife(10);
+            timer.restart();
+          }
+        }
     }else if(map3){
       image(backgroundImage3, -backgroundOffset, 0);
         //BATALLAS EN JUEGO
@@ -477,15 +490,8 @@ void draw(){
             platformNode = platformNode.next;
           }
           
-          // Verificar colisión con plataformas
-          if (CollisionDetector.isColliding(3, mainCharacter, (SimpleList)game.getPlatforms(), backgroundOffset)) {
-            mainCharacter.setOnGround(true);
-          } else {
-            mainCharacter.setOnGround(false);
-          }
-          
           //CONTROL DE BATALLAS
-          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 7000 && !booleanBattle3){
+          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 2900 && !booleanBattle3){
             print("llegue");
             game.nextBattle();
             booleanBattle3 = true;
