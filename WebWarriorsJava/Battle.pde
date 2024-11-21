@@ -154,7 +154,7 @@ public class Battle {
             enemyHealth -= damage;
             battleCharacter.vibrate();
             // Mensaje de daño
-            damageMessage = "You chose action " + selectedAction + " and dealt " + damage + " damage to the enemy!";
+            damageMessage = "You dealt " + damage + " damage to the enemy!";
             enemyDamageMessage = "";
             if (enemyHealth <= 0) {
                 System.out.print("you won");
@@ -176,7 +176,7 @@ public class Battle {
           // El enemigo hace un ataque
           int enemyDamage = (int) random(1, 5); // Daño aleatorio del enemigo
           playerHealth -= enemyDamage;
-          enemyDamageMessage = "Enemy dealt " + enemyDamage + " damage to you!";
+          enemyDamageMessage = "Ouch Enemy dealt " + enemyDamage + " damage to you!";
           // Verificar si la batalla ha terminado
           selectedAction = 0; // Resetear la acción seleccionada
           round++; // Incrementar la ronda
@@ -205,10 +205,12 @@ public class Battle {
                 // Mostrar la imagen inicial durante 5 segundos
                 app.image(areYouReady, 0, 0, app.width, app.height); // Ajusta la imagen al tamaño de la pantalla
                 if (app.millis() - startBattleStartTime > 6000) {
+                    areYouReady.stop();
                     showStartImage = false; // Desactivar la imagen inicial después de 5 segundos
                 }
             } else {
                 // Aquí continúa la lógica normal de la batalla
+                
                 battleCharacter.display(app);
                 enemy.display(app);
                 if (isPlayerTurn) {
