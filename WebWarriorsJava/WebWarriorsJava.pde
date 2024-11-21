@@ -146,6 +146,11 @@ void setup(){
   //Spikes 2
   game.addSpike(new Spike(2, 532, 565, 1776, 55));
   game.addSpike(new Spike(2, 914, 225, 30, 55));
+  game.addSpike(new Spike(2, 2965, 570, 78, 55));
+  game.addSpike(new Spike(2, 3418, 450, 78, 55));
+  game.addSpike(new Spike(2, 4049, 565, 78, 55));
+  game.addSpike(new Spike(2, 4307, 565, 1769, 25));
+  game.addSpike(new Spike(2, 4307, 0, 1769, 45));
         
   // MAPA 3
   game.addPlatform(new Platform(3, 0, 625, 380, 15));
