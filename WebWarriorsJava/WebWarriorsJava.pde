@@ -8,12 +8,12 @@ Character mainCharacter, enemy1, enemy2, enemy3, battleCharacter;
 GifPlayer gifPlayer;
 boolean showYouWon = false, showYouLose = false;
 int startTime, finishTime;
-float backgroundOffset = 0; // Ancho total de la imagen de principalPage
+float backgroundOffset = 5000; // Ancho total de la imagen de principalPage
 float backgroundWidth = 8000; // Ancho total de la imagen de principalPage
 PFont mouse = null;
 int indexBackground = 1;
 
-boolean booleanBattle1 = false, booleanBattle2 = false, booleanBattle3 = false;
+boolean booleanBattle1 = false, booleanBattle2 = false, booleanBattle3 = false, battleFinished = true;
 SimpleList battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, commentsBattle1;
 SimpleList battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, commentsBattle2;
 SimpleList battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3TextsRound3, battle3TextsRound4, battle3TextsRound5, commentsBattle3;
@@ -194,8 +194,8 @@ void setup(){
   
   battleCharacter = new Character(this, "B", 10, 200, 250, 5, 200, 270);
   enemy1 = new Character(this, "A", 10, 1000, 0, 5, 300, 330);
-  enemy2 = new Character(this, "G", 10, 1000, 0, 5, 110, 60);
-  enemy3 = new Character(this, "N", 10, 1000, 0, 5, 420, 360);
+  enemy2 = new Character(this, "G", 10, 1000, 100, 5, 400, 218);
+  enemy3 = new Character(this, "N", 10, 900, 0, 5, 420, 360);
   
   //POSICIONES DE LOS BOTONES
   battle1xPositions = new SimpleList();
@@ -260,7 +260,7 @@ void setup(){
   commentsBattle1 = new SimpleList();
   commentsBattle1.addNode("Nobody likes\nyou here.\nWhy don't you\njust leave and\nstop wasting\neveryone's time?");
   commentsBattle1.addNode("You'll regret\nstaying here.\nI'll make sure\neveryone knows\nembarrassing things\nabout you!");
-  commentsBattle1.addNode("I'm sharing\nscreenshots of your\nposts.\nEveryone will\nknow how pathetic\nyou are!");
+  commentsBattle1.addNode("I'm sharing\nscreenshots of\nyour posts.\nEveryone will\nknow how pathetic\nyou are!");
   commentsBattle1.addNode("Your friends\nalready hate you.\nThey're just\npretending to\nlike you online!");
   commentsBattle1.addNode("You don't\ndeserve to\nbe happy.\nJust give up\nalready!");
   commentsBattle1.addNode("I'll make sure\nyour life is\nmiserable unless\nyou leave this\nplatform for good.");
@@ -437,6 +437,7 @@ void draw(){
           if (finishTime < 5000) {
             image(youWon1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
+            battleFinished = false;
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
             timer.resume();
           }
@@ -448,7 +449,6 @@ void draw(){
             image(youLose1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
-            
           }
         }else{
           mainCharacter.updateLifeBar(this);
@@ -468,21 +468,18 @@ void draw(){
             platformNode = platformNode.next;
           }
           
-          // Verificar colisión con plataformas
-          
+          //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
+          if(mainCharacter.getLife() > 0 && battleFinished){
+            enemy2.enemyDisplay(this, 3900, 325);
+          }
           //CONTROL DE BATALLAS
-          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 4036 && !booleanBattle1){
+          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 3932 && !booleanBattle1){
             print("llegue");
             game.setActiveBattle(0); // Comienza con la primera batalla
             game.startBattle();
             booleanBattle1 = true;
           }
           
-          //if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 1500 && test == false){
-          //  print("vida - 1");
-          //  mainCharacter.setLife(mainCharacter.getLife() - 1);
-          //  test = true;
-          //}
           //verificar que se haya terminado el nivel para pasar al selector de niveles nuevamente
           if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 7400){
             map1 = false;
@@ -491,6 +488,7 @@ void draw(){
             mainCharacter.gifPlayer.setX(0);
             mainCharacter.setLife(10);
             timer.restart();
+            battleFinished = true;
           }
         }
     }else if(map2 && !levelLocked2){ // mapaaaaaaa
@@ -508,6 +506,7 @@ void draw(){
           } else {
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
             timer.resume();
+            battleFinished = false;
           }
         }else if(showYouLose){
           //se actualiza la vida después de la batalla
@@ -517,7 +516,6 @@ void draw(){
             image(youLose1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
-            
           }
       }else{
         mainCharacter.updateLifeBar(this);
@@ -536,8 +534,13 @@ void draw(){
           platformNode = platformNode.next;
         }
         
+        //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
+        if(mainCharacter.getLife() > 0 && battleFinished){
+          enemy3.enemyDisplay(this, 1880, 225);
+        }
+        
         //CONTROL DE BATALLAS
-        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 1880 && !booleanBattle2){
+        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 2050 && !booleanBattle2){
           print("llegue");
           game.nextBattle();
           booleanBattle2 = true;
@@ -550,6 +553,7 @@ void draw(){
             mainCharacter.gifPlayer.setX(0);
             mainCharacter.setLife(10);
             timer.restart();
+            battleFinished = true;
           }
         }
     }else if(map3){
@@ -567,6 +571,7 @@ void draw(){
           } else {
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
             timer.resume();
+            battleFinished = false;
           }
         }else if(showYouLose){
           //se actualiza la vida después de la batalla
@@ -576,7 +581,6 @@ void draw(){
             image(youLose1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
-            
           }
         }else{
           mainCharacter.updateLifeBar(this);
@@ -595,18 +599,25 @@ void draw(){
             platformNode = platformNode.next;
           }
           
+          //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
+          if(mainCharacter.getLife() > 0 && battleFinished){
+            enemy1.enemyDisplay(this, 2850, 220);
+          }
+          
           //CONTROL DE BATALLAS
-          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 2900 && !booleanBattle3){
+          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 2850 && !booleanBattle3){
             print("llegue");
             game.nextBattle();
             booleanBattle3 = true;
           }
         }
-    }
+        
+        //FALTA AGREGAR EL battleFinished = true; EN LA VALIDACIÓN DE FINALIZAR EL NIVEL 3
+      }
   }
   
   textFont(mouse);
-  text("mouseX "+ mouseX + " mouseY " + mouseY + " offsetX " + backgroundOffset + " Total " + (int(mouseX) + backgroundOffset), 20, 20);
+  text("mouseX "+ mouseX + " mouseY " + mouseY + " offsetX " + backgroundOffset + " Total " + (int(mouseX) + backgroundOffset), 20, 100);
 }
 
 void mousePressed() {

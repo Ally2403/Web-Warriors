@@ -273,7 +273,7 @@ public class Battle {
     
                         // Mostrar las letras hasta `letterCount`
                         app.fill(0);
-                        app.text(currentComment.substring(0, letterCount), 590, 100);
+                        app.text(currentComment.substring(0, letterCount), 580, 100);
                     }
                 } else {
                     app.fill(0);

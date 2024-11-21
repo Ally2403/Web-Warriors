@@ -180,6 +180,10 @@ public class Character {
     gifPlayer.display(app); // Mostrar el GIF del personaje
   }
   
+  public void enemyDisplay(PApplet app, int xpos, int ypos){
+      gifPlayer.enemyDisplay(app, xpos, ypos); 
+  }
+  
   public void constrainBorders(PApplet app){
     // Limitar la posición del character a los límites de la screen
         if (gifPlayer.getX() < 340) {
@@ -203,37 +207,37 @@ public class Character {
         // Dibujar la barra de vida correspondiente
         switch (this.life) {
             case 10:
-                app.image(lifeBar10, 0, 0);
+                app.image(lifeBar10, 50, 60);
                 break;
             case 9:
-                app.image(lifeBar9, 0, 0);
+                app.image(lifeBar9, 50, 60);
                 break;
             case 8:
-                app.image(lifeBar8, 0, 0);
+                app.image(lifeBar8, 50, 60);
                 break;
             case 7:
-                app.image(lifeBar7, 0, 0);
+                app.image(lifeBar7, 50, 60);
                 break;
             case 6:
-                app.image(lifeBar6, 0, 0);
+                app.image(lifeBar6, 50, 60);
                 break;
             case 5:
-                app.image(lifeBar5, 0, 0);
+                app.image(lifeBar5, 50, 60);
                 break;
             case 4:
-                app.image(lifeBar4, 0, 0);
+                app.image(lifeBar4, 50, 60);
                 break;
             case 3:
-                app.image(lifeBar3, 0, 0);
+                app.image(lifeBar3, 50, 60);
                 break;
             case 2:
-                app.image(lifeBar2, 0, 0);
+                app.image(lifeBar2, 50, 60);
                 break;
             case 1:
-                app.image(lifeBar1, 0, 0);
+                app.image(lifeBar1, 50, 60);
                 break;
             case 0:
-                app.image(lifeBar0, 0, 0);
+                app.image(lifeBar0, 50, 60);
                 break;
           }
       }
@@ -252,9 +256,9 @@ public class Character {
   
       // Dibujar la imagen correspondiente
       if (showFirstImage) {
-          app.image(currentLifeBar, 0, 0);
+          app.image(currentLifeBar, 50, 60);
       } else {
-          app.image(previousLifeBar, 0, 0);
+          app.image(previousLifeBar, 50, 60);
       }
   }
   

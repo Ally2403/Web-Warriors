@@ -52,6 +52,21 @@ public class GifPlayer {
       }
   }
   
+  public void enemyDisplay(PApplet app, int xpos, int ypos){
+
+      if (numFrames > 0) {
+          PImage currentFrame = (PImage) frames.getNode(frameIndex);
+          app.image(currentFrame, xpos - backgroundOffset, ypos, width, height);
+      }
+  
+      // Lógica de avance de cuadros
+      delayCounter++;
+      if (delayCounter >= frameDelay) {
+          frameIndex = (frameIndex + 1) % numFrames;  // Avanzar al siguiente cuadro
+          delayCounter = 0;  // Reiniciar contador
+      }
+  }
+  
   // Métodos getters y setters para la posición
   public float getX() {
       return x;
