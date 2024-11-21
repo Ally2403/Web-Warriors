@@ -35,9 +35,9 @@ public class GifPlayer {
   
   // Método para mostrar el GIF en la screen
   public void display(PApplet app) {
-      app.noFill();
-      app.stroke(255, 0, 0);  // Dibujar el marco de colisión
-      app.rect(x, y, width, height);
+      //app.noFill();
+      //app.stroke(255, 0, 0);  // Dibujar el marco de colisión
+      //app.rect(x, y, width, height);
   
       if (numFrames > 0) {
           PImage currentFrame = (PImage) frames.getNode(frameIndex);

@@ -1,20 +1,23 @@
 import processing.sound.*;
+import processing.video.*;
 WebWarriors game;
 PImage backgroundImage1, backgroundImage2, backgroundImage3;
-PImage character, combate, youWon, youLose, next, textBox;
+PImage character, combate, youWon, youLose, next, textBox, optionBox;
 PImage lifeBar0, lifeBar1, lifeBar2, lifeBar3, lifeBar4, lifeBar5, lifeBar6, lifeBar7, lifeBar8, lifeBar9, lifeBar10;
 Character mainCharacter, enemy1, enemy2, enemy3, battleCharacter;
 GifPlayer gifPlayer;
 boolean showYouWon = false, showYouLose = false;
 int startTime, finishTime;
-float backgroundOffset = 0; // Ancho total de la imagen de principalPage
+float backgroundOffset = 3000; // Ancho total de la imagen de principalPage
 float backgroundWidth = 8000; // Ancho total de la imagen de principalPage
 PFont mouse = null;
 int indexBackground = 1;
 
 boolean booleanBattle1 = false, booleanBattle2 = false, booleanBattle3 = false;
-SimpleList battle1Texts, battle1xPositions, battle1yPositions, comments;
+SimpleList battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, commentsBattle1;
+SimpleList battle1xPositions, battle1yPositions;
 Battle battle1, battle2, battle3;
+Movie youWon1, youLose1, areYouReady;
 
 //JUANCHO STUFF
 PImage principalPage, selectYourCharacter, howToPlay, credits, setting, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn, mapa = null;
@@ -47,6 +50,7 @@ void setup(){
   start = loadImage("Start.png");
   okn = loadImage("Okselect.png");
   mapa = loadImage("Mapa.png");
+  optionBox = loadImage("optionBox.png");
   
   lifeBar0 = loadImage("Z0.png");
   lifeBar0.resize(350, 40);
@@ -169,6 +173,7 @@ void setup(){
   enemy2 = new Character(this, "N", 10, 1000, 0, 5);
   enemy3 = new Character(this, "G", 13, 1000, 0, 5);
   
+  //POSICIONES DE LOS BOTONES
   battle1xPositions = new SimpleList();
   battle1xPositions.addNode(545);
   battle1xPositions.addNode(1000);
@@ -183,25 +188,62 @@ void setup(){
   battle1yPositions.addNode(630);
   battle1yPositions.addNode(537);
   
-  // Crear listas de texto y posiciones para las batallas
-  battle1Texts = new SimpleList();
-  battle1Texts.addNode("1");
-  battle1Texts.addNode("2");
-  battle1Texts.addNode("3");
-  battle1Texts.addNode("4");
-  battle1Texts.addNode("");
+  // BATALLA NIVEL 1
+  battle1TextsRound0 = new SimpleList();
+  battle1TextsRound1 = new SimpleList();
+  battle1TextsRound2 = new SimpleList();
+  battle1TextsRound3 = new SimpleList();
+  battle1TextsRound4 = new SimpleList();
+  battle1TextsRound5 = new SimpleList();
+  //round 0
+  battle1TextsRound0.addNode("1");
+  battle1TextsRound0.addNode("2");
+  battle1TextsRound0.addNode("3");
+  battle1TextsRound0.addNode("4");
+  battle1TextsRound0.addNode("");
+  //round 1
+  battle1TextsRound1.addNode("5");
+  battle1TextsRound1.addNode("6");
+  battle1TextsRound1.addNode("7");
+  battle1TextsRound1.addNode("8");
+  battle1TextsRound1.addNode("");
+  //round 2
+  battle1TextsRound2.addNode("9");
+  battle1TextsRound2.addNode("10");
+  battle1TextsRound2.addNode("11");
+  battle1TextsRound2.addNode("12");
+  battle1TextsRound2.addNode("");
+  //round 3
+  battle1TextsRound3.addNode("13");
+  battle1TextsRound3.addNode("14");
+  battle1TextsRound3.addNode("15");
+  battle1TextsRound3.addNode("16");
+  battle1TextsRound3.addNode("");
+  //round 4
+  battle1TextsRound4.addNode("17");
+  battle1TextsRound4.addNode("18");
+  battle1TextsRound4.addNode("19");
+  battle1TextsRound4.addNode("20");
+  battle1TextsRound4.addNode("");
+  //round 5
+  battle1TextsRound5.addNode("21");
+  battle1TextsRound5.addNode("22");
+  battle1TextsRound5.addNode("23");
+  battle1TextsRound5.addNode("24");
+  battle1TextsRound5.addNode("");
   
-  comments = new SimpleList();
-  comments.addNode("buenos dias\ncomo estas\ncomo te llamas");
-  comments.addNode("me gusta la papaaaaa");
-  comments.addNode("3");
-  comments.addNode("4");
-  comments.addNode("5");
+  //comentarios de los enemigos
+  commentsBattle1 = new SimpleList();
+  commentsBattle1.addNode("1");
+  commentsBattle1.addNode("2");
+  commentsBattle1.addNode("3");
+  commentsBattle1.addNode("4");
+  commentsBattle1.addNode("5");
   
   // Crear batallas
-  battle1 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy1);
-  battle2 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy2); // Puedes personalizar otra batalla
-  battle3 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy3);
+  battle1 = new Battle(this, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy1);
+  /*battle2 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy2); // Puedes personalizar otra batalla
+  battle3 = new Battle(this, battle1Texts, battle1xPositions, battle1yPositions, game, comments, battleCharacter, enemy3);*/
   
   // Agregar batallas a WebWarriors
   game.addBattle(battle1);
@@ -215,6 +257,15 @@ void setup(){
   characterSelector.addNode(loadImage("SelPersonaje5.png"));
   
   timer = new Timer();
+  
+  youWon1 = new Movie(this, "youWon.mp4");
+  youLose1 = new Movie(this, "youLose.mp4");
+  areYouReady = new Movie(this, "areYouReady.mp4");
+}
+
+// Método que se llama cada vez que el video avanza
+void movieEvent(Movie m) {
+  m.read();  // Lee el fotograma del video
 }
 
 void draw(){
@@ -252,7 +303,7 @@ void draw(){
           mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
-            image(youWon, 0, 0); // Muestra la imagen en (100, 100)
+            image(youWon1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
             timer.resume();
@@ -262,7 +313,7 @@ void draw(){
           mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
           finishTime = millis() - startTime;
           if (finishTime < 5000) {
-            image(youLose, 0, 0); // Muestra la imagen en (100, 100)
+            image(youLose1, 0, 0); // Muestra la imagen en (100, 100)
           } else {
             showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
             
@@ -306,10 +357,10 @@ void draw(){
             test = true;
           }
           //verificar que se haya terminado el nivel para pasar al selector de niveles nuevamente
-          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 2000){
+          /*if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 2000){
             map1 = false;
             levelLocked2 = false;
-          }
+          }*/
         }
     }else if(map2 && !levelLocked2){ // mapaaaaaaa
       image(backgroundImage2, -backgroundOffset, 0);

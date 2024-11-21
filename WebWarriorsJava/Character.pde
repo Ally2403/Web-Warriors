@@ -24,10 +24,10 @@ public class Character {
   private PImage previousLifeBar; // Barra de vida anterior
   
   private boolean isVibrating = false; // Estado de la vibración
-  private float vibrationAmplitude = 15; // Amplitud del movimiento
-  private float vibrationDuration = 0.5f; // Duración total de la vibración en segundos
+  private float vibrationAmplitude = 20; // Amplitud del movimiento
+  private float vibrationDuration = 1.0f; // Duración total de la vibración en segundos
   private float vibrationElapsedTime = 0; // Tiempo acumulado de vibración
-  private float vibrationFrequency = 4; // Frecuencia de vibración (ciclos por segundo)
+  private float vibrationFrequency = 3; // Frecuencia de vibración (ciclos por segundo)
   private float originalX; // Posición X inicial para restaurar después de la vibración
   
   public Character(PApplet app, String folder, int numFrames, float x, float y, float speed) {
