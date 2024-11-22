@@ -8,7 +8,7 @@ Character mainCharacter, enemy1, enemy2, enemy3, battleCharacter;
 GifPlayer gifPlayer;
 boolean showYouWon = false, showYouLose = false;
 int startTime, finishTime;
-float backgroundOffset = 5000; // Ancho total de la imagen de principalPage
+float backgroundOffset = 0; // Ancho total de la imagen de principalPage
 float backgroundWidth = 8000; // Ancho total de la imagen de principalPage
 PFont mouse = null;
 int indexBackground = 1;
@@ -481,7 +481,7 @@ void draw(){
           if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 3932 && !booleanBattle1){
             print("llegue");
             game.setActiveBattle(0); // Comienza con la primera batalla
-            game.startBattle();
+            game.startBattle(mainCharacter.getLife());
             booleanBattle1 = true;
           }
           
@@ -499,6 +499,7 @@ void draw(){
     }else if(map2 && !levelLocked2){ // mapaaaaaaa
       image(backgroundImage2, -backgroundOffset, 0);
       ///BATALLAS EN JUEGO
+      print(mainCharacter.getLife());
         if (game.isBattleActive()) {
           timer.pause();
           game.updateBattle(mainCharacter.getLife());
@@ -541,13 +542,13 @@ void draw(){
         
         //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
         if(mainCharacter.getLife() > 0 && battleFinished){
-          enemy3.enemyDisplay(this, 1880, 225);
+          enemy3.enemyDisplay(this, 1660, 225);
         }
         
         //CONTROL DE BATALLAS
-        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 2050 && !booleanBattle2){
+        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 1760 && !booleanBattle2){
           print("llegue");
-          game.nextBattle();
+          game.nextBattle(mainCharacter.getLife());
           booleanBattle2 = true;
         }
         
@@ -612,7 +613,7 @@ void draw(){
           //CONTROL DE BATALLAS
           if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 2850 && !booleanBattle3){
             print("llegue");
-            game.nextBattle();
+            game.nextBattle(mainCharacter.getLife());
             booleanBattle3 = true;
           }
         }

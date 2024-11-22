@@ -38,18 +38,18 @@ public class WebWarriors {
     this.battleList.addNode(battle);
   }
 
-  public void startBattle() {
+  public void startBattle(int life) {
     if (((SimpleList)battleList).size() > 0) {
       Battle battle = (Battle) ((SimpleList)battleList).getNode(activeBattleIndex);
       battleState = true;
-      battle.start(); 
+      battle.start(life); 
     }
   }
 
-  public void nextBattle() {
+  public void nextBattle(int life) {
     if (activeBattleIndex < ((SimpleList)battleList).size() - 1) {
       activeBattleIndex++;
-      startBattle();
+      startBattle(life);
     }
   }
 

@@ -71,10 +71,10 @@ public class Battle {
         this.enemy = enemy;
     }
 
-    public void start() {
+    public void start(int life) {
         isPlayerTurn = true;
         inBattle = true;
-        playerHealth = 10;
+        playerHealth = life;
         enemyHealth = 10;
         selectedAction = 0; // Resetear la acción seleccionada al inicio de cada batalla
         round = 0; // Resetear las rondas
