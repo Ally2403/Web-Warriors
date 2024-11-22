@@ -56,11 +56,18 @@ void draw() {
     image(setting, 0, 0, width, height);
   } else if (pantalla == 5) {
     image(mapa, 0, 0, width, height);
-    if(map1){
+    if (map1) {
       image(setting, 0, 0, width, height);
-    }else if(map2){
+      println();
+      fill(255, 255, 0);
+      rect(50, 300, 300, 50);  // Dibuja el cartel (ajusta posición y tamaño si es necesario)
+      fill(0);
+      textSize(16);
+      textAlign(CENTER, CENTER);
+      text("¡Has hecho clic aquí!", 200, 325);
+    } else if (map2) {
       image(howToPlay, 0, 0, width, height);
-    }else if(map3){
+    } else if (map3) {
       image(credits, 0, 0, width, height);
     }
   }
@@ -124,26 +131,25 @@ void mousePressed() {
     } else if (mouseX > 694 && mouseX <792 && mouseY >600 && mouseY <650) {
       pantalla = 5;
     }
-  } else if(pantalla == 5){
-      if(mouseX>290 && mouseX<378 && mouseY>509 && mouseY<556){
-        map1 = true;
-        map2 = false;
-        map3 = false;
-      }else if(mouseX>1141 && mouseX<1245 && mouseY>637 && mouseY<692){
-        map1 = false;
-        map2 = true;
-        map3 = false;
-      }else if(mouseX>718 && mouseX<839 && mouseY>623 && mouseY<688){
-        map1 = false;
-        map2 = false;
-        map3 = true;
-      }
+  } else if (pantalla == 5) {
+    if (mouseX>290 && mouseX<378 && mouseY>509 && mouseY<556) {
+      map1 = true;
+      map2 = false;
+      map3 = false;
+    } else if (mouseX>1141 && mouseX<1245 && mouseY>637 && mouseY<692) {
+      map1 = false;
+      map2 = true;
+      map3 = false;
+    } else if (mouseX>718 && mouseX<839 && mouseY>623 && mouseY<688) {
+      map1 = false;
+      map2 = false;
+      map3 = true;
+    }
   } else if (pantalla == 2 || pantalla == 3 || pantalla == 4) {
     if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49) {
       pantalla = 0;
     }
   }
-
 }
 
 void mouseMoved() {
