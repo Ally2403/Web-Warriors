@@ -186,8 +186,8 @@ void setup(){
   
   //Spikes 3
   game.addSpike(new Spike(3, 676, 425, 78, 55));
-  game.addSpike(new Spike(3, 1408, 0, 3370, 190));
-  game.addSpike(new Spike(3, 1414, 630, 3357, 25));
+  game.addSpike(new Spike(3, 1408, 0, 3370, 170));
+  game.addSpike(new Spike(3, 1414, 630, 3357, 35));
   game.addSpike(new Spike(3, 3678, 385, 78, 55));
   game.addSpike(new Spike(3, 5625, 570, 78, 55));
       
@@ -377,8 +377,8 @@ void setup(){
   commentsBattle3.addNode("1");
 
   // Crear batallas
-  battle1 = new Battle(this, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy2);
-  battle2 = new Battle(this, battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle2, battleCharacter, enemy3); // Puedes personalizar otra batalla
+  battle1 = new Battle(this, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy3);
+  battle2 = new Battle(this, battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle2, battleCharacter, enemy2); // Puedes personalizar otra batalla
   battle3 = new Battle(this, battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3TextsRound3, battle3TextsRound4, battle3TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle3, battleCharacter, enemy1); 
   
   // Agregar batallas a WebWarriors
@@ -475,10 +475,10 @@ void draw(){
           
           //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
           if(mainCharacter.getLife() > 0 && battleFinished){
-            enemy2.enemyDisplay(this, 3900, 325);
+            enemy3.enemyDisplay(this, 3880, 184);
           }
           //CONTROL DE BATALLAS
-          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 3932 && !booleanBattle1){
+          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 3987 && !booleanBattle1){
             print("llegue");
             game.setActiveBattle(0); // Comienza con la primera batalla
             game.startBattle(mainCharacter.getLife());
@@ -499,7 +499,6 @@ void draw(){
     }else if(map2 && !levelLocked2){ // mapaaaaaaa
       image(backgroundImage2, -backgroundOffset, 0);
       ///BATALLAS EN JUEGO
-      print(mainCharacter.getLife());
         if (game.isBattleActive()) {
           timer.pause();
           game.updateBattle(mainCharacter.getLife());
@@ -542,11 +541,11 @@ void draw(){
         
         //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
         if(mainCharacter.getLife() > 0 && battleFinished){
-          enemy3.enemyDisplay(this, 1660, 225);
+          enemy2.enemyDisplay(this, 1793, 0);
         }
         
         //CONTROL DE BATALLAS
-        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 1760 && !booleanBattle2){
+        if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 1880 && !booleanBattle2){
           print("llegue");
           game.nextBattle(mainCharacter.getLife());
           booleanBattle2 = true;
@@ -607,11 +606,11 @@ void draw(){
           
           //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
           if(mainCharacter.getLife() > 0 && battleFinished){
-            enemy1.enemyDisplay(this, 2850, 220);
+            enemy1.enemyDisplay(this, 2786, 304);
           }
           
           //CONTROL DE BATALLAS
-          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 2850 && !booleanBattle3){
+          if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 2786 && !booleanBattle3){
             print("llegue");
             game.nextBattle(mainCharacter.getLife());
             booleanBattle3 = true;
