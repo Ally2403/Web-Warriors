@@ -646,6 +646,7 @@ void draw(){
             backgroundOffset = 0;
             timer.restart();
             booleanBattle2 = false;
+            battleFinished = true;
             game.setActiveBattle(0);
             map2 = false;
           }
