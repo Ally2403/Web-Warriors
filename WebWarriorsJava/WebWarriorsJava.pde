@@ -5,6 +5,8 @@ PImage backgroundImage1, backgroundImage2, backgroundImage3;
 PImage character, combate, youWon, youLose, next, textBox, optionBox;
 PImage lifeBar0, lifeBar1, lifeBar2, lifeBar3, lifeBar4, lifeBar5, lifeBar6, lifeBar7, lifeBar8, lifeBar9, lifeBar10;
 Character mainCharacter, enemy1, enemy2, enemy3, battleCharacter;
+Character character1, character2, character3, character4, character5;
+Character battleCharacter1, battleCharacter2, battleCharacter3, battleCharacter4, battleCharacter5;
 GifPlayer gifPlayer;
 boolean showYouWon = false, showYouLose = false;
 int startTime, finishTime;
@@ -23,16 +25,19 @@ Battle battle1, battle2, battle3;
 Movie youWon1, youLose1, areYouReady;
 
 //JUANCHO STUFF
-PImage principalPage, selectYourCharacter, howToPlay, credits, setting, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn, mapa = null;
+PImage principalPage, selectYourCharacter, howToPlay, credits, setting, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn = null;
+PImage mapaBlock, mapa, mapaBlock3 = null;
 int screen = 0, characterVariable = 1;
 boolean oke = false;
-boolean map1 = false, map2 = false, map3 = false;
-boolean levelLocked2 = true, levelLocked3 = true;
+boolean map1, map2, map3 =false;
+boolean levelLocked = true, levelLocked2 = true, levelLocked3 = true;
+boolean showLevelLocked2, showLevelLocked3;
 DoublyList characterSelector;
+int startTimeLevelLocked, finishTimeLevelLocked;
 
 Timer timer;
 boolean test = false;
-void setup(){
+void setup() {
   mouse = createFont("PressStart2P.ttf", 20);
   size(1500, 720);
   combate = loadImage("Combate.png");
@@ -43,7 +48,7 @@ void setup(){
   youLose.resize(width, height);
   next = loadImage("next.png");
   textBox = loadImage("textBox.png");
-  
+
   principalPage = loadImage("Start.png");
   selectYourCharacter = loadImage("SelectYourCharacter.png");
   howToPlay = loadImage("How To Play.png");
@@ -53,8 +58,10 @@ void setup(){
   start = loadImage("Start.png");
   okn = loadImage("Okselect.png");
   mapa = loadImage("Mapa.png");
+  mapaBlock = loadImage("mapaBlock.png");
+  mapaBlock3 = loadImage("mapaBlock3.png");
   optionBox = loadImage("optionBox.png");
-  
+
   lifeBar0 = loadImage("Z0.png");
   lifeBar0.resize(350, 40);
   lifeBar1 = loadImage("Z1.png");
@@ -77,14 +84,14 @@ void setup(){
   lifeBar9.resize(350, 40);
   lifeBar10 = loadImage("Z10.png");
   lifeBar10.resize(350, 40);
-  
+
   game = new WebWarriors(this);
   game.addSong("music1.mp3");
   game.addSong("music2.mp3");
-  
+
   //Plataformas
-  
-  // MAPA 1
+
+  //MAPA 1
   game.addPlatform(new Platform(1, 0, 625, 465, 15));
   game.addPlatform(new Platform(1, 465, 560, 168, 15));
   game.addPlatform(new Platform(1, 633, 484, 353, 15));
@@ -105,7 +112,7 @@ void setup(){
   game.addPlatform(new Platform(1, 6527, 355, 352, 15));
   game.addPlatform(new Platform(1, 7096, 560, 126, 15));
   game.addPlatform(new Platform(1, 7223, 488, 688, 55));
- 
+  
   //Spikes 1
   game.addSpike(new Spike(1, 764, 426, 78, 55));
   game.addSpike(new Spike(1, 2095, 568, 78, 55));
@@ -115,7 +122,7 @@ void setup(){
   game.addSpike(new Spike(1, 5460, 436, 78, 55));
   game.addSpike(new Spike(1, 6428, 568, 78, 55));
   game.addSpike(new Spike(1, 6666, 260, 78, 55));
- 
+
   // MAPA 2
   game.addPlatform(new Platform(2, 0, 625, 3123, 15));
   game.addPlatform(new Platform(2, 3123, 590, 167, 15));
@@ -151,7 +158,7 @@ void setup(){
   game.addSpike(new Spike(2, 4049, 565, 78, 55));
   game.addSpike(new Spike(2, 4307, 565, 1769, 25));
   game.addSpike(new Spike(2, 4307, 0, 1769, 45));
-        
+
   // MAPA 3
   game.addPlatform(new Platform(3, 0, 625, 380, 15));
   game.addPlatform(new Platform(3, 380, 565, 170, 15));
@@ -186,22 +193,33 @@ void setup(){
   
   //Spikes 3
   game.addSpike(new Spike(3, 676, 425, 78, 55));
-  game.addSpike(new Spike(3, 1408, 0, 3370, 170));
-  game.addSpike(new Spike(3, 1414, 630, 3357, 35));
+  game.addSpike(new Spike(3, 1408, 0, 3370, 190));
+  game.addSpike(new Spike(3, 1414, 630, 3357, 25));
   game.addSpike(new Spike(3, 3678, 385, 78, 55));
   game.addSpike(new Spike(3, 5625, 570, 78, 55));
-      
+
   backgroundImage1 = loadImage("FONDO MAPA VIDEOJUEGO "+ 1 +".png");
   backgroundImage2 = loadImage("FONDO MAPA VIDEOJUEGO "+ 2 +".png");
   backgroundImage3 = loadImage("FONDO MAPA VIDEOJUEGO "+ 3 +".png");
-  
-  mainCharacter = new Character(this, "D", 5, 0, 0, 5, 65, 75);
-  
+
+  mainCharacter = new Character(this, "F", 5, 0, 0, 5, 65, 75);
+  character1 = new Character(this, "F", 5, 0, 0, 5, 65, 75);
+  character2 = new Character(this, "C", 5, 0, 0, 5, 65, 75);
+  character3 = new Character(this, "D", 5, 0, 0, 5, 65, 75);
+  character4 = new Character(this, "H", 5, 0, 0, 5, 65, 75);
+  character5 = new Character(this, "E", 5, 0, 0, 5, 65, 75);
+
   battleCharacter = new Character(this, "B", 10, 200, 250, 5, 200, 270);
+  battleCharacter1 = new Character(this, "F", 10, 200, 250, 5, 200, 270);
+  battleCharacter2 = new Character(this, "C", 10, 200, 250, 5, 200, 270);
+  battleCharacter3 = new Character(this, "D", 10, 200, 250, 5, 200, 270);
+  battleCharacter4 = new Character(this, "H", 10, 200, 250, 5, 200, 270);
+  battleCharacter5 = new Character(this, "E", 10, 200, 250, 5, 200, 270);
+
   enemy1 = new Character(this, "A", 10, 1000, 0, 5, 300, 330);
   enemy2 = new Character(this, "G", 10, 1000, 100, 5, 400, 218);
   enemy3 = new Character(this, "N", 10, 900, 0, 5, 420, 360);
-  
+
   //POSICIONES DE LOS BOTONES
   battle1xPositions = new SimpleList();
   battle1xPositions.addNode(545);
@@ -386,15 +404,19 @@ void setup(){
   game.addBattle(battle2);
   game.addBattle(battle3);
   
+  // Agregar batallas a WebWarriors
+  game.addBattle(battle1);
+  game.addBattle(battle2);
+  game.addBattle(battle3);
+
   characterSelector = new DoublyList();
   characterSelector.addNode(loadImage("SelPersonaje1.png"));
   characterSelector.addNode(loadImage("SelPersonaje2.png"));
   characterSelector.addNode(loadImage("SelPersonaje3.png"));
   characterSelector.addNode(loadImage("SelPersonaje4.png"));
   characterSelector.addNode(loadImage("SelPersonaje5.png"));
-  
+
   timer = new Timer();
-  
   youWon1 = new Movie(this, "youWon.mp4");
   youLose1 = new Movie(this, "youLose.mp4");
   areYouReady = new Movie(this, "areYouReady.mp4");
@@ -405,8 +427,8 @@ void movieEvent(Movie m) {
   m.read();  // Lee el fotograma del video
 }
 
-void draw(){
-  
+void draw() {
+
   background(0);
   if (screen == 0) {
     image(principalPage, 0, 0, width, height);
@@ -419,7 +441,6 @@ void draw(){
     }
 
     characterSelector.displayCharacter();
-    
   } else if (screen == 2) {
     image(credits, 0, 0, width, height);
   } else if (screen == 3) {
@@ -427,9 +448,39 @@ void draw(){
   } else if (screen == 4) {
     image(setting, 0, 0, width, height);
   } else if (screen == 5) {
-    image(mapa, 0, 0, width, height);
-    if(map1){
-        image(backgroundImage1, -backgroundOffset, 0);
+    switch(characterSelector.getCharacterNumber()) {
+    case 1:
+      mainCharacter = character1;
+      battleCharacter = battleCharacter1;
+      break;
+    case 2:
+      mainCharacter = character2;
+      battleCharacter = battleCharacter2;
+      break;
+    case 3:
+      mainCharacter = character3;
+      battleCharacter = battleCharacter3;
+      break;
+    case 4:
+      mainCharacter = character4;
+      battleCharacter = battleCharacter4;
+      break;
+    case 5:
+      mainCharacter = character5;
+      battleCharacter = battleCharacter5;
+      break;
+    }
+
+    if (!levelLocked3) {
+      image(mapa, 0, 0, width, height);
+    } else if (!levelLocked2) {
+      image(mapaBlock3, 0, 0, width, height);
+    } else {
+      image(mapaBlock, 0, 0, width, height);
+    }
+
+    if (map1) {
+      image(backgroundImage1, -backgroundOffset, 0);
         
         //BATALLAS EN JUEGO
         if (game.isBattleActive()) {
@@ -496,9 +547,19 @@ void draw(){
             battleFinished = true;
           }
         }
-    }else if(map2 && !levelLocked2){ // mapaaaaaaa
+    } else if (levelLocked2 && map2) {
+      if (showLevelLocked2) {
+        finishTimeLevelLocked = millis() - startTimeLevelLocked;
+        if (finishTimeLevelLocked < 3000) {
+          image(youWon, 0, 0); // Muestra la imagen en (100, 100)
+        } else {
+          showLevelLocked2 = false; // Deja de mostrar la imagen después de 5 segundos
+        }
+      }
+    } else if (map2 && !levelLocked2) { // mapaaaaaaa
       image(backgroundImage2, -backgroundOffset, 0);
       ///BATALLAS EN JUEGO
+       
         if (game.isBattleActive()) {
           timer.pause();
           game.updateBattle(mainCharacter.getLife());
@@ -561,7 +622,16 @@ void draw(){
             battleFinished = true;
           }
         }
-    }else if(map3){
+    } else if (levelLocked3 && map3) {
+      if (showLevelLocked3) {
+        finishTimeLevelLocked = millis() - startTimeLevelLocked;
+        if (finishTimeLevelLocked < 3000) {
+          image(youWon, 0, 0); // Muestra la imagen en (100, 100)
+        } else {
+          showLevelLocked2 = false; // Deja de mostrar la imagen después de 5 segundos
+        }
+      }
+    } else if (map3 && !levelLocked3) {
       image(backgroundImage3, -backgroundOffset, 0);
         //BATALLAS EN JUEGO
         if (game.isBattleActive()) {
@@ -620,13 +690,13 @@ void draw(){
         //FALTA AGREGAR EL battleFinished = true; EN LA VALIDACIÓN DE FINALIZAR EL NIVEL 3
       }
   }
-  
+
   textFont(mouse);
-  text("mouseX "+ mouseX + " mouseY " + mouseY + " offsetX " + backgroundOffset + " Total " + (int(mouseX) + backgroundOffset), 20, 100);
+  text("mouseX "+ mouseX + " mouseY " + mouseY + " offsetX" + backgroundOffset + " Total" + (int(mouseX) + backgroundOffset), 20, 20);
 }
 
 void mousePressed() {
-  
+
   float dx1 = 922, dy1 = 297, ix1 = 560, iy1 = 297;
   float dx2 = 974, dy2 = 358, ix2 = 509, iy2 = 358;
   float dx3 = 922, dy3 = 410, ix3 = 560, iy3 = 410;
@@ -642,44 +712,48 @@ void mousePressed() {
       screen = 4;
     }
   } else if (screen == 1) {
+    levelLocked = false;
     if (isPointInTriangle(mouseX, mouseY, dx1, dy1, dx2, dy2, dx3, dy3)) {
       characterSelector.nextCharacter();
     } else if (isPointInTriangle(mouseX, mouseY, ix1, iy1, ix2, iy2, ix3, iy3)) {
       characterSelector.prevCharacter();
     } else if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49) {
+      levelLocked = true;
       screen = 0;
     } else if (mouseX > 694 && mouseX <792 && mouseY >600 && mouseY <650) {
       screen = 5;
       timer.start();
     }
-  } else if(screen == 5 && !game.isBattleActive()){
-      if(mouseX>290 && mouseX<378 && mouseY>509 && mouseY<556){
-        map1 = true;
-        map2 = false;
-        map3 = false;
-      }else if(mouseX>1141 && mouseX<1245 && mouseY>637 && mouseY<692){
-        if(levelLocked2){
-          
-        }else{
-          map1 = false;
-          map2 = true;
-          map3 = false;
-        }
-      }else if(mouseX>718 && mouseX<839 && mouseY>623 && mouseY<688){
-        if(levelLocked3){
-          
-        }else{
-          map1 = false;
-          map2 = false;
-          map3 = true;
-        }
-      }
-  } else if (screen == 2 || screen == 3 || screen == 4) {
+  } else if (screen == 5 && !game.isBattleActive()) {
+    if (mouseX>290 && mouseX<378 && mouseY>509 && mouseY<556) {
+      map1 = true;
+      map2 = false;
+      map3 = false;
+    } else if (mouseX>1141 && mouseX<1245 && mouseY>637 && mouseY<692) {
+      map1 = false;
+      map2 = true;
+      map3 = false;
+      showLevelLocked2 = true;
+      startTimeLevelLocked = millis();
+    } else if (mouseX>718 && mouseX<839 && mouseY>623 && mouseY<688) {
+      map1 = false;
+      map2 = false;
+      map3 = true;
+      showLevelLocked3 = true;
+      startTimeLevelLocked = millis();
+    }
+  } else if (screen == 1 || screen == 2 || screen == 3 || screen == 4) {
     if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49) {
+      levelLocked = true;
       screen = 0;
     }
   }
-  
+  if (!levelLocked) {
+    if (mouseX >20 && mouseX < 141 && mouseY> 27 && mouseY< 47) {
+      screen = 1;
+    }
+  }
+
   if (game.isBattleActive()) {
     game.mousePressed();
   }
