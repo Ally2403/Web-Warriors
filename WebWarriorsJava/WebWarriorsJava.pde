@@ -4,6 +4,12 @@ WebWarriors game;
 PImage backgroundImage1, backgroundImage2, backgroundImage3;
 PImage character, combate, youWon, youLose, next, textBox, optionBox;
 PImage lifeBar0, lifeBar1, lifeBar2, lifeBar3, lifeBar4, lifeBar5, lifeBar6, lifeBar7, lifeBar8, lifeBar9, lifeBar10;
+PImage helpMessage1, helpMessage2, helpMessage3, helpMessage4;
+boolean showMessage1 = true, showMessage2 = true, showMessage3 = true, showMessage4 = true;
+int message1X = 300, message1Y = 200;
+int message2X = 600, message2Y = 200;
+int message3X = 900, message3Y = 200;
+int message4X = 1200, message4Y = 200;
 Character mainCharacter, enemy1, enemy2, enemy3, battleCharacter;
 GifPlayer gifPlayer;
 boolean showYouWon = false, showYouLose = false;
@@ -78,6 +84,11 @@ void setup(){
   lifeBar10 = loadImage("Z10.png");
   lifeBar10.resize(350, 40);
   
+  helpMessage1 = loadImage("helpMessage1.png");
+  helpMessage2 = loadImage("helpMessage2.png");
+  helpMessage3 = loadImage("helpMessage3.png");
+  helpMessage4 = loadImage("helpMessage4.png");
+  
   game = new WebWarriors(this);
   game.addSong("music1.mp3");
   game.addSong("music2.mp3");
@@ -93,7 +104,7 @@ void setup(){
   game.addPlatform(new Platform(1, 1740, 500, 350, 15));
   game.addPlatform(new Platform(1, 2195, 370, 350, 15));
   game.addPlatform(new Platform(1, 2867, 565, 125, 15));
-  game.addPlatform(new Platform(1, 2993, 492, 688, 55));
+  game.addPlatform(new Platform(1, 2993, 492, 688, 105));
   game.addPlatform(new Platform(1, 3680, 630, 220, 15));
   game.addPlatform(new Platform(1, 3900, 545, 352, 15));
   game.addPlatform(new Platform(1, 4252, 630, 910, 15));
@@ -431,6 +442,19 @@ void draw(){
     if(map1){
         image(backgroundImage1, -backgroundOffset, 0);
         
+        if (showMessage1) {
+          image(helpMessage1, message1X, message1Y);
+        }
+        if (showMessage2) {
+          image(helpMessage2, message2X, message2Y);
+        }
+        if (showMessage3) {
+          image(helpMessage3, message3X, message3Y);
+        }
+        if (showMessage4) {
+          image(helpMessage4, message4X, message4Y);
+        }
+              
         //BATALLAS EN JUEGO
         if (game.isBattleActive()) {
           timer.pause();
@@ -459,9 +483,9 @@ void draw(){
           mainCharacter.updateLifeBar(this);
           
           //JUEGO PLATAFORMAS
-          mainCharacter.move(this, 1);
-          mainCharacter.display(this);
           moveBackground();
+          mainCharacter.display(this);
+          mainCharacter.move(this, 1);
           timer.time();
           // Mostrar plataformas
           Node platformNode = game.getPlatforms().PTR;
