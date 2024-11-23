@@ -29,16 +29,16 @@ public class WebWarriors {
     this.battleList = new SimpleList();
     this.spikes = new SimpleList();
     
-    jumpSound = new SoundFile(app, "jump.wav");
-    spikeHitSound = new SoundFile(app, "spike_hit.wav");
-    portalSound = new SoundFile(app, "portal.wav");
-    bonusSound = new SoundFile(app, "bonus.wav");
-    victorySound = new SoundFile(app, "victory.wav");
-    virusAttackSound = new SoundFile(app, "virus_attack.wav");
+    jumpSound = new SoundFile(app, "salto.mp3");
+    spikeHitSound = new SoundFile(app, "dañoPincho.mp3");
+    portalSound = new SoundFile(app, "portal.mp3");
+    bonusSound = new SoundFile(app, "bonus.mp3");
+    victorySound = new SoundFile(app, "victory.mp3");
+    virusAttackSound = new SoundFile(app, "virusAttack.mp3");
     virusAttackedSound = new SoundFile(app, "virus_attacked.wav");
     computerAttackSound = new SoundFile(app, "computer_attack.wav");
     robotAttackSound = new SoundFile(app, "robot_attack.wav");
-    characterAttackSound = new SoundFile(app, "");
+    characterAttackSound = new SoundFile(app, "puños.mp3");
 
   }
   
@@ -206,7 +206,7 @@ public class WebWarriors {
     if (robotAttackSound != null) robotAttackSound.play();
   }
   
-  public void playCharacterAttack(){
+  public void playCharacterAttackSound(){
     if (characterAttackSound != null) characterAttackSound.play();
   }
   

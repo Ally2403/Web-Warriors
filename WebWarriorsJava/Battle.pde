@@ -152,7 +152,7 @@ public class Battle {
 
             // Reducir la salud del enemigo
             enemyHealth -= damage;
-            game.playtRobotAttackSound();
+            game.playCharacterAttackSound();
             if(damage != 0){
               battleCharacter.vibrate();
             }
@@ -198,6 +198,7 @@ public class Battle {
             
           // El enemigo hace un ataque
           int enemyDamage = (int) random(1, 5); // Daño aleatorio del enemigo
+          game.playVirusAttackSound(); // corregir !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!! !!!!!
           playerHealth -= enemyDamage;
           // Mensaje de daño
           switch (enemyDamage){

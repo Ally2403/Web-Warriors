@@ -96,8 +96,8 @@ void setup(){
   helpMessage4.resize(200, 100);
   
   game = new WebWarriors(this);
-  game.addSong("music1.mp3");
-  game.addSong("music2.mp3");
+  //game.addSong("music1.mp3");
+  //game.addSong("music2.mp3");
   
   //Plataformas
   
@@ -691,6 +691,7 @@ void draw(){
             timer.restart();
             booleanBattle3 = false;
             battleFinished = true;
+            game.playVictorySound();
           }
         
         // Derrota jugador

@@ -163,11 +163,7 @@ public class Character {
         }
       }
       
-      // Salto
-      if (moveUp && onGround) {
-        velocityY = jumpStrength;
-        onGround = false;  
-      }
+      
       
       constrainBorders(app);
   }
