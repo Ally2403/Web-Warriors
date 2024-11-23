@@ -28,14 +28,7 @@ public class Battle {
     private boolean showStartImage; // Indica si se debe mostrar la imagen inicial
 
     // Daño que los botones causan en cada ronda
-    private int[][] damageMatrix = {
-        {2, 3, 4, 0}, // Daños para ronda 1
-        {1, 4, 3, 0}, // Daños para ronda 2
-        {3, 0, 1, 4}, // Daños para ronda 3
-        {4, 1, 2, 3}, // Daños para ronda 4
-        {2, 3, 4, 0}, // Daños para ronda 5
-        {3, 4, 1, 0}  // Daños para ronda 6
-    };
+    private int[][] damageMatrix;
     
     private int currentCommentIndex; // Índice del comentario actual
     private int letterCount;         // Contador de letras mostradas
@@ -47,8 +40,9 @@ public class Battle {
     
     private WebWarriors game; // Referencia a WebWarriors
 
-    public Battle(PApplet app, SimpleList textsRound0, SimpleList textsRound1, SimpleList textsRound2, SimpleList textsRound3, SimpleList textsRound4, SimpleList textsRound5, SimpleList xPositions, SimpleList yPositions, WebWarriors game, SimpleList comments, Character battleCharacter, Character enemy) {
+    public Battle(PApplet app, int[][] damageMatrix, SimpleList textsRound0, SimpleList textsRound1, SimpleList textsRound2, SimpleList textsRound3, SimpleList textsRound4, SimpleList textsRound5, SimpleList xPositions, SimpleList yPositions, WebWarriors game, SimpleList comments, Character battleCharacter, Character enemy) {
         this.app = app;
+        this.damageMatrix = damageMatrix;
         this.textsRound0 = textsRound0;
         this.textsRound1 = textsRound1;
         this.textsRound2 = textsRound2;
@@ -182,7 +176,13 @@ public class Battle {
             if (enemyHealth <= 0) {
                 System.out.print("you won");
                 showYouWon = true;
-                youWon1.play();
+                if(youWon1.isPlaying()){
+                  //youWon1.stop();
+                  youWon1.jump(0);
+                  youWon1.play();
+                }else{
+                  youWon1.play();
+                }
                 startTime = millis();
                 inBattle = false; // Terminar la batalla si el enemigo muere
                 game.setBattleState(false); // Actualizar battleState en WebWarriors
@@ -235,6 +235,7 @@ public class Battle {
               this.playerHealth = 0;
               System.out.print("you lose");
               showYouLose = true;
+              youLose1.jump(0);
               youLose1.play();
               startTime = millis();
               inBattle = false; // Terminar la batalla si el jugador muere

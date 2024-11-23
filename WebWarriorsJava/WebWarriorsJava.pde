@@ -278,6 +278,15 @@ void setup(){
   battle1TextsRound5.addNode("Avoid confrontation but do nothing");
   battle1TextsRound5.addNode("");
   
+  int[][] damageMatrix1 = {
+        {2, 3, 4, 0}, // Daños para ronda 1
+        {1, 4, 3, 0}, // Daños para ronda 2
+        {3, 0, 1, 4}, // Daños para ronda 3
+        {4, 1, 2, 3}, // Daños para ronda 4
+        {2, 3, 4, 0}, // Daños para ronda 5
+        {3, 4, 1, 0}  // Daños para ronda 6
+  };
+  
   //Comentarios enemigos Battle 1
   commentsBattle1 = new SimpleList();
   commentsBattle1.addNode("Nobody likes\nyou here.\nWhy don't you\njust leave and\nstop wasting\neveryone's time?");
@@ -295,50 +304,59 @@ void setup(){
   battle2TextsRound4 = new SimpleList();
   battle2TextsRound5 = new SimpleList();
   //round 0
-  battle2TextsRound0.addNode("1");
-  battle2TextsRound0.addNode("1");
-  battle2TextsRound0.addNode("1");
-  battle2TextsRound0.addNode("1");
+  battle2TextsRound0.addNode("Ignore and report\nthe message now");
+  battle2TextsRound0.addNode("Submit all the\nrequested info");
+  battle2TextsRound0.addNode("Call your bank\nto confirm details");
+  battle2TextsRound0.addNode("Share only partial\naccount info");
   battle2TextsRound0.addNode("");
   //round 1
-  battle2TextsRound1.addNode("1");
-  battle2TextsRound1.addNode("1");
-  battle2TextsRound1.addNode("1");
-  battle2TextsRound1.addNode("1");
+  battle2TextsRound1.addNode("Ask for proof of\ntheir identity");
+  battle2TextsRound1.addNode("Send them a small\nfavor to test them");
+  battle2TextsRound1.addNode("Believe and help\nthem immediately");
+  battle2TextsRound1.addNode("Call your friend\nto confirm");
   battle2TextsRound1.addNode("");
   //round 2
-  battle2TextsRound2.addNode("1");
-  battle2TextsRound2.addNode("1");
-  battle2TextsRound2.addNode("1");
-  battle2TextsRound2.addNode("1");
+  battle2TextsRound2.addNode("Give full access to\nresolve the issue");
+  battle2TextsRound2.addNode("Ask for credentials\nto verify them");
+  battle2TextsRound2.addNode("Allow limited access\nto your computer");
+  battle2TextsRound2.addNode("Refuse and block\nthe contact");
   battle2TextsRound2.addNode("");
   //round 3
-  battle2TextsRound3.addNode("1");
-  battle2TextsRound3.addNode("1");
-  battle2TextsRound3.addNode("1");
-  battle2TextsRound3.addNode("1");
+  battle2TextsRound3.addNode("Donate immediately\nwithout checking");
+  battle2TextsRound3.addNode("Donate a little\nto test them");
+  battle2TextsRound3.addNode("Research the charity\nbefore donating");
+  battle2TextsRound3.addNode("Ask for official\ndocuments to verify");
   battle2TextsRound3.addNode("");
   //round 4
-  battle2TextsRound4.addNode("1");
-  battle2TextsRound4.addNode("1");
-  battle2TextsRound4.addNode("1");
-  battle2TextsRound4.addNode("1");
+  battle2TextsRound4.addNode("Call your manager\nand check");
+  battle2TextsRound4.addNode("Send less critical\nfiles first");
+  battle2TextsRound4.addNode("Check the email\naddress to verify");
+  battle2TextsRound4.addNode("Send the requested\nfiles right away");
   battle2TextsRound4.addNode("");
   //round 5
-  battle2TextsRound5.addNode("1");
-  battle2TextsRound5.addNode("1");
-  battle2TextsRound5.addNode("1");
-  battle2TextsRound5.addNode("1");
+  battle2TextsRound5.addNode("Search online for\nscams like this");
+  battle2TextsRound5.addNode("Check your official\ntransaction history");
+  battle2TextsRound5.addNode("Provide your account\ninfo for the refund");
+  battle2TextsRound5.addNode("Follow the link to\ninvestigate further");
   battle2TextsRound5.addNode("");
+  
+  int [][] damageMatrix2 = {
+    {3, 0, 4, 2}, // Daños para ronda 1
+    {4, 1, 0, 3}, // Daños para ronda 2
+    {0, 3, 2, 4}, // Daños para ronda 3
+    {0, 2, 4, 3}, // Daños para ronda 4
+    {4, 1, 3, 0}, // Daños para ronda 5
+    {3, 4, 0, 1}  // Daños para ronda 6
+  };
   
   //Comentarios enemigos Battle 2
   commentsBattle2 = new SimpleList();
-  commentsBattle2.addNode("1");
-  commentsBattle2.addNode("1");
-  commentsBattle2.addNode("1");
-  commentsBattle2.addNode("1");
-  commentsBattle2.addNode("1");
-  commentsBattle2.addNode("1");
+  commentsBattle2.addNode("I'm your bank.\nPlease confirm\nyour account\ndetails for a\nroutine security\ncheck.");
+  commentsBattle2.addNode("Hi, this is\nyour friend.\nI changed my\nnumber. Can you\nhelp me with a\nquick favor?");
+  commentsBattle2.addNode("Your computer is\nat risk!\nI'm a technician,\nand I can fix\nit remotely\nfor free.");
+  commentsBattle2.addNode("I'm from a\npopular charity.\nWould you like\nto donate to\nhelp children\nin need?");
+  commentsBattle2.addNode("I'm your manager.\nPlease send me\nthe client's\nprivate files\nimmediately.");
+  commentsBattle2.addNode("You've been\novercharged.\nClick here to\nclaim your refund\nright away!");
   
   // BATALLA NIVEL 3
   battle3TextsRound0 = new SimpleList();
@@ -348,55 +366,64 @@ void setup(){
   battle3TextsRound4 = new SimpleList();
   battle3TextsRound5 = new SimpleList();
   //round 0
-  battle3TextsRound0.addNode("1");
-  battle3TextsRound0.addNode("1");
-  battle3TextsRound0.addNode("1");
-  battle3TextsRound0.addNode("1");
+  battle3TextsRound0.addNode("Tell them your\nreal name and age");
+  battle3TextsRound0.addNode("Don't reply and\nblock the user");
+  battle3TextsRound0.addNode("Give a fake\nname and age");
+  battle3TextsRound0.addNode("Say you don't share\npersonal info online");
   battle3TextsRound0.addNode("");
   //round 1
-  battle3TextsRound1.addNode("1");
-  battle3TextsRound1.addNode("1");
-  battle3TextsRound1.addNode("1");
-  battle3TextsRound1.addNode("1");
+  battle3TextsRound1.addNode("Say you're not\ncomfortable with it");
+  battle3TextsRound1.addNode("Send the photo\nthey requested");
+  battle3TextsRound1.addNode("Report the account\nsuspicious behavior");
+  battle3TextsRound1.addNode("Ask why they\nneed the photo");
   battle3TextsRound1.addNode("");
   //round 2
-  battle3TextsRound2.addNode("1");
-  battle3TextsRound2.addNode("1");
-  battle3TextsRound2.addNode("1");
-  battle3TextsRound2.addNode("1");
+  battle3TextsRound2.addNode("Be cautious and\nkeep your distance");
+  battle3TextsRound2.addNode("Politely decline\nfurther conversation");
+  battle3TextsRound2.addNode("Agree and continue\nchatting");
+  battle3TextsRound2.addNode("Share more about\nyou to build trust");
   battle3TextsRound2.addNode("");
   //round 3
-  battle3TextsRound3.addNode("1");
-  battle3TextsRound3.addNode("1");
-  battle3TextsRound3.addNode("1");
-  battle3TextsRound3.addNode("1");
+  battle3TextsRound3.addNode("Ask why they\nneed to call you");
+  battle3TextsRound3.addNode("Refuse and block\nthe contact");
+  battle3TextsRound3.addNode("Agree to talk\nover the phone");
+  battle3TextsRound3.addNode("Keep chatting but\navoid the call");
   battle3TextsRound3.addNode("");
   //round 4
-  battle3TextsRound4.addNode("1");
-  battle3TextsRound4.addNode("1");
-  battle3TextsRound4.addNode("1");
-  battle3TextsRound4.addNode("1");
+  battle3TextsRound4.addNode("Say you're not\ncomfortable meeting");
+  battle3TextsRound4.addNode("Avoid answering\nthe question");
+  battle3TextsRound4.addNode("Agree to meet them");
+  battle3TextsRound4.addNode("Tell an adult now\nabout the request");
   battle3TextsRound4.addNode("");
   //round 5
-  battle3TextsRound5.addNode("1");
-  battle3TextsRound5.addNode("1");
-  battle3TextsRound5.addNode("1");
-  battle3TextsRound5.addNode("1");
+  battle3TextsRound5.addNode("Report the account\nto authorities");
+  battle3TextsRound5.addNode("Apologize and\ncontinue chatting");
+  battle3TextsRound5.addNode("Seek help from a\ntrusted adult");
+  battle3TextsRound5.addNode("Agree to meet them\nto avoid conflict");
   battle3TextsRound5.addNode("");
+  
+  int [][] damageMatrix3 = {
+    {0, 4, 1, 3}, // Daños para ronda 1
+    {3, 0, 4, 1}, // Daños para ronda 2
+    {4, 3, 1, 0}, // Daños para ronda 3
+    {1, 4, 0, 2}, // Daños para ronda 4
+    {3, 1, 0, 4}, // Daños para ronda 5
+    {4, 2, 3, 0}  // Daños para ronda 6
+  };
   
   //Comentarios enemigos Battle 3
   commentsBattle3 = new SimpleList();
-  commentsBattle3.addNode("1");
-  commentsBattle3.addNode("1");
-  commentsBattle3.addNode("1");
-  commentsBattle3.addNode("1");
-  commentsBattle3.addNode("1");
-  commentsBattle3.addNode("1");
-
+  commentsBattle3.addNode("Hey, you look\nlike a cool\nperson!\nWhat's your name\nand how old\nare you?");
+  commentsBattle3.addNode("I go to your\nschool. Can you\nsend me a picture\nso I can\nrecognize you?");
+  commentsBattle3.addNode("We have so much\nin common.\nI think we'd be\ngreat friends!");
+  commentsBattle3.addNode("I know someone\nwho looks just\nlike you.\nCan I call you\nto confirm\nit's you?");
+  commentsBattle3.addNode("I feel so close\nto you. I'd like\nto meet up\nsomewhere private\nto talk.");
+  commentsBattle3.addNode("You're special to\nme. If you don't\nmeet me, I'll be\nreally upset\nand lonely.");
+  
   // Crear batallas
-  battle1 = new Battle(this, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy3);
-  battle2 = new Battle(this, battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle2, battleCharacter, enemy2); // Puedes personalizar otra batalla
-  battle3 = new Battle(this, battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3TextsRound3, battle3TextsRound4, battle3TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle3, battleCharacter, enemy1); 
+  battle1 = new Battle(this, damageMatrix1, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy3);
+  battle2 = new Battle(this, damageMatrix2, battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle2, battleCharacter, enemy2); // Puedes personalizar otra batalla
+  battle3 = new Battle(this, damageMatrix3, battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3TextsRound3, battle3TextsRound4, battle3TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle3, battleCharacter, enemy1); 
   
   // Agregar batallas a WebWarriors
   game.addBattle(battle1);
