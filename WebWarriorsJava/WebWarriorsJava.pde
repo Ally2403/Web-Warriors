@@ -22,7 +22,7 @@ SimpleList battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3Te
 
 SimpleList battle1xPositions, battle1yPositions;
 Battle battle1, battle2, battle3;
-Movie youWon1, youLose1, areYouReady;
+Movie youWon1, youLose1, areYouReady; 
 
 //JUANCHO STUFF
 PImage principalPage, selectYourCharacter, howToPlay, credits, setting, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn = null;
