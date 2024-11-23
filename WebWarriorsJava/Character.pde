@@ -125,6 +125,7 @@ public class Character {
         isJumping = true; 
         jumpTime = 0; 
         onGround = false;  
+        game.playJumpSound();
       } else if (moveUp && isJumping && jumpTime < maxJumpTime) {
         velocityY -= gravity; // Reduce la velocidad hacia abajo mientras mantienes el salto
         jumpTime++; 
@@ -149,6 +150,7 @@ public class Character {
           velocityY = -20;
           isInvulnerable = true;
           blinkTimer = 0;
+          game.playSpikeHitSound();
         }
       }
       updateInvulnerability(); // Actualizar estado de inmunidad

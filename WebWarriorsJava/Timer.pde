@@ -79,9 +79,20 @@ class Timer {
     textSize(40);
     text(nf(this.minute(), 2)+":"+nf(this.second(), 2)+":"+nf(this.milisecond(), 2), 600, 100);
   
-    //Cuando llegue a 100 segundos muera el personaje
-    if (this.minute() == 1 && this.second() >= 40 ) {
-      print("you died");
+    if (this.second() >= 50) {
+      screen = 0;
+      mainCharacter.gifPlayer.setX(0);
+      mainCharacter.gifPlayer.setY(0);
+      mainCharacter.setLife(10);
+      backgroundOffset = 0;
+      this.restart();
+      battleFinished = true;
+      booleanBattle1 = false;
+      booleanBattle2 = false;
+      booleanBattle3 = false;
+      map1 = false;
+      map2 = false;
+      map3 = false;
     }
   }
 }

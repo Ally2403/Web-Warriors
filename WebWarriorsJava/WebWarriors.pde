@@ -11,6 +11,16 @@ public class WebWarriors {
   private int activeBattleIndex = 0; // Índice de la batalla activa
   private boolean battleState = false; // Controla si una batalla está en curso
   private boolean count = true;
+  private SoundFile jumpSound;
+  private SoundFile spikeHitSound;
+  private SoundFile portalSound;
+  private SoundFile bonusSound;
+  private SoundFile victorySound;
+  private SoundFile virusAttackSound;
+  private SoundFile virusAttackedSound;
+  private SoundFile computerAttackSound;
+  private SoundFile robotAttackSound;
+  private SoundFile characterAttackSound;
 
   public WebWarriors(PApplet app) {
     this.app = app;
@@ -18,6 +28,17 @@ public class WebWarriors {
     this.platforms = new SimpleList();
     this.battleList = new SimpleList();
     this.spikes = new SimpleList();
+    
+    jumpSound = new SoundFile(app, "jump.wav");
+    spikeHitSound = new SoundFile(app, "spike_hit.wav");
+    portalSound = new SoundFile(app, "portal.wav");
+    bonusSound = new SoundFile(app, "bonus.wav");
+    victorySound = new SoundFile(app, "victory.wav");
+    virusAttackSound = new SoundFile(app, "virus_attack.wav");
+    virusAttackedSound = new SoundFile(app, "virus_attacked.wav");
+    computerAttackSound = new SoundFile(app, "computer_attack.wav");
+    robotAttackSound = new SoundFile(app, "robot_attack.wav");
+    characterAttackSound = new SoundFile(app, "");
 
   }
   
@@ -147,4 +168,46 @@ public class WebWarriors {
     app.textAlign(PApplet.CENTER, PApplet.CENTER);
     app.text("Now Playing: " + currentSong.info, app.width / 2, app.height / 2);
   }
+  
+  // EFECTOS DE SONIDO
+  public void playJumpSound() {
+    if (jumpSound != null) jumpSound.play();
+  }
+  
+  public void playSpikeHitSound() {
+    if (spikeHitSound != null) spikeHitSound.play();
+  }
+  
+  public void playPortalSound() {
+    if (portalSound != null) portalSound.play();
+  }
+  
+  public void playBonusSound() {
+    if (bonusSound != null) bonusSound.play();
+  }
+  
+  public void playVictorySound() {
+    if (victorySound != null) victorySound.play();
+  }
+  
+  public void playVirusAttackSound() {
+    if (virusAttackSound != null) virusAttackSound.play();
+  }
+  
+  public void playVirusAttackedSound() {
+    if (virusAttackedSound != null) virusAttackedSound.play();
+  }
+  
+  public void playComputerAttackSound() {
+    if (computerAttackSound != null) computerAttackSound.play();
+  }
+  
+  public void playRobotAttackSound() {
+    if (robotAttackSound != null) robotAttackSound.play();
+  }
+  
+  public void playCharacterAttack(){
+    if (characterAttackSound != null) characterAttackSound.play();
+  }
+  
 }

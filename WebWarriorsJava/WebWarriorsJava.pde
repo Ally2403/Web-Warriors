@@ -6,10 +6,11 @@ PImage character, combate, youWon, youLose, next, textBox, optionBox;
 PImage lifeBar0, lifeBar1, lifeBar2, lifeBar3, lifeBar4, lifeBar5, lifeBar6, lifeBar7, lifeBar8, lifeBar9, lifeBar10;
 PImage helpMessage1, helpMessage2, helpMessage3, helpMessage4;
 boolean showMessage1 = true, showMessage2 = true, showMessage3 = true, showMessage4 = true;
-int message1X = 300, message1Y = 200;
-int message2X = 600, message2Y = 200;
-int message3X = 900, message3Y = 200;
-int message4X = 1200, message4Y = 200;
+
+int message1X = 845, message1Y = 280;
+int message2X = 1730, message2Y = 100;
+int message3X = 3870, message3Y = 235;
+int message4X = 7140, message4Y = 200;
 Character mainCharacter, enemy1, enemy2, enemy3, battleCharacter;
 GifPlayer gifPlayer;
 boolean showYouWon = false, showYouLose = false;
@@ -88,6 +89,11 @@ void setup(){
   helpMessage2 = loadImage("helpMessage2.png");
   helpMessage3 = loadImage("helpMessage3.png");
   helpMessage4 = loadImage("helpMessage4.png");
+  
+  helpMessage1.resize(200, 100);
+  helpMessage2.resize(200, 100);
+  helpMessage3.resize(200, 100);
+  helpMessage4.resize(200, 100);
   
   game = new WebWarriors(this);
   game.addSong("music1.mp3");
@@ -443,16 +449,16 @@ void draw(){
         image(backgroundImage1, -backgroundOffset, 0);
         
         if (showMessage1) {
-          image(helpMessage1, message1X, message1Y);
+          image(helpMessage1, message1X - backgroundOffset, message1Y);
         }
-        if (showMessage2) {
-          image(helpMessage2, message2X, message2Y);
+        if (showMessage2 && backgroundOffset > 750 && backgroundOffset < 1490) {
+          image(helpMessage2, message2X - backgroundOffset, message2Y);
         }
-        if (showMessage3) {
-          image(helpMessage3, message3X, message3Y);
+        if (showMessage3 && battleFinished) {
+          image(helpMessage3, message3X - backgroundOffset, message3Y);
         }
         if (showMessage4) {
-          image(helpMessage4, message4X, message4Y);
+          image(helpMessage4, message4X - backgroundOffset, message4Y);
         }
               
         //BATALLAS EN JUEGO
@@ -511,6 +517,7 @@ void draw(){
           
           //verificar que se haya terminado el nivel para pasar al selector de niveles nuevamente
           if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 7400){
+            game.playPortalSound();
             map1 = false;
             levelLocked2 = false;
             backgroundOffset = 0;
@@ -591,6 +598,7 @@ void draw(){
         }
         
         if(mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset == 7500){
+            game.playPortalSound();
             map2 = false;
             levelLocked3 = false;
             backgroundOffset = 0;
@@ -602,7 +610,7 @@ void draw(){
             battleFinished = true;
           }
           
-          // Derrota jugador ERROR CAMBIAR DE MAPAS
+          // Derrota jugador
           if(mainCharacter.getLife() <= 0){
             screen = 0;
             mainCharacter.gifPlayer.setX(0);
@@ -731,13 +739,15 @@ void mousePressed() {
       screen = 0;
     } else if (mouseX > 694 && mouseX <792 && mouseY >600 && mouseY <650) {
       screen = 5;
-      timer.start();
+      
     }
   } else if(screen == 5 && !game.isBattleActive()){
       if(mouseX>290 && mouseX<378 && mouseY>509 && mouseY<556){
         map1 = true;
         map2 = false;
         map3 = false;
+        timer.start();
+        timer.restart();
       }else if(mouseX>1141 && mouseX<1245 && mouseY>637 && mouseY<692){
         if(levelLocked2){
           
@@ -745,6 +755,7 @@ void mousePressed() {
           map1 = false;
           map2 = true;
           map3 = false;
+          timer.restart();
         }
       }else if(mouseX>718 && mouseX<839 && mouseY>623 && mouseY<688){
         if(levelLocked3){
@@ -753,6 +764,7 @@ void mousePressed() {
           map1 = false;
           map2 = false;
           map3 = true;
+          timer.restart();
         }
       }
   } else if (screen == 2 || screen == 3 || screen == 4) {

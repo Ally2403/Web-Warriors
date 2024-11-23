@@ -152,6 +152,7 @@ public class Battle {
 
             // Reducir la salud del enemigo
             enemyHealth -= damage;
+            game.playtRobotAttackSound();
             if(damage != 0){
               battleCharacter.vibrate();
             }
