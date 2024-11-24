@@ -109,8 +109,14 @@ void setup() {
   helpMessage4.resize(200, 100);
 
   game = new WebWarriors(this);
-  //game.addSong("music1.mp3");
-  //game.addSong("music2.mp3");
+
+  game.addSong("Titanium.mp3");
+  game.addSong("Once in Paris.mp3");
+  game.addSong("Jazz song.mp3");
+  game.addSong("Inside you.mp3");
+  game.addSong("Good night chill.mp3");
+  game.addSong("My universe.mp3");
+  game.addSong("Smoke.mp3");
 
   //Plataformas
 
@@ -480,6 +486,8 @@ void movieEvent(Movie m) {
 void draw() {
 
   background(0);
+  game.checkSongEnd();
+  game.getCurrentPlayer().amp(0.3);
   if (screen == 0) {
     image(principalPage, 0, 0, width, height);
   } else if (screen == 1) {
@@ -605,15 +613,6 @@ void draw() {
         mainCharacter.display(this);
         mainCharacter.move(this, 1);
         timer.time();
-        // Mostrar plataformas
-        Node platformNode = game.getPlatforms().PTR;
-        while (platformNode != null) {
-          Platform platform = (Platform) platformNode.info;
-          if (platform.getIndex() == 1) {
-            platform.display(this);
-          }
-          platformNode = platformNode.next;
-        }
 
         //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
         if (mainCharacter.getLife() > 0 && battleFinished) {
@@ -734,15 +733,6 @@ void draw() {
         mainCharacter.display(this);
         moveBackground();
         timer.time();
-        // Mostrar plataformas
-        Node platformNode = game.getPlatforms().PTR;
-        while (platformNode != null) {
-          Platform platform = (Platform) platformNode.info;
-          if (platform.getIndex() == 2) {
-            platform.display(this);
-          }
-          platformNode = platformNode.next;
-        }
 
         //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
         if (mainCharacter.getLife() > 0 && battleFinished) {
@@ -865,15 +855,6 @@ void draw() {
         mainCharacter.display(this);
         moveBackground();
         timer.time();
-        // Mostrar plataformas
-        Node platformNode = game.getPlatforms().PTR;
-        while (platformNode != null) {
-          Platform platform = (Platform) platformNode.info;
-          if (platform.getIndex() == 3) {
-            platform.display(this);
-          }
-          platformNode = platformNode.next;
-        }
 
         //MOSTRAR ENEMIGO EN LA ZONA DESTINADA
         if (mainCharacter.getLife() > 0 && battleFinished) {
@@ -948,6 +929,7 @@ void draw() {
 
   textFont(mouse);
   text("mouseX "+ mouseX + " mouseY " + mouseY + " offsetX" + backgroundOffset + " Total" + (int(mouseX) + backgroundOffset), 20, 20);
+  game.displayCurrentSong();
 }
 
 void mousePressed() {

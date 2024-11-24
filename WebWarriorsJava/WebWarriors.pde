@@ -18,6 +18,8 @@ public class WebWarriors {
   private SoundFile victorySound;
   private SoundFile virusAttackSound;
   private SoundFile characterAttackSound;
+  private int songStartTime;   // Momento en que inició la canción
+  private int songDuration;    // Duración de la canción en milisegundos
 
   public WebWarriors(PApplet app) {
     this.app = app;
@@ -106,9 +108,7 @@ public class WebWarriors {
   
   public void addSong(Object song){
     this.playlist.addNode(song);
-    if (currentSong == null) {
-      setupPlaylist();
-    }
+    setupPlaylist();
   }
   
   public void addPlatform(Object platform){
@@ -130,8 +130,8 @@ public class WebWarriors {
   private void setupPlaylist() {
     // Selecciona una canción aleatoria para comenzar
     currentSong = (DoublyNode) playlist.PTR;
-    int randomStart = (int) app.random(((CircularDoublyList)playlist).size());
-    for (int i = 0; i < randomStart; i++) {
+    int randomStart = (int) app.random(0, ((CircularDoublyList)playlist).size());
+    for (int i = 0; i <= randomStart; i++) {
       currentSong = (DoublyNode) currentSong.next;
     }
     playCurrentSong();
@@ -139,10 +139,25 @@ public class WebWarriors {
 
   public void playCurrentSong() {
     if (currentPlayer != null && currentPlayer.isPlaying()) {
-      currentPlayer.stop();
+        currentPlayer.stop();
     }
     currentPlayer = new SoundFile(app, "data/" + (String) currentSong.info);
-    currentPlayer.play();
+    
+    // Verifica que el archivo se cargue correctamente antes de configurar el volumen
+    if (currentPlayer != null) {
+        currentPlayer.amp(0.3); // Silencia el volumen
+        currentPlayer.play();
+        
+        // Iniciar temporizador para controlar la duración
+        songStartTime = app.millis();
+        songDuration = (int) (currentPlayer.duration() * 1000); // Convertir duración a milisegundos
+    } else {
+        System.out.println("Error al cargar la canción: " + currentSong.info);
+    }
+  }
+  
+  public SoundFile getCurrentPlayer(){
+    return this.currentPlayer;
   }
 
   public void nextSong() {
@@ -154,13 +169,15 @@ public class WebWarriors {
     currentSong = (DoublyNode) currentSong.prev;
     playCurrentSong();
   }
+  
+  public void checkSongEnd() {
+    if (millis() - songStartTime >= songDuration) {
+        nextSong();  // Cambiar a la siguiente canción
+    }
+  }
 
   public void displayCurrentSong() {
-    app.background(255);
-    app.textSize(24);
-    app.fill(0);
-    app.textAlign(PApplet.CENTER, PApplet.CENTER);
-    app.text("Now Playing: " + currentSong.info, app.width / 2, app.height / 2);
+    app.text("Now Playing: " + currentSong.info + "\nPress n for next song or\np for previous song", 980, 30);
   }
   
   // EFECTOS DE SONIDO
