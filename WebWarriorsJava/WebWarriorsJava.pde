@@ -33,12 +33,12 @@ Battle battle1, battle2, battle3;
 Movie youWon1, youLose1, youWon2, youLose2, youWon3, youLose3, areYouReady;
 
 //JUANCHO STUFF
-PImage principalPage, selectYourCharacter, howToPlay, credits, setting, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn = null;
-PImage mapaBlock, mapa, mapaBlock3, levelLockedImage, youLoseImage, youWonImage = null;
+PImage principalPage, selectYourCharacter, howToPlay, credits, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn = null;
+PImage mapaBlock, mapa, mapaBlock3, levelLockedImage, youLoseImage, youWonImage, pauseImage = null;
 int screen = 0, characterVariable = 1;
 boolean oke = false;
 boolean map1, map2, map3 =false;
-boolean levelLocked = true, levelLocked2 = true, levelLocked3 = true;
+boolean levelLocked = true, levelLocked2 = true, levelLocked3 = true, pause = false;
 boolean showLevelLocked2, showLevelLocked3, showYouLoseImage, showYouWonImage;
 DoublyList characterSelector;
 int startTimeLevelLocked, finishTimeLevelLocked, startTimeYouLose, startTimeYouWon;
@@ -61,7 +61,6 @@ void setup() {
   selectYourCharacter = loadImage("SelectYourCharacter.png");
   howToPlay = loadImage("How To Play.png");
   credits = loadImage("Credits.png");
-  setting = loadImage("Settings.png");
   ok = loadImage("Ok.png");
   start = loadImage("Start.png");
   okn = loadImage("Okselect.png");
@@ -74,6 +73,8 @@ void setup() {
   youLoseImage.resize(width, height);
   youWonImage = loadImage("YouWonImage.png");
   youWonImage.resize(width, height);
+  pauseImage = loadImage("pause.png");
+  pauseImage.resize(width, height);
 
   lifeBar0 = loadImage("Z0.png");
   lifeBar0.resize(350, 40);
@@ -449,7 +450,7 @@ void setup() {
   commentsBattle3.addNode("I know someone\nwho looks just\nlike you.\nCan I call you\nto confirm\nit's you?");
   commentsBattle3.addNode("I feel so close\nto you. I'd like\nto meet up\nsomewhere private\nto talk.");
   commentsBattle3.addNode("You're special to\nme. If you don't\nmeet me, I'll be\nreally upset\nand lonely.");
-  
+
   youWon1 = new Movie(this, "youWon.mp4");
   youLose1 = new Movie(this, "youLose.mp4");
   youWon2 = new Movie(this, "youWon.mp4");
@@ -457,7 +458,7 @@ void setup() {
   youWon3 = new Movie(this, "youWon.mp4");
   youLose3 = new Movie(this, "youLose.mp4");
   areYouReady = new Movie(this, "areYouReady.mp4");
-  
+
   // Crear batallas
   battle1 = new Battle(this, damageMatrix1, youWon1, youLose1, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy3);
   battle2 = new Battle(this, damageMatrix2, youWon2, youLose2, battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle2, battleCharacter, enemy2); // Puedes personalizar otra batalla
@@ -503,8 +504,6 @@ void draw() {
     image(credits, 0, 0, width, height);
   } else if (screen == 3) {
     image(howToPlay, 0, 0, width, height);
-  } else if (screen == 4) {
-    image(setting, 0, 0, width, height);
   } else if (screen == 5) {
     switch(characterSelector.getCharacterNumber()) {
     case 1:
@@ -564,7 +563,9 @@ void draw() {
       }
 
       //BATALLAS EN JUEGO
-      if (game.isBattleActive()) {
+      if (pause) {
+        image(pauseImage, 0, 0);
+      } else if (game.isBattleActive()) {
         timer.pause();
         game.updateBattle(mainCharacter.getLife());
       } else if (showYouWon) {
@@ -574,14 +575,14 @@ void draw() {
         if (finishTime < 5000) {
           image(youWon1, 0, 0); // Muestra la imagen en (100, 100)
         } else {
-          
+
           if (youWon1.isPlaying()) {
             youWon1.stop(); // Detén el video antes de reposicionarlo
           }
           if (youWon1.duration() > 0) {
             youWon1.jump(1); // Salta al inicio solo si es seguro
           }
-          
+
           battleFinished = false;
           showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
           timer.resume();
@@ -603,11 +604,11 @@ void draw() {
         }
       } else {
         mainCharacter.updateLifeBar(this);
-        if(from3to1){
+        if (from3to1) {
           mainCharacter.setLife(10);
           from3to1 = false;
         }
-        
+
         //JUEGO PLATAFORMAS
         moveBackground();
         mainCharacter.display(this);
@@ -724,7 +725,7 @@ void draw() {
         }
       } else {
         mainCharacter.updateLifeBar(this);
-        if(from3to1){
+        if (from3to1) {
           mainCharacter.setLife(10);
           from3to1 = false;
         }
@@ -845,11 +846,11 @@ void draw() {
         }
       } else {
         mainCharacter.updateLifeBar(this);
-        if(from3to1){
+        if (from3to1) {
           mainCharacter.setLife(10);
           from3to1 = false;
         }
-        
+
         //JUEGO PLATAFORMAS
         mainCharacter.move(this, 3);
         mainCharacter.display(this);
@@ -939,15 +940,13 @@ void mousePressed() {
   float dx3 = 922, dy3 = 410, ix3 = 560, iy3 = 410;
 
   if (screen == 0) {
-    if (mouseX>78 && mouseX<583 && mouseY>300 && mouseY<352) {
+    if (mouseX > 67 && mouseX < 573 && mouseY > 330 && mouseY<382) {
       screen = 1;
-    } else if (mouseX>154 && mouseX<507 && mouseY>418 && mouseY<468) {
+    } else if (mouseX > 538 && mouseX < 892 && mouseY > 489 && mouseY < 540) {
       screen = 2;
-    } else if (mouseX>869 && mouseX<1426 && mouseY>356 && mouseY<412) {
+    } else if (mouseX > 869 && mouseX < 1426 && mouseY > 375 && mouseY < 433) {
       screen = 3;
-    } else if (mouseX>945 && mouseX<1350 && mouseY>480 && mouseY<538) {
-      screen = 4;
-    }
+    } 
   } else if (screen == 1) {
     levelLocked = false;
     if (game.isPointInTriangle(mouseX, mouseY, dx1, dy1, dx2, dy2, dx3, dy3)) {
@@ -982,7 +981,7 @@ void mousePressed() {
       timer.restart();
       startTimeLevelLocked = millis();
     }
-  } else if (screen == 1 || screen == 2 || screen == 3 || screen == 4) {
+  } else if (screen == 1 || screen == 2 || screen == 3) {
     if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49) {
       levelLocked = true;
       screen = 0;
@@ -991,6 +990,27 @@ void mousePressed() {
   if (!levelLocked) {
     if (mouseX >20 && mouseX < 141 && mouseY> 27 && mouseY< 47) {
       screen = 1;
+    }
+  }
+  if (screen == 5 && pause) {
+    if (mouseX > 552 && mouseX < 948 && mouseY > 253 && mouseY < 340) { //continue
+      pause = false;
+      timer.resume();
+    } else if (mouseX > 529 && mouseX < 970 && mouseY > 389 && mouseY < 536) { // back
+      mainCharacter.gifPlayer.setX(0);
+      mainCharacter.gifPlayer.setY(0);
+      mainCharacter.setLife(10);
+      backgroundOffset = 0;
+      timer.restart();
+      battleFinished = true;
+      booleanBattle1 = false;
+      booleanBattle2 = false;
+      booleanBattle3 = false;
+      map1 = false;
+      map2 = false;
+      map3 = false;
+      pause = false;
+      screen = 0;
     }
   }
 
@@ -1015,6 +1035,10 @@ void keyPressed() {
     game.nextSong();
   } else if (key == 'p') {  // Canción anterior
     game.previousSong();
+  }
+  if ((map1 || map2 || map3) && keyCode == TAB) {
+    pause = true;
+    timer.pause();
   }
 }
 
