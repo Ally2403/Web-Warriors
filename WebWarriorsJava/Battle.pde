@@ -342,6 +342,10 @@ public class Battle {
         }
     }
     
+    public void setBattleCharacter(Character battleCharacter){
+      this.battleCharacter = battleCharacter;
+    }
+    
     public void updatePlayerLifeBar(PApplet app) {
       // Dibujar la barra de vida correspondiente
       switch (this.playerHealth) {
