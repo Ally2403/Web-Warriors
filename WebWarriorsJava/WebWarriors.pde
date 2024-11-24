@@ -8,9 +8,9 @@ public class WebWarriors {
   private List platforms;
   private List battleList; // Lista de batallas
   private List spikes;
-  private int activeBattleIndex = 0; // Índice de la batalla activa
-  private boolean battleState = false; // Controla si una batalla está en curso
-  private boolean count = true;
+  private int activeBattleIndex; // Índice de la batalla activa
+  private boolean battleState; // Controla si una batalla está en curso
+  private boolean count;
   private SoundFile jumpSound;
   private SoundFile spikeHitSound;
   private SoundFile portalSound;
@@ -28,82 +28,21 @@ public class WebWarriors {
     this.battleList = new SimpleList();
     this.spikes = new SimpleList();
     
-    jumpSound = new SoundFile(app, "salto.mp3");
-    spikeHitSound = new SoundFile(app, "dañoPincho.mp3");
-    portalSound = new SoundFile(app, "portal.mp3");
-    bonusSound = new SoundFile(app, "bonus.mp3");
-    victorySound = new SoundFile(app, "victory.mp3");
-    virusAttackSound = new SoundFile(app, "virusAttack.mp3");
-    characterAttackSound = new SoundFile(app, "puños.mp3");
-
-  }
-  
-  //BATTLE METHODS
-  public void setActiveBattle(int index){
-    this.activeBattleIndex = index;
-  }
-  
-  public boolean isBattleActive() {
-    return battleState;
-  }
-
-  public void setBattleState(boolean state) {
-    this.battleState = state;
+    this.jumpSound = new SoundFile(app, "salto.mp3");
+    this.spikeHitSound = new SoundFile(app, "dañoPincho.mp3");
+    this.portalSound = new SoundFile(app, "portal.mp3");
+    this.bonusSound = new SoundFile(app, "bonus.mp3");
+    this.victorySound = new SoundFile(app, "victory.mp3");
+    this.virusAttackSound = new SoundFile(app, "virusAttack.mp3");
+    this.characterAttackSound = new SoundFile(app, "puños.mp3");
+    
+    this.activeBattleIndex = 0;
+    this.battleState = false;
+    this.count = true;
   }
 
   public void addBattle(Battle battle) {
     this.battleList.addNode(battle);
-  }
-
-  public void startBattle(int life) {
-    if (((SimpleList)battleList).size() > 0) {
-      Battle battle = (Battle) ((SimpleList)battleList).getNode(activeBattleIndex);
-      battleState = true;
-      battle.start(life); 
-    }
-  }
-
-  public void nextBattle(int life) {
-    if (activeBattleIndex < ((SimpleList)battleList).size() - 1) {
-      activeBattleIndex++;
-      startBattle(life);
-    }
-  }
-
-  public int updateBattle(int life) {
-    Battle battle = (Battle) ((SimpleList)battleList).getNode(activeBattleIndex);
-    if (battleState && ((SimpleList)battleList).size() > 0) {
-      app.image(combate, 0, 0);
-      if(count){
-        //se pasa la información de la vida en el juego
-        battle.setPlayerHealth(life);
-        count = false;
-      }
-      
-      battle.updatePlayerLifeBar(app);
-      battle.updateEnemyLifeBar(app);
-      battle.displayStatus();
-      battle.displaySquares();
-      battle.displayTurn();
-      if(battle.getEnemyHealth() == 0 || battle.getPlayerHealth() == 0){
-        battleState = false;
-        count = true;
-      }
-    }
-    //se pasa la información de la vida después de la batalla
-    return battle.getPlayerHealth();
-  }
-
-  public void mousePressed() {
-    if (battleState && ((SimpleList)battleList).size() > 0) {
-      Battle battle = (Battle) ((SimpleList)battleList).getNode(activeBattleIndex);
-      battle.mousePressed();
-    }
-  }
-
-  
-  public List getPlaylist(){
-    return this.playlist;
   }
   
   public void addSong(Object song){
@@ -115,98 +54,171 @@ public class WebWarriors {
     this.platforms.addNode(platform);
   }
   
-  public List getPlatforms(){
-    return this.platforms;
-  }
-  
   public void addSpike(Object spike){
     this.spikes.addNode(spike);
   }
   
-  public List getSpikes(){
-    return this.spikes;
+  //BATTLE METHODS
+  public void startBattle(int life) {
+    if (((SimpleList)this.battleList).size() > 0) {
+      Battle battle = (Battle) ((SimpleList)this.battleList).getNode(this.activeBattleIndex);
+      this.battleState = true;
+      battle.start(life); 
+    }
   }
 
+  public void nextBattle(int life) {
+    if (this.activeBattleIndex < ((SimpleList)this.battleList).size() - 1) {
+      this.activeBattleIndex++;
+      startBattle(life);
+    }
+  }
+
+  public int updateBattle(int life) {
+    Battle battle = (Battle) ((SimpleList)this.battleList).getNode(this.activeBattleIndex);
+    if (this.battleState && ((SimpleList)this.battleList).size() > 0) {
+      app.image(combate, 0, 0);
+      if(this.count){
+        //se pasa la información de la vida en el juego
+        battle.setPlayerHealth(life);
+        this.count = false;
+      }
+      
+      battle.updatePlayerLifeBar(app);
+      battle.updateEnemyLifeBar(app);
+      battle.displayStatus();
+      battle.displaySquares();
+      battle.displayTurn();
+      if(battle.getEnemyHealth() == 0 || battle.getPlayerHealth() == 0){
+        this.battleState = false;
+        this.count = true;
+      }
+    }
+    //se pasa la información de la vida después de la batalla
+    return battle.getPlayerHealth();
+  }
+
+  public void mousePressed() {
+    if (this.battleState && ((SimpleList)this.battleList).size() > 0) {
+      Battle battle = (Battle) ((SimpleList)this.battleList).getNode(this.activeBattleIndex);
+      battle.mousePressed();
+    }
+  }
+  
+  //MUSIC METHODS
   private void setupPlaylist() {
     // Selecciona una canción aleatoria para comenzar
-    currentSong = (DoublyNode) playlist.PTR;
-    int randomStart = (int) app.random(0, ((CircularDoublyList)playlist).size());
+    this.currentSong = (DoublyNode) this.playlist.getPTR();
+    int randomStart = (int) app.random(0, ((CircularDoublyList)this.playlist).size());
     for (int i = 0; i <= randomStart; i++) {
-      currentSong = (DoublyNode) currentSong.next;
+      this.currentSong = (DoublyNode) this.currentSong.getNext();
     }
     playCurrentSong();
   }
 
   public void playCurrentSong() {
-    if (currentPlayer != null && currentPlayer.isPlaying()) {
-        currentPlayer.stop();
+    if (this.currentPlayer != null && this.currentPlayer.isPlaying()) {
+        this.currentPlayer.stop();
     }
-    currentPlayer = new SoundFile(app, "data/" + (String) currentSong.info);
+    this.currentPlayer = new SoundFile(app, "data/" + (String) this.currentSong.getInfo());
     
     // Verifica que el archivo se cargue correctamente antes de configurar el volumen
-    if (currentPlayer != null) {
-        currentPlayer.amp(0.3); // Silencia el volumen
-        currentPlayer.play();
+    if (this.currentPlayer != null) {
+        this.currentPlayer.amp(0.3); // Silencia el volumen
+        this.currentPlayer.play();
         
         // Iniciar temporizador para controlar la duración
-        songStartTime = app.millis();
-        songDuration = (int) (currentPlayer.duration() * 1000); // Convertir duración a milisegundos
-    } else {
-        System.out.println("Error al cargar la canción: " + currentSong.info);
+        this.songStartTime = app.millis();
+        this.songDuration = (int) (this.currentPlayer.duration() * 1000); // Convertir duración a milisegundos
     }
-  }
-  
-  public SoundFile getCurrentPlayer(){
-    return this.currentPlayer;
   }
 
   public void nextSong() {
-    currentSong = (DoublyNode) currentSong.next;
+    this.currentSong = (DoublyNode) this.currentSong.getNext();
     playCurrentSong();
   }
 
   public void previousSong() {
-    currentSong = (DoublyNode) currentSong.prev;
+    this.currentSong = (DoublyNode) this.currentSong.getPrev();
     playCurrentSong();
   }
   
   public void checkSongEnd() {
-    if (millis() - songStartTime >= songDuration) {
+    if (millis() - this.songStartTime >= this.songDuration) {
         nextSong();  // Cambiar a la siguiente canción
     }
   }
 
   public void displayCurrentSong() {
-    app.text("Now Playing: " + currentSong.info + "\nPress n for next song or\np for previous song", 980, 30);
+    app.text("Now Playing: " + this.currentSong.getInfo() + "\nPress n for next song or\np for previous song", 980, 30);
   }
   
-  // EFECTOS DE SONIDO
+  // SOUND EFFECTS
   public void playJumpSound() {
-    if (jumpSound != null) jumpSound.play();
+    if (this.jumpSound != null) this.jumpSound.play();
   }
   
   public void playSpikeHitSound() {
-    if (spikeHitSound != null) spikeHitSound.play();
+    if (this.spikeHitSound != null) this.spikeHitSound.play();
   }
   
   public void playPortalSound() {
-    if (portalSound != null) portalSound.play();
+    if (this.portalSound != null) this.portalSound.play();
   }
   
   public void playBonusSound() {
-    if (bonusSound != null) bonusSound.play();
+    if (this.bonusSound != null) this.bonusSound.play();
   }
   
   public void playVictorySound() {
-    if (victorySound != null) victorySound.play();
+    if (this.victorySound != null) this.victorySound.play();
   }
   
   public void playVirusAttackSound() {
-    if (virusAttackSound != null) virusAttackSound.play();
+    if (this.virusAttackSound != null) this.virusAttackSound.play();
   }
   
   public void playCharacterAttackSound(){
-    if (characterAttackSound != null) characterAttackSound.play();
+    if (this.characterAttackSound != null) this.characterAttackSound.play();
+  }
+  
+  //CHARACTER SELECTOR BUTTON
+  public boolean isPointInTriangle(float px, float py, float x1, float y1, float x2, float y2, float x3, float y3) {
+    float areaOrig = abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));
+    float area1 = abs((x1 - px) * (y2 - py) - (x2 - px) * (y1 - py));
+    float area2 = abs((x2 - px) * (y3 - py) - (x3 - px) * (y2 - py));
+    float area3 = abs((x3 - px) * (y1 - py) - (x1 - px) * (y3 - py));
+  
+    return abs(area1 + area2 + area3 - areaOrig) < 1.0;
+  }
+  
+  //GETTERS Y SETTERS
+  public void setActiveBattle(int index){
+    this.activeBattleIndex = index;
+  }
+  
+  public boolean isBattleActive() {
+    return battleState;
+  }
+
+  public void setBattleState(boolean state) {
+    this.battleState = state;
+  }
+  
+  public List getPlaylist(){
+    return this.playlist;
+  }
+  
+  public List getPlatforms(){
+    return this.platforms;
+  }
+  
+  public List getSpikes(){
+    return this.spikes;
+  }
+  
+  public SoundFile getCurrentPlayer(){
+    return this.currentPlayer;
   }
   
 }

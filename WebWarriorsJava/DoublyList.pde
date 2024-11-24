@@ -1,11 +1,12 @@
 public class DoublyList extends List {
   private DoublyNode current; // Nodo actual del personaje seleccionado
   
-  private int characterNumber = 1;
+  private int characterNumber;
 
   // Constructor
   public DoublyList() {
     super();
+    this.characterNumber = 1;
     this.current = null;
   }
 
@@ -13,46 +14,46 @@ public class DoublyList extends List {
   @Override
   public void addNode(Object info) {
     DoublyNode newNode = new DoublyNode(info);
-    if (PTR == null) {  // Si la lista está vacía
-      PTR = newNode;
-      FINAL = newNode;
-      current = newNode;
+    if (this.PTR == null) {  // Si la lista está vacía
+      this.PTR = newNode;
+      this.FINAL = newNode;
+      this.current = newNode;
     } else {
-      FINAL.next = newNode;           // El último nodo apunta al nuevo nodo
-      newNode.setPrev((DoublyNode) FINAL);  // El nuevo nodo apunta al anterior
-      FINAL = newNode;                // Actualiza el último nodo
+      this.FINAL.setNext(newNode);           // El último nodo apunta al nuevo nodo
+      newNode.setPrev((DoublyNode) this.FINAL);  // El nuevo nodo apunta al anterior
+      this.FINAL = newNode;                // Actualiza el último nodo
     }
     // Hacer la lista circular
-    FINAL.next = PTR;
-    ((DoublyNode) PTR).setPrev((DoublyNode) FINAL);
+    this.FINAL.setNext(this.PTR);
+    ((DoublyNode) this.PTR).setPrev((DoublyNode) this.FINAL);
   }
   
   // Método para avanzar al siguiente personaje
   public void nextCharacter() {
-    if (current != null) {
-      current = (DoublyNode) current.next;
-      characterNumber += 1;
-      if(characterNumber == 6){
-        characterNumber = 1;
+    if (this.current != null) {
+      this.current = (DoublyNode) this.current.getNext();
+      this.characterNumber += 1;
+      if(this.characterNumber == 6){
+        this.characterNumber = 1;
       }
     }
   }
 
   // Método para retroceder al personaje anterior
   public void prevCharacter() {
-    if (current != null) {
-      current = (DoublyNode) current.getPrev();
-      characterNumber -= 1;
-      if(characterNumber == 0){
-        characterNumber = 5;
+    if (this.current != null) {
+      this.current = (DoublyNode) this.current.getPrev();
+      this.characterNumber -= 1;
+      if(this.characterNumber == 0){
+        this.characterNumber = 5;
       }
     }
   }
 
   // Método para mostrar el personaje actual
   public void displayCharacter() {
-    if (current != null) {
-      PImage characterImage = (PImage) current.info;
+    if (this.current != null) {
+      PImage characterImage = (PImage) this.current.getInfo();
       image(characterImage, 470, 125); // Ajusta las coordenadas según sea necesario
     }
   }

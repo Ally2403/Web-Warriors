@@ -950,9 +950,9 @@ void mousePressed() {
     }
   } else if (screen == 1) {
     levelLocked = false;
-    if (isPointInTriangle(mouseX, mouseY, dx1, dy1, dx2, dy2, dx3, dy3)) {
+    if (game.isPointInTriangle(mouseX, mouseY, dx1, dy1, dx2, dy2, dx3, dy3)) {
       characterSelector.nextCharacter();
-    } else if (isPointInTriangle(mouseX, mouseY, ix1, iy1, ix2, iy2, ix3, iy3)) {
+    } else if (game.isPointInTriangle(mouseX, mouseY, ix1, iy1, ix2, iy2, ix3, iy3)) {
       characterSelector.prevCharacter();
     } else if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49) {
       levelLocked = true;
@@ -1005,9 +1005,6 @@ void keyPressed() {
   if (key == ' ' || key == 'W') {
     mainCharacter.setMoveUp(true);
   }
-  if (key == 's' || key == 'S') {
-    mainCharacter.setMoveDown(true);
-  }
   if (key == 'a' || key == 'A') {
     mainCharacter.setMoveLeft(true);
   }
@@ -1025,9 +1022,6 @@ void keyReleased() {
   // Desactivar las variables de movimiento al soltar teclas
   if (key == ' ' || key == 'W') {
     mainCharacter.setMoveUp(false);
-  }
-  if (key == 's' || key == 'S') {
-    mainCharacter.setMoveDown(false);
   }
   if (key == 'a' || key == 'A') {
     mainCharacter.setMoveLeft(false);
@@ -1056,13 +1050,4 @@ void mouseMoved() {
   } else {
     oke = false;
   }
-}
-
-boolean isPointInTriangle(float px, float py, float x1, float y1, float x2, float y2, float x3, float y3) {
-  float areaOrig = abs((x2 - x1) * (y3 - y1) - (x3 - x1) * (y2 - y1));
-  float area1 = abs((x1 - px) * (y2 - py) - (x2 - px) * (y1 - py));
-  float area2 = abs((x2 - px) * (y3 - py) - (x3 - px) * (y2 - py));
-  float area3 = abs((x3 - px) * (y1 - py) - (x1 - px) * (y3 - py));
-
-  return abs(area1 + area2 + area3 - areaOrig) < 1.0;
 }

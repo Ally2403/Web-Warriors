@@ -9,27 +9,27 @@ public class CircularDoublyList extends List {
   @Override
   public void addNode(Object info) {
     DoublyNode newNode = new DoublyNode(info);
-    if (PTR == null) {  // Si la lista está vacía
-      PTR = newNode;
-      FINAL = newNode;
-      FINAL.next = PTR;  // El siguiente del último nodo apunta al primero
-      ((DoublyNode)PTR).setPrev(((DoublyNode)FINAL));    // El anterior del primer nodo apunta al último
+    if (this.PTR == null) {  // Si la lista está vacía
+      this.PTR = newNode;
+      this.FINAL = newNode;
+      this.FINAL.setNext(this.PTR);  // El siguiente del último nodo apunta al primero
+      ((DoublyNode)this.PTR).setPrev(((DoublyNode)this.FINAL));    // El anterior del primer nodo apunta al último
     } else {
-      FINAL.next = newNode;       // El último nodo apunta al nuevo nodo
-      newNode.prev = ((DoublyNode)FINAL);       // El nuevo nodo apunta al nodo anterior
-      ((DoublyNode)PTR).setPrev(((DoublyNode)newNode));  // El primer nodo apunta hacia atrás al nuevo nodo
-      FINAL = newNode;            // Actualiza el puntero al último nodo
-      FINAL.next = PTR;           // El siguiente del último nodo apunta al primero
+      this.FINAL.setNext(newNode);       // El último nodo apunta al nuevo nodo
+      newNode.setPrev(((DoublyNode)this.FINAL));       // El nuevo nodo apunta al nodo anterior
+      ((DoublyNode)this.PTR).setPrev(((DoublyNode)newNode));  // El primer nodo apunta hacia atrás al nuevo nodo
+      this.FINAL = newNode;            // Actualiza el puntero al último nodo
+      this.FINAL.setNext(this.PTR);           // El siguiente del último nodo apunta al primero
     }
   }
   
   public int size() {
-    if (PTR == null) return 0;
+    if (this.PTR == null) return 0;
     int count = 1;
-    Node current = PTR;
-    while (current.next != PTR) {
+    Node current = this.PTR;
+    while (current.getNext() != this.PTR) {
       count++;
-      current = current.next;
+      current = current.getNext();
     }
     return count;
   }
