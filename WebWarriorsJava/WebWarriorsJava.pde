@@ -38,7 +38,7 @@ PImage mapaBlock, mapa, mapaBlock3, levelLockedImage, youLoseImage, youWonImage 
 int screen = 0, characterVariable = 1;
 boolean oke = false;
 boolean map1, map2, map3 =false;
-boolean levelLocked = true, levelLocked2 = false, levelLocked3 = false;
+boolean levelLocked = true, levelLocked2 = true, levelLocked3 = true;
 boolean showLevelLocked2, showLevelLocked3, showYouLoseImage, showYouWonImage;
 DoublyList characterSelector;
 int startTimeLevelLocked, finishTimeLevelLocked, startTimeYouLose, startTimeYouWon;
@@ -933,7 +933,7 @@ void draw() {
         map3 = false;
         screen = 0;
       }
-    } else if (!map3 && showYouLoseImage && showYouLose == false) {
+    } else if (!map3 && showYouLoseImage) {
       finishTimeLevelLocked = millis() - startTimeYouLose;
       if (finishTimeLevelLocked < 4000) {
         image(youLoseImage, 0, 0); // Muestra la imagen en (100, 100)
