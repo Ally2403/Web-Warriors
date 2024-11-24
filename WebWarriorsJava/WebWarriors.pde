@@ -17,9 +17,6 @@ public class WebWarriors {
   private SoundFile bonusSound;
   private SoundFile victorySound;
   private SoundFile virusAttackSound;
-  private SoundFile virusAttackedSound;
-  private SoundFile computerAttackSound;
-  private SoundFile robotAttackSound;
   private SoundFile characterAttackSound;
 
   public WebWarriors(PApplet app) {
@@ -35,9 +32,6 @@ public class WebWarriors {
     bonusSound = new SoundFile(app, "bonus.mp3");
     victorySound = new SoundFile(app, "victory.mp3");
     virusAttackSound = new SoundFile(app, "virusAttack.mp3");
-    virusAttackedSound = new SoundFile(app, "virus_attacked.wav");
-    computerAttackSound = new SoundFile(app, "computer_attack.wav");
-    robotAttackSound = new SoundFile(app, "robot_attack.wav");
     characterAttackSound = new SoundFile(app, "puños.mp3");
 
   }
@@ -192,18 +186,6 @@ public class WebWarriors {
   
   public void playVirusAttackSound() {
     if (virusAttackSound != null) virusAttackSound.play();
-  }
-  
-  public void playVirusAttackedSound() {
-    if (virusAttackedSound != null) virusAttackedSound.play();
-  }
-  
-  public void playComputerAttackSound() {
-    if (computerAttackSound != null) computerAttackSound.play();
-  }
-  
-  public void playRobotAttackSound() {
-    if (robotAttackSound != null) robotAttackSound.play();
   }
   
   public void playCharacterAttackSound(){

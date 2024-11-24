@@ -120,8 +120,8 @@ void setup() {
   game.addPlatform(new Platform(1, 633, 484, 353, 15));
   game.addPlatform(new Platform(1, 986, 562, 166, 15));
   game.addPlatform(new Platform(1, 1154, 625, 1713, 15));
-  game.addPlatform(new Platform(1, 1740, 500, 350, 15));
-  game.addPlatform(new Platform(1, 2195, 370, 350, 15));
+  game.addPlatform(new Platform(1, 1740, 470, 350, 15));
+  game.addPlatform(new Platform(1, 2195, 330, 350, 15));
   game.addPlatform(new Platform(1, 2867, 565, 125, 15));
   game.addPlatform(new Platform(1, 2993, 492, 688, 105));
   game.addPlatform(new Platform(1, 3680, 630, 220, 15));
@@ -132,7 +132,7 @@ void setup() {
   game.addPlatform(new Platform(1, 5685, 575, 166, 15));
   game.addPlatform(new Platform(1, 5852, 627, 1240, 15));
   game.addPlatform(new Platform(1, 6074, 472, 352, 15));
-  game.addPlatform(new Platform(1, 6527, 355, 352, 15));
+  game.addPlatform(new Platform(1, 6527, 325, 352, 15));
   game.addPlatform(new Platform(1, 7096, 560, 126, 15));
   game.addPlatform(new Platform(1, 7223, 488, 688, 55));
 
@@ -153,7 +153,7 @@ void setup() {
   game.addPlatform(new Platform(2, 3644, 590, 165, 15));
   game.addPlatform(new Platform(2, 3811, 625, 2441, 15));
   game.addPlatform(new Platform(2, 6252, 550, 127, 15));
-  game.addPlatform(new Platform(2, 6378, 475, 688, 15));
+  game.addPlatform(new Platform(2, 6378, 475, 688, 105));
   game.addPlatform(new Platform(2, 7065, 625, 935, 15));
   game.addPlatform(new Platform(2, 179, 512, 350, 15));
   game.addPlatform(new Platform(2, 573, 390, 182, 15));
