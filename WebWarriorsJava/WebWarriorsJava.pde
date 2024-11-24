@@ -22,6 +22,7 @@ float backgroundWidth = 8000; // Ancho total de la imagen de principalPage
 PFont mouse = null;
 int indexBackground = 1;
 
+boolean from3to1 = false;
 boolean booleanBattle1 = false, booleanBattle2 = false, booleanBattle3 = false, battleFinished = true;
 SimpleList battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, commentsBattle1;
 SimpleList battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, commentsBattle2;
@@ -29,7 +30,7 @@ SimpleList battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3Te
 
 SimpleList battle1xPositions, battle1yPositions;
 Battle battle1, battle2, battle3;
-Movie youWon1, youLose1, areYouReady;
+Movie youWon1, youLose1, youWon2, youLose2, youWon3, youLose3, areYouReady;
 
 //JUANCHO STUFF
 PImage principalPage, selectYourCharacter, howToPlay, credits, setting, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn = null;
@@ -442,11 +443,19 @@ void setup() {
   commentsBattle3.addNode("I know someone\nwho looks just\nlike you.\nCan I call you\nto confirm\nit's you?");
   commentsBattle3.addNode("I feel so close\nto you. I'd like\nto meet up\nsomewhere private\nto talk.");
   commentsBattle3.addNode("You're special to\nme. If you don't\nmeet me, I'll be\nreally upset\nand lonely.");
-
+  
+  youWon1 = new Movie(this, "youWon.mp4");
+  youLose1 = new Movie(this, "youLose.mp4");
+  youWon2 = new Movie(this, "youWon.mp4");
+  youLose2 = new Movie(this, "youLose.mp4");
+  youWon3 = new Movie(this, "youWon.mp4");
+  youLose3 = new Movie(this, "youLose.mp4");
+  areYouReady = new Movie(this, "areYouReady.mp4");
+  
   // Crear batallas
-  battle1 = new Battle(this, damageMatrix1, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy3);
-  battle2 = new Battle(this, damageMatrix2, battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle2, battleCharacter, enemy2); // Puedes personalizar otra batalla
-  battle3 = new Battle(this, damageMatrix3, battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3TextsRound3, battle3TextsRound4, battle3TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle3, battleCharacter, enemy1);
+  battle1 = new Battle(this, damageMatrix1, youWon1, youLose1, battle1TextsRound0, battle1TextsRound1, battle1TextsRound2, battle1TextsRound3, battle1TextsRound4, battle1TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle1, battleCharacter, enemy3);
+  battle2 = new Battle(this, damageMatrix2, youWon2, youLose2, battle2TextsRound0, battle2TextsRound1, battle2TextsRound2, battle2TextsRound3, battle2TextsRound4, battle2TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle2, battleCharacter, enemy2); // Puedes personalizar otra batalla
+  battle3 = new Battle(this, damageMatrix3, youWon3, youLose3, battle3TextsRound0, battle3TextsRound1, battle3TextsRound2, battle3TextsRound3, battle3TextsRound4, battle3TextsRound5, battle1xPositions, battle1yPositions, game, commentsBattle3, battleCharacter, enemy1);
 
   // Agregar batallas a WebWarriors
   game.addBattle(battle1);
@@ -461,10 +470,6 @@ void setup() {
   characterSelector.addNode(loadImage("SelPersonaje5.png"));
 
   timer = new Timer();
-
-  youWon1 = new Movie(this, "youWon.mp4");
-  youLose1 = new Movie(this, "youLose.mp4");
-  areYouReady = new Movie(this, "areYouReady.mp4");
 }
 
 // Método que se llama cada vez que el video avanza
@@ -561,6 +566,14 @@ void draw() {
         if (finishTime < 5000) {
           image(youWon1, 0, 0); // Muestra la imagen en (100, 100)
         } else {
+          
+          if (youWon1.isPlaying()) {
+            youWon1.stop(); // Detén el video antes de reposicionarlo
+          }
+          if (youWon1.duration() > 0) {
+            youWon1.jump(1); // Salta al inicio solo si es seguro
+          }
+          
           battleFinished = false;
           showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
           timer.resume();
@@ -572,11 +585,21 @@ void draw() {
         if (finishTime < 5000) {
           image(youLose1, 0, 0); // Muestra la imagen en (100, 100)
         } else {
+          if (youLose1.isPlaying()) {
+            youLose1.stop(); // Detén el video antes de reposicionarlo
+          }
+          if (youLose1.duration() > 0) {
+            youLose1.jump(1); // Salta al inicio solo si es seguro
+          }
           showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
         }
       } else {
         mainCharacter.updateLifeBar(this);
-
+        if(from3to1){
+          mainCharacter.setLife(10);
+          from3to1 = false;
+        }
+        
         //JUEGO PLATAFORMAS
         moveBackground();
         mainCharacter.display(this);
@@ -618,6 +641,7 @@ void draw() {
           battleFinished = true;
           showYouWonImage = true;
           startTimeYouWon = millis();
+          from3to1 = true;
         }
 
         // Derrota jugador
@@ -632,6 +656,7 @@ void draw() {
           showYouLoseImage = true;
           battleFinished = true;
           startTimeYouLose = millis();
+          from3to1 = true;
         }
       }
     } else if (!map1 && showYouWonImage) {
@@ -643,7 +668,7 @@ void draw() {
       }
     } else if (!map1 && showYouLoseImage) {
       finishTimeLevelLocked = millis() - startTimeYouLose;
-      if (finishTimeLevelLocked < 5000) {
+      if (finishTimeLevelLocked < 4000) {
         image(youLoseImage, 0, 0); // Muestra la imagen en (100, 100)
       } else {
         showYouLoseImage = false; // Deja de mostrar la imagen después de 5 segundos
@@ -671,8 +696,14 @@ void draw() {
         mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
         finishTime = millis() - startTime;
         if (finishTime < 5000) {
-          image(youWon1, 0, 0); // Muestra la imagen en (100, 100)
+          image(youWon2, 0, 0); // Muestra la imagen en (100, 100)
         } else {
+          if (youWon2.isPlaying()) {
+            youWon2.stop(); // Detén el video antes de reposicionarlo
+          }
+          if (youWon2.duration() > 0) {
+            youWon2.jump(1); // Salta al inicio solo si es seguro
+          }
           showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
           timer.resume();
           battleFinished = false;
@@ -682,12 +713,22 @@ void draw() {
         mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
         finishTime = millis() - startTime;
         if (finishTime < 5000) {
-          image(youLose1, 0, 0); // Muestra la imagen en (100, 100)
+          image(youLose2, 0, 0); // Muestra la imagen en (100, 100)
         } else {
+          if (youLose2.isPlaying()) {
+            youLose2.stop(); // Detén el video antes de reposicionarlo
+          }
+          if (youLose2.duration() > 0) {
+            youLose2.jump(1); // Salta al inicio solo si es seguro
+          }
           showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
         }
       } else {
         mainCharacter.updateLifeBar(this);
+        if(from3to1){
+          mainCharacter.setLife(10);
+          from3to1 = false;
+        }
         //JUEGO PLATAFORMAS
         mainCharacter.move(this, 2);
         mainCharacter.display(this);
@@ -729,6 +770,7 @@ void draw() {
           battleFinished = true;
           showYouWonImage = true;
           startTimeYouWon = millis();
+          from3to1 = true;
         }
 
         // Derrota jugador
@@ -744,6 +786,7 @@ void draw() {
           showYouLoseImage = true;
           battleFinished = true;
           startTimeYouLose = millis();
+          from3to1 = true;
         }
       }
     } else if (!map2 && showYouWonImage) {
@@ -755,7 +798,7 @@ void draw() {
       }
     } else if (!map2 && showYouLoseImage) {
       finishTimeLevelLocked = millis() - startTimeYouLose;
-      if (finishTimeLevelLocked < 5000) {
+      if (finishTimeLevelLocked < 4000) {
         image(youLoseImage, 0, 0); // Muestra la imagen en (100, 100)
       } else {
         showYouLoseImage = false; // Deja de mostrar la imagen después de 5 segundos
@@ -783,8 +826,14 @@ void draw() {
         mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
         finishTime = millis() - startTime;
         if (finishTime < 5000) {
-          image(youWon1, 0, 0); // Muestra la imagen en (100, 100)
+          image(youWon3, 0, 0); // Muestra la imagen en (100, 100)
         } else {
+          if (youWon3.isPlaying()) {
+            youWon3.stop(); // Detén el video antes de reposicionarlo
+          }
+          if (youWon3.duration() > 0) {
+            youWon3.jump(1); // Salta al inicio solo si es seguro
+          }
           showYouWon = false; // Deja de mostrar la imagen después de 5 segundos
           timer.resume();
           battleFinished = false;
@@ -794,12 +843,23 @@ void draw() {
         mainCharacter.setLife(game.updateBattle(mainCharacter.getLife()));
         finishTime = millis() - startTime;
         if (finishTime < 5000) {
-          image(youLose1, 0, 0); // Muestra la imagen en (100, 100)
+          image(youLose3, 0, 0); // Muestra la imagen en (100, 100)
         } else {
+          if (youLose3.isPlaying()) {
+            youLose3.stop(); // Detén el video antes de reposicionarlo
+          }
+          if (youLose3.duration() > 0) {
+            youLose3.jump(1); // Salta al inicio solo si es seguro
+          }
           showYouLose = false; // Deja de mostrar la imagen después de 5 segundos
         }
       } else {
         mainCharacter.updateLifeBar(this);
+        if(from3to1){
+          mainCharacter.setLife(10);
+          from3to1 = false;
+        }
+        
         //JUEGO PLATAFORMAS
         mainCharacter.move(this, 3);
         mainCharacter.display(this);
@@ -842,6 +902,7 @@ void draw() {
         showYouWonImage = true;
         game.playVictorySound();
         startTimeYouWon = millis();
+        from3to1 = true;
       }
 
       // Derrota jugador
@@ -856,6 +917,7 @@ void draw() {
         map3 = false;
         showYouLoseImage = true;
         battleFinished = true;
+        from3to1 = true;
         startTimeYouLose = millis();
       }
 
@@ -873,7 +935,7 @@ void draw() {
       }
     } else if (!map3 && showYouLoseImage) {
       finishTimeLevelLocked = millis() - startTimeYouLose;
-      if (finishTimeLevelLocked < 5000) {
+      if (finishTimeLevelLocked < 4000) {
         image(youLoseImage, 0, 0); // Muestra la imagen en (100, 100)
       } else {
         showYouLoseImage = false; // Deja de mostrar la imagen después de 5 segundos
