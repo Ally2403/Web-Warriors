@@ -621,7 +621,6 @@ void draw() {
         }
         //CONTROL DE BATALLAS
         if (mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 3987 && !booleanBattle1) {
-          print("llegue");
           game.setActiveBattle(0); // Comienza con la primera batalla
           game.startBattle(mainCharacter.getLife());
           booleanBattle1 = true;
@@ -742,7 +741,6 @@ void draw() {
 
         //CONTROL DE BATALLAS
         if (mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 1880 && !booleanBattle2) {
-          print("llegue");
           game.setActiveBattle(0);
           game.nextBattle(mainCharacter.getLife());
           booleanBattle2 = true;
@@ -864,7 +862,6 @@ void draw() {
 
         //CONTROL DE BATALLAS
         if (mainCharacter.gifPlayer.getX() + mainCharacter.gifPlayer.getWidth() + backgroundOffset >= 2786 && !booleanBattle3) {
-          print("llegue");
           game.setActiveBattle(1);
           game.nextBattle(mainCharacter.getLife());
           booleanBattle3 = true;
@@ -929,7 +926,6 @@ void draw() {
   }
 
   textFont(mouse);
-  text("mouseX "+ mouseX + " mouseY " + mouseY + " offsetX" + backgroundOffset + " Total" + (int(mouseX) + backgroundOffset), 20, 20);
   game.displayCurrentSong();
 }
 
@@ -1031,9 +1027,9 @@ void keyPressed() {
   if (key == 'd' || key == 'D') {
     mainCharacter.setMoveRight(true);
   }
-  if (key == 'n') {  // Siguiente canción
+  if (key == 'n'|| key == 'N') {  // Siguiente canción
     game.nextSong();
-  } else if (key == 'p') {  // Canción anterior
+  } else if (key == 'p' || key == 'P') {  // Canción anterior
     game.previousSong();
   }
   if ((map1 || map2 || map3) && keyCode == TAB) {
