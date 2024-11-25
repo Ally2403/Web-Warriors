@@ -1022,7 +1022,7 @@ void mousePressed() {
 // Control de movimiento
 void keyPressed() {
   // Activar las variables de movimiento al presionar teclas
-  if (key == ' ' || key == 'W') {
+  if (key == ' ' || key == 'W' || key == 'w') {
     mainCharacter.setMoveUp(true);
   }
   if (key == 'a' || key == 'A') {
@@ -1044,7 +1044,7 @@ void keyPressed() {
 
 void keyReleased() {
   // Desactivar las variables de movimiento al soltar teclas
-  if (key == ' ' || key == 'W') {
+  if (key == ' ' || key == 'W' || key == 'w') {
     mainCharacter.setMoveUp(false);
   }
   if (key == 'a' || key == 'A') {
