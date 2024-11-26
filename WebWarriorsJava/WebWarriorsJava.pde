@@ -35,6 +35,8 @@ Movie youWon1, youLose1, youWon2, youLose2, youWon3, youLose3, areYouReady;
 //JUANCHO STUFF
 PImage principalPage, selectYourCharacter, howToPlay, credits, characterVariable1, characterVariable2, characterVariable3, characterVariable4, characterVariable5, ok, start, okn = null;
 PImage mapaBlock, mapa, mapaBlock3, levelLockedImage, youLoseImage, youWonImage, pauseImage = null;
+PImage startGameSelect, howToPlaySelect, creditsSelect, backSelect, backSelectMap, backSelectHTP = null;
+boolean startGameSelectBool, howToPlaySelectBool, creditsSelectBool, backSelectBool = false;
 int screen = 0, characterVariable = 1;
 boolean oke = false;
 boolean map1, map2, map3 =false;
@@ -75,6 +77,13 @@ void setup() {
   youWonImage.resize(width, height);
   pauseImage = loadImage("pause.png");
   pauseImage.resize(width, height);
+
+  startGameSelect = loadImage("StartGameSelect.png");
+  howToPlaySelect = loadImage("HowToPlaySelect.png");
+  creditsSelect = loadImage("CreditsSelect.png");
+  backSelect = loadImage("BackSelect.png");
+  backSelectMap = loadImage("BackSelectMap.png");
+  backSelectHTP = loadImage("BackSelectHTP.png");
 
   lifeBar0 = loadImage("Z0.png");
   lifeBar0.resize(350, 40);
@@ -324,7 +333,7 @@ void setup() {
   commentsBattle1.addNode("Nobody likes\nyou here.\nWhy don't you\njust leave and\nstop wasting\neveryone's time?");
   commentsBattle1.addNode("You'll regret\nstaying here.\nI'll make sure\neveryone knows\nembarrassing\nthings about\nyou!");
   commentsBattle1.addNode("I'm sharing\nscreenshots of\nyour posts.\nEveryone will\nknow how pathetic\nyou are!");
-  commentsBattle1.addNode("Your friends\nalready hate you.\nThey're just\npretending to\nlike you online!"); 
+  commentsBattle1.addNode("Your friends\nalready hate you.\nThey're just\npretending to\nlike you online!");
   commentsBattle1.addNode("You don't\ndeserve to\nbe happy.\nJust give up\nalready!");
   commentsBattle1.addNode("I'll make sure\nyour life is\nmiserable unless\nyou leave this\nplatform for good.");
 
@@ -492,6 +501,13 @@ void draw() {
   game.getCurrentPlayer().amp(0.3);
   if (screen == 0) {
     image(principalPage, 0, 0, width, height);
+    if (startGameSelectBool) {
+      image(startGameSelect, 33, 313);
+    } else if (howToPlaySelectBool) {
+      image(howToPlaySelect, 869, 376);
+    } else if (creditsSelectBool) {
+      image(creditsSelect, 538, 489);
+    }
   } else if (screen == 1) {
     image(selectYourCharacter, 0, 0, width, height);
     if (!oke) {
@@ -499,13 +515,24 @@ void draw() {
     } else {
       image(okn, (750-55), 600);
     }
-
+    if (backSelectBool) {
+      image(backSelect, 61, 29);
+    }
     characterSelector.displayCharacter();
   } else if (screen == 2) {
     image(credits, 0, 0, width, height);
+    if (backSelectBool) {
+      image(backSelect, 61, 29);
+    }
   } else if (screen == 3) {
     image(howToPlay, 0, 0, width, height);
+    if(backSelectBool){
+      image(backSelectHTP, 61, 29);
+    }
   } else if (screen == 5) {
+    if (backSelectBool) {
+      image(backSelect, 61, 29);
+    }
     switch(characterSelector.getCharacterNumber()) {
     case 1:
       mainCharacter = character1;
@@ -546,7 +573,9 @@ void draw() {
     } else {
       image(mapaBlock, 0, 0, width, height);
     }
-
+    if (backSelectBool) {
+      image(backSelectMap, 61, 28);
+    }
     if (map1) {
       image(backgroundImage1, -backgroundOffset, 0);
 
@@ -943,7 +972,7 @@ void mousePressed() {
   float dx3 = 922, dy3 = 410, ix3 = 560, iy3 = 410;
 
   if (screen == 0) {
-    if (mouseX > 67 && mouseX < 573 && mouseY > 330 && mouseY<382) {
+    if (mouseX > 33 && mouseX < 539 && mouseY > 312 && mouseY<364) {
       screen = 1;
     } else if (mouseX > 538 && mouseX < 892 && mouseY > 489 && mouseY < 540) {
       screen = 2;
@@ -1081,9 +1110,38 @@ void moveBackground() {
 }
 
 void mouseMoved() {
-  if (mouseX > 694 && mouseX <792 && mouseY >600 && mouseY <650) {
-    oke=true;
-  } else {
-    oke = false;
+  if (screen == 0) {
+    if (mouseX > 33 && mouseX < 539 && mouseY > 312 && mouseY<364) {
+      startGameSelectBool = true;
+    } else {
+      startGameSelectBool = false;
+    }
+    if (mouseX > 538 && mouseX < 892 && mouseY > 489 && mouseY < 540) {
+      creditsSelectBool= true;
+    } else {
+      creditsSelectBool= false;
+    }
+    if (mouseX > 869 && mouseX < 1426 && mouseY > 375 && mouseY < 433) {
+      howToPlaySelectBool = true;
+    } else {
+      howToPlaySelectBool = false;
+    }
+  } else if (screen == 1) {
+    if (mouseX > 694 && mouseX <792 && mouseY >600 && mouseY <650) {
+      oke=true;
+    } else {
+      oke = false;
+    }
+    if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49) {
+      backSelectBool = true;
+    } else {
+      backSelectBool = false;
+    }
+  } else if (screen == 2 || screen == 3 || screen == 5) {
+    if (mouseX > 20 && mouseX < 141 && mouseY > 29 && mouseY < 49) {
+      backSelectBool = true;
+    } else {
+      backSelectBool = false;
+    }
   }
 }
