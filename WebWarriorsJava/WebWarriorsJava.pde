@@ -324,7 +324,7 @@ void setup() {
   commentsBattle1.addNode("Nobody likes\nyou here.\nWhy don't you\njust leave and\nstop wasting\neveryone's time?");
   commentsBattle1.addNode("You'll regret\nstaying here.\nI'll make sure\neveryone knows\nembarrassing\nthings about\nyou!");
   commentsBattle1.addNode("I'm sharing\nscreenshots of\nyour posts.\nEveryone will\nknow how pathetic\nyou are!");
-  commentsBattle1.addNode("Your friends\nalready hate you.\nThey're just\npretending to\nlike you online!");
+  commentsBattle1.addNode("Your friends\nalready hate you.\nThey're just\npretending to\nlike you online!"); 
   commentsBattle1.addNode("You don't\ndeserve to\nbe happy.\nJust give up\nalready!");
   commentsBattle1.addNode("I'll make sure\nyour life is\nmiserable unless\nyou leave this\nplatform for good.");
 
