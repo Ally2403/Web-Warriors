@@ -682,13 +682,16 @@ void draw() {
         if (finishTimeLevelLocked < 2000) {
           image(levelLockedImage, 1010, 580); // Muestra la imagen en (100, 100)
         } else {
-          showLevelLocked2 = false; // Deja de mostrar la imagen después de 5 segundos
+          showLevelLocked2 = false;
+          map2 = false; // Deja de mostrar la imagen después de 5 segundos
         }
       }
     } else if (map2 && !levelLocked2) { // mapaaaaaaa
       image(backgroundImage2, -backgroundOffset, 0);
       ///BATALLAS EN JUEGO
-      if (game.isBattleActive()) {
+      if (pause) {
+        image(pauseImage, 0, 0);
+      } else if (game.isBattleActive()) {
         timer.pause();
         game.updateBattle(mainCharacter.getLife());
       } else if (showYouWon) {
@@ -802,13 +805,16 @@ void draw() {
         if (finishTimeLevelLocked < 2000) {
           image(levelLockedImage, 593, 564); // Muestra la imagen en (100, 100)
         } else {
-          showLevelLocked2 = false; // Deja de mostrar la imagen después de 5 segundos
+          showLevelLocked2 = false;
+          map3 = false; // Deja de mostrar la imagen después de 5 segundos
         }
       }
     } else if (map3 && !levelLocked3) {
       image(backgroundImage3, -backgroundOffset, 0);
       //BATALLAS EN JUEGO
-      if (game.isBattleActive()) {
+      if (pause) {
+        image(pauseImage, 0, 0);
+      } else if (game.isBattleActive()) {
         timer.pause();
         game.updateBattle(mainCharacter.getLife());
       } else if (showYouWon) {
