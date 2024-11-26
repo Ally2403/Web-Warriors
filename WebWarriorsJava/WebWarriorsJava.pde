@@ -218,7 +218,8 @@ void setup() {
   game.addPlatform(new Platform(3, 4271, 435, 47, 15));
   game.addPlatform(new Platform(3, 4402, 365, 47, 15));
   game.addPlatform(new Platform(3, 4566, 450, 47, 15));
-  game.addPlatform(new Platform(3, 4772, 625, 1552, 15));
+  game.addPlatform(new Platform(3, 4772, 625, 1252, 15));
+  game.addPlatform(new Platform(3, 6024, 690, 2552, 15));
   game.addPlatform(new Platform(3, 5272, 460, 352, 15));
 
   //Spikes 3
