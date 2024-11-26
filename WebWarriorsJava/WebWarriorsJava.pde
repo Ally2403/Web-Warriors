@@ -942,7 +942,7 @@ void mousePressed() {
       screen = 2;
     } else if (mouseX > 869 && mouseX < 1426 && mouseY > 375 && mouseY < 433) {
       screen = 3;
-    } 
+    }
   } else if (screen == 1) {
     levelLocked = false;
     if (game.isPointInTriangle(mouseX, mouseY, dx1, dy1, dx2, dy2, dx3, dy3)) {
@@ -1035,6 +1035,15 @@ void keyPressed() {
   if ((map1 || map2 || map3) && keyCode == TAB) {
     pause = true;
     timer.pause();
+  }
+  if (screen == 1) {
+    if (keyCode == 37) {
+      characterSelector.prevCharacter();
+    } else if (keyCode == 39) {
+      characterSelector.nextCharacter();
+    } else if (keyCode == ENTER || keyCode == RETURN) {
+      screen = 5;
+    }
   }
 }
 
