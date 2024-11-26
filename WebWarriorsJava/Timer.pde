@@ -88,7 +88,7 @@ class Timer {
   
     if (this.second() >= 50) {
       screen = 0;
-      mainCharacter.gifPlayer.setX(0);
+      mainCharacter.getGifPlayer.setX(0);
       mainCharacter.gifPlayer.setY(0);
       mainCharacter.setLife(10);
       backgroundOffset = 0;

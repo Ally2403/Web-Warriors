@@ -40,7 +40,7 @@ boolean oke = false;
 boolean map1, map2, map3 =false;
 boolean levelLocked = true, levelLocked2 = true, levelLocked3 = true, pause = false;
 boolean showLevelLocked2, showLevelLocked3, showYouLoseImage, showYouWonImage;
-DoublyList characterSelector;
+CircularDoublyList characterSelector;
 int startTimeLevelLocked, finishTimeLevelLocked, startTimeYouLose, startTimeYouWon;
 
 Timer timer;
@@ -470,7 +470,7 @@ void setup() {
   game.addBattle(battle2);
   game.addBattle(battle3);
 
-  characterSelector = new DoublyList();
+  characterSelector = new CircularDoublyList();
   characterSelector.addNode(loadImage("SelPersonaje1.png"));
   characterSelector.addNode(loadImage("SelPersonaje2.png"));
   characterSelector.addNode(loadImage("SelPersonaje3.png"));
