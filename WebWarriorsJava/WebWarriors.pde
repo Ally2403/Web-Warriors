@@ -150,7 +150,9 @@ public class WebWarriors {
   }
 
   public void displayCurrentSong() {
-    app.text("Now Playing: " + this.currentSong.getInfo() + "\nPress n for next song or\np for previous song", 980, 30);
+    app.fill(255);
+    app.text("Now Playing: " + this.currentSong.getInfo(), width/2-310, 30);
+    app.fill(0);
   }
   
   // SOUND EFFECTS

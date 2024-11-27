@@ -341,6 +341,10 @@ public class Character {
     return this.life;
   }
   
+  public GifPlayer getGifPlayer(){
+    return this.gifPlayer;
+  }
+  
   // Setters
   public void setMoveUp(boolean moveUp) {
     this.moveUp = moveUp;
