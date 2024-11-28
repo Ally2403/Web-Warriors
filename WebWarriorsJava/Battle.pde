@@ -82,6 +82,7 @@ public class Battle {
         this.printNext = false;
         this.startBattleStartTime = app.millis(); // Guardar el tiempo de inicio
         this.showStartImage = true; // Activar la visualización de la imagen inicial
+        this.currentCommentIndex = 0;
         areYouReady.play();
     }
 
